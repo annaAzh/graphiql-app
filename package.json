@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint",
+    "prettier-fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,html}\"",
+    "prepare": "husky"
   },
   "dependencies": {
     "next": "^14.2.6",
@@ -28,7 +31,13 @@
     "eslint-plugin-react-compiler": "^0.0.0-experimental-8e3b87c-20240822",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.11",
+    "husky": "^9.1.5",
     "prettier": "^3.3.3",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "validate-branch-name": "^1.3.1"
+  },
+  "validate-branch-name": {
+    "pattern": "(feat|fix|docs|refactor|chore|init)/(\\d)",
+    "errorMsg": "Invalid branch name"
   }
 }
