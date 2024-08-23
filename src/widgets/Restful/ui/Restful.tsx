@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { DEFAULT_URL_EXAMPLE, VALID_METHODS } from 'shared/constants';
 import { encode64 } from 'shared/lib/dataConverters';
 import { RestfulType } from 'shared/types/restful';
+import { PropsArea } from './PropsArea/PropsArea';
 
 interface RestfulProps {
   children: ReactNode;
@@ -68,6 +69,7 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
             send
           </button>
         </div>
+        <PropsArea setValue={setValue} watch={watch} register={register} />
         <div>{children}</div>
       </form>
     </div>
