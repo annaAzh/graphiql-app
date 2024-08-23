@@ -1,0 +1,26 @@
+@import '../../../shared/styles/common.scss';
+
+.keyAndValue {
+  @include flex($flexDirection: column, $gap: 10px);
+  background: var(--main-color-1);
+  color: var(--main-color-4);
+  border-radius: 4px;
+  padding: 10px;
+  height: 200px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--main-color-3) var(--main-color-1);
+}
+
+.line {
+  @include flex(space-between, $gap: 10px);
+
+  input {
+    @include flex($flexGrow: 1);
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: 'Poppins';
+    font-weight: bold;
+    padding: 2px 5px;
+  }
+}
