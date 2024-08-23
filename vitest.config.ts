@@ -10,9 +10,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text'],
       include: ['**/src/**'],
-      exclude: [
-        '**/index.ts',
-      ],
+      exclude: ['**/index.ts'],
     },
     globals: true,
     environment: 'jsdom',
