@@ -1,0 +1,38 @@
+@mixin flex(
+  $justifyContent: false,
+  $gap: 0,
+  $flexDirection: row,
+  $wrap: nowrap,
+  $alignItems: false,
+  $flexGrow: false
+) {
+  display: flex;
+
+  @if $justifyContent {
+    justify-content: $justifyContent;
+  }
+
+  @if $flexDirection != row {
+    flex-direction: $flexDirection;
+  }
+
+  @if $gap != 0 {
+    gap: $gap;
+  }
+
+  @if $wrap != nowrap {
+    flex-wrap: $wrap;
+  }
+
+  @if $alignItems {
+    align-items: $alignItems;
+  }
+
+  @if $flexGrow {
+    flex-grow: $flexGrow;
+  }
+}
+
+@mixin google-font($family) {
+  @import url('http://fonts.googleapis.com/css?family=#{$family}');
+}

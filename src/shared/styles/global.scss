@@ -1,0 +1,38 @@
+@import './variables/reset.scss';
+@import './common.scss';
+
+@include google-font('Poppins');
+@include google-font('Alfa Slab One');
+
+:root {
+  --main-color-0: #f6f2f6;
+  --main-color-1: #dee2e6;
+  --main-color-2: #e1d5d9;
+  --main-color-3: #58545b;
+  --main-color-4: #1c252c;
+  --grey: #6c7275;
+  --red: #e45545;
+  --green: #6d972e;
+  --blue: #0353a4;
+  --denim: #4758a4;
+  --yellow: #ffe81f;
+  --orange: #e85d04;
+  --deep-yellow: #ad7a03;
+  --magenta: #945e93;
+  --grape: #614e79;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  @include flex($flexDirection: column);
+  font-family: 'Poppins';
+  min-height: 100vh;
+  font-size: 20px;
+  background: var(--main-color-4);
+  color: var(--main-color-1);
+}

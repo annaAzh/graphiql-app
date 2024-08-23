@@ -1,0 +1,80 @@
+@import '../../../shared/styles/common.scss';
+
+.postman {
+  @include flex($flexDirection: column, $gap: 20px, $alignItems: flex-start);
+  margin: auto;
+  padding: 1%;
+
+  h2 {
+    font-size: 30px;
+    font-family: 'Alfa Slab One';
+    margin: 0 auto;
+    color: var(--red);
+  }
+}
+
+.form {
+  @include flex($flexDirection: column, $gap: 10px);
+  margin: 0 auto;
+  border: 1px solid var(--main-color-1);
+  border-radius: 4px;
+  width: 600px;
+  min-height: 200px;
+  padding: 5px;
+}
+
+.upperSection {
+  @include flex($gap: 5px);
+  height: 30px;
+}
+
+.colorful {
+  &-GET {
+    color: var(--green);
+  }
+
+  &-POST {
+    color: var(--deep-yellow);
+  }
+
+  &-PUT {
+    color: var(--blue);
+  }
+
+  &-PATCH {
+    color: var(--grape);
+  }
+
+  &-DELETE {
+    color: var(--orange);
+  }
+
+  &-HEAD {
+    color: var(--green);
+  }
+
+  &-OPTIONS {
+    color: var(--magenta);
+  }
+}
+
+.select {
+  @extend .colorful;
+  font-family: 'Poppins';
+  font-weight: 900;
+  border-radius: 4px;
+  padding: 1px;
+  font-size: 16px;
+
+  option {
+    @extend .select;
+  }
+}
+
+.curl {
+  font-family: 'Poppins';
+  width: 100%;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 16px;
+}

@@ -6,11 +6,7 @@
     },
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -32,16 +28,14 @@
         "name": "next"
       }
     ],
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals"]
   },
   "include": [
     "./src",
     "./dist/types/**/*.ts",
     "./next-env.d.ts",
     ".next/types/**/*.ts",
-    "./setupTests.ts",
-   ],
-  "exclude": [
-    "./node_modules"
-  ]
+    "./setupTests.ts"
+  ],
+  "exclude": ["./node_modules"]
 }

@@ -11,15 +11,16 @@ module.exports = {
   ],
   settings: {
     react: {
-      version: "detect"
-    }
+      version: 'detect',
+    },
   },
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh', "react-compiler"],
+  plugins: ['react-refresh', 'react-compiler'],
   rules: {
     '@typescript-eslint/no-explicit-any': 'error',
-    "react-compiler/react-compiler": "error",
-    "react/react-in-jsx-scope": "off",
+    'react-compiler/react-compiler': 'error',
+    'react/react-in-jsx-scope': 'off',
+    'react-hooks/exhaustive-deps': 'off',
   },
-}
+};

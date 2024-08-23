@@ -1,0 +1,7 @@
+@import '../shared/styles/common.scss';
+
+.main {
+  @include flex($flexDirection: column, $alignItems: center, $gap: 20px);
+  padding: 1%;
+  margin: auto;
+}
