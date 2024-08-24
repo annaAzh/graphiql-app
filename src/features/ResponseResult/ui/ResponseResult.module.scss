@@ -1,0 +1,8 @@
+.result {
+  max-height: 250px;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--main-color-3) var(--main-color-4);
+  padding: 2px;
+  font-size: 14px;
+}
