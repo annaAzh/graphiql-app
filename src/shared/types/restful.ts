@@ -1,11 +1,11 @@
 interface RestfulType {
   url?: string;
   type?: string;
-  headers?: KeyAndValueItem[];
+  headers?: HeadersItem[];
   body?: string;
 }
 
-interface KeyAndValueItem {
+interface HeadersItem {
   key?: string;
   value?: string;
 }
@@ -26,7 +26,7 @@ interface RestResponse {
 
 export {
   type RestfulType,
-  type KeyAndValueItem,
+  type HeadersItem,
   type ValidMethods,
   type RestResponse,
 };
