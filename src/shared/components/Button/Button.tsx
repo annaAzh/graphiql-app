@@ -12,6 +12,7 @@ type Props = {
   size?: ButtonSize;
   disabled?: boolean;
   className?: string;
+  type?: 'button' | 'submit';
 };
 
 export const Button: FC<Props> = ({
@@ -21,6 +22,7 @@ export const Button: FC<Props> = ({
   size = 'md',
   disabled = false,
   className = '',
+  type,
 }) => {
   const buttonClass = clsx(
     styles.button,
@@ -37,6 +39,7 @@ export const Button: FC<Props> = ({
       className={`${className} ${buttonClass}`}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
+      type={type}
     >
       {children}
     </button>
