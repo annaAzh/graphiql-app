@@ -14,10 +14,13 @@ const email = yup
 const password = yup
   .string()
   .required('Password is required')
-  .matches(/[a-zа-я]/, 'at least one lowercase letter')
-  .matches(/[A-ZА-Я]/, 'at least one uppercase letter')
+  .matches(/\p{Ll}/u, 'at least one lowercase letter')
+  .matches(/\p{Lu}/u, 'at least one uppercase letter')
   .matches(/[0-9]/, 'at least one number')
-  .matches(/[!&@%~#^*]/, 'at least one special character')
+  .matches(
+    /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/,
+    'at least one special character'
+  )
   .min(8, 'length must be at least 8 characters');
 
 export const schemaLogin = yup.object().shape({
