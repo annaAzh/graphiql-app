@@ -1,6 +1,9 @@
 import * as yup from 'yup';
 
-const name = yup.string().required('Name is required');
+const name = yup
+  .string()
+  .required('Name is required')
+  .matches(/\p{L}/u, 'only letters are allowed');
 
 const email = yup
   .string()

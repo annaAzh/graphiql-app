@@ -82,6 +82,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
             {...field}
             sx={{ minHeight: '5rem' }}
             helperText={error?.message}
+            autoComplete="true"
           />
         )}
       />
