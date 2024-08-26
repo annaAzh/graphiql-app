@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import style from './MainPage.module.scss';
+import style from './styles/MainPage.module.scss';
 import { Path } from 'shared/types/path';
 
 const Home = () => {
