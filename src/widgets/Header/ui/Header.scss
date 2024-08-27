@@ -35,3 +35,12 @@
     border-color: var(--main-color-2) !important;
   }
 }
+
+.containerButtons {
+  @include flex($alignItems: center, $gap: 20px);
+
+  button {
+    width: 80px;
+    height: 40px;
+  }
+}

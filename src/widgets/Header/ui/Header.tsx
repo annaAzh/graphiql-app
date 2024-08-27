@@ -3,7 +3,7 @@ import { FC } from 'react';
 import Image from 'next/image';
 import Logo from 'shared/assets/img/logo.jpg';
 import { MenuItem, Select } from '@mui/material';
-import { Title } from 'shared/components';
+import { Button, Title } from 'shared/components';
 import './Header.scss';
 
 export const Header: FC = () => {
@@ -21,6 +21,10 @@ export const Header: FC = () => {
           <MenuItem value={'en'}>EN</MenuItem>
           <MenuItem value={'ru'}>RU</MenuItem>
         </Select>
+      </div>
+      <div className="containerButtons">
+        <Button size="lg">{'Sign Up'}</Button>
+        <Button size="lg">{'Sign In'}</Button>
       </div>
     </header>
   );

@@ -19,7 +19,7 @@
   --yellow: #ffe81f;
   --orange: #e85d04;
   --deep-yellow: #ad7a03;
-  --magenta: #945e93;
+  --magenta: #9c27b0;
   --grape: #614e79;
 
   --font-weight-regular: 400;
@@ -42,6 +42,7 @@
 
 body {
   @include flex($flexDirection: column);
+  position: relative;
   font-family: 'Poppins';
   min-height: 100vh;
   font-size: 20px;
