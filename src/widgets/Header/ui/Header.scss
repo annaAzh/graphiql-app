@@ -1,0 +1,37 @@
+@import '../../../shared/styles/common.scss';
+
+.header {
+  @include flex($alignItems: center, $justifyContent: space-between);
+  position: sticky;
+  top: 0;
+  padding: 1%;
+  border-bottom: 1px solid var(--main-color-2);
+  margin: 0 15px;
+  background-color: var(--main-color-4);
+  z-index: 20;
+
+  img {
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  svg {
+    fill: var(--main-color-2);
+  }
+}
+
+.selectorHeader {
+  @include flex($alignItems: center, $gap: 10px);
+  width: 190px;
+
+  #select {
+    padding: 5px 30px 5px 15px !important;
+    color: var(--main-color-2) !important;
+  }
+
+  .MuiInputBase-root:not(.Mui-focused) .MuiOutlinedInput-notchedOutline,
+  .MuiInputBase-root:focus-within .MuiOutlinedInput-notchedOutline,
+  .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: var(--main-color-2) !important;
+  }
+}
