@@ -24,9 +24,14 @@ interface RestResponse {
   body: string;
 }
 
+interface StringObject {
+  [key: string]: string;
+}
+
 export {
   type RestfulType,
   type HeadersItem,
   type ValidMethods,
   type RestResponse,
+  type StringObject,
 };
