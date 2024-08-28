@@ -20,27 +20,38 @@
   }
 }
 
-.selectorHeader {
-  @include flex($alignItems: center, $gap: 10px);
-  width: 190px;
+.scrollHeader {
+  animation-name: bg-color;
+  animation-duration: 0.5s;
+  animation-direction: alternate;
+  animation-fill-mode: forwards;
+}
 
-  #select {
-    padding: 5px 30px 5px 15px !important;
-    color: var(--main-color-2) !important;
-  }
+.dashboard {
+  @include flex($alignItems: center, $gap: 20px);
 
-  .MuiInputBase-root:not(.Mui-focused) .MuiOutlinedInput-notchedOutline,
-  .MuiInputBase-root:focus-within .MuiOutlinedInput-notchedOutline,
-  .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline {
-    border-color: var(--main-color-2) !important;
+  select {
+    width: 50px;
+    height: 35px;
+    font-size: 1rem;
+    border-radius: 4px;
+    color: var(--main-color-2);
+    background-color: var(--main-color-4);
+    cursor: pointer;
   }
 }
 
-.containerButtons {
-  @include flex($alignItems: center, $gap: 20px);
+@keyframes bg-color {
+  100% {
+    background-color: var(--main-color-3);
+    border-radius: 4px;
+    border: none;
+  }
+}
 
-  button {
-    width: 80px;
-    height: 40px;
+@media (max-width: 590px) {
+  .header {
+    @include flex($flexDirection: column, $gap: 10px);
+    padding-bottom: 10px;
   }
 }
