@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { DEFAULT_URL_EXAMPLE, VALID_METHODS } from 'shared/constants';
 import { encode64 } from 'shared/lib/dataConverters';
-import { RestfulType } from 'shared/types/restful';
+import { RestfulType, StringObject } from 'shared/types/restful';
 import { PropsArea } from './PropsArea/PropsArea';
 
 interface RestfulProps {
@@ -14,10 +14,6 @@ interface RestfulProps {
 
 export const Restful: FC<RestfulProps> = ({ children }) => {
   const { register, handleSubmit, setValue, watch } = useForm({ mode: 'all' });
-  useEffect(() => {
-    setValue('url', DEFAULT_URL_EXAMPLE);
-    setValue('type', VALID_METHODS[0]);
-  }, []);
   const navigate = useRouter();
   const selectedOption = watch('type');
   const onSubmit: SubmitHandler<RestfulType> = ({
@@ -25,10 +21,23 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
     type,
     headers,
     body,
+    variables,
   }) => {
     const encodedUrl = encode64(url);
-    const encodedBody = encode64(body);
     let encodedHeaders: string | undefined = undefined;
+    let formattedBody: StringObject | undefined;
+
+    if (body) {
+      formattedBody = JSON.parse(body);
+    }
+
+    if (variables) {
+      variables.forEach((variable) => {
+        if (variable.key !== undefined && variable.value !== undefined) {
+          formattedBody = { ...formattedBody, [variable.key]: variable.value };
+        }
+      });
+    }
 
     if (headers) {
       encodedHeaders = '';
@@ -42,12 +51,19 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
       });
     }
 
+    const encodedBody = encode64(JSON.stringify(formattedBody));
+
     if (encodedHeaders) {
       navigate.push(`/${type}/${encodedUrl}/${encodedBody}${encodedHeaders}`);
     } else {
       navigate.push(`/${type}/${encodedUrl}/${encodedBody}`);
     }
   };
+
+  useEffect(() => {
+    setValue('url', DEFAULT_URL_EXAMPLE);
+    setValue('type', VALID_METHODS[0]);
+  }, []);
 
   return (
     <div className={style.postman}>

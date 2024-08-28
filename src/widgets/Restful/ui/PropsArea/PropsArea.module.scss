@@ -1,7 +1,7 @@
 @import '../../../../shared/styles/common.scss';
 
 .headers {
-  @include flex(center, $gap: 30%);
+  @include flex(center, $gap: 15%);
 
   p:hover:not(.active) {
     cursor: pointer;
