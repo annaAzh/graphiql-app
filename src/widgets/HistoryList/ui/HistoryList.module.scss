@@ -1,0 +1,58 @@
+@import '../../../shared/styles/common.scss';
+
+.historyList {
+  @include flex($flexDirection: column, $gap: 15px, $alignItems: center);
+  border-radius: 4px;
+  border: 1px solid var(--main-color-1);
+  padding: 5px;
+  min-height: 150px;
+  max-height: 300px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--grape) var(--main-color-4);
+}
+
+.container {
+  @include flex($flexDirection: column, $gap: 15px, $alignItems: center);
+}
+
+.label {
+  font-weight: 900;
+  pointer-events: none;
+  color: var(--magenta);
+}
+
+.line {
+  @include flex($gap: 10px);
+  width: 100%;
+  padding: 5px;
+
+  &:hover {
+    opacity: 0.5;
+    cursor: pointer;
+  }
+}
+
+.type {
+  width: 85px;
+}
+
+.url {
+  max-width: 450px;
+  overflow: hidden;
+}
+
+.empty {
+  @include flex(
+    space-between,
+    $flexDirection: column,
+    $alignItems: center,
+    $gap: 15px,
+    $flexGrow: 1
+  );
+  padding: 10px;
+}
+
+.buttons {
+  @include flex($gap: 15px);
+}

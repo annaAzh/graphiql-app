@@ -1,8 +1,7 @@
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, useEffect, useState } from 'react';
 import style from './PropsArea.module.scss';
 import {
   UseFormSetValue,
-  FieldValues,
   UseFormWatch,
   UseFormRegister,
 } from 'react-hook-form';
@@ -16,8 +15,8 @@ const headers: (keyof Pick<RestfulType, 'headers' | 'body' | 'variables'>)[] = [
 ];
 
 interface PropsAreaProps {
-  setValue: UseFormSetValue<FieldValues>;
-  watch: UseFormWatch<FieldValues>;
+  setValue: UseFormSetValue<RestfulType>;
+  watch: UseFormWatch<RestfulType>;
   register: UseFormRegister<RestfulType>;
 }
 
@@ -27,34 +26,36 @@ export const PropsArea: FC<PropsAreaProps> = ({
   register,
 }) => {
   const [activeHeader, setActiveHeader] = useState(headers[0]);
-  let content: ReactNode;
+  const [content, setContent] = useState<ReactNode>(null);
 
-  if (activeHeader === 'headers') {
-    content = (
-      <HeadersEditor
-        key="headers"
-        initialValue={watch('headers')}
-        callback={(value: HeadersItem[]) => setValue('headers', value)}
-      />
-    );
-  } else if (activeHeader === 'variables') {
-    content = (
-      <HeadersEditor
-        key="variables"
-        initialValue={watch('variables')}
-        callback={(value: HeadersItem[]) => setValue('variables', value)}
-      />
-    );
-  } else {
-    content = (
-      <textarea
-        className={style.textArea}
-        placeholder="Enter your body"
-        {...register('body')}
-        value={watch('body')}
-      />
-    );
-  }
+  useEffect(() => {
+    if (activeHeader === 'headers') {
+      setContent(
+        <HeadersEditor
+          key="headers"
+          initialValue={watch('headers')}
+          callback={(value: HeadersItem[]) => setValue('headers', value)}
+        />
+      );
+    } else if (activeHeader === 'variables') {
+      setContent(
+        <HeadersEditor
+          key="variables"
+          initialValue={watch('variables')}
+          callback={(value: HeadersItem[]) => setValue('variables', value)}
+        />
+      );
+    } else {
+      setContent(
+        <textarea
+          className={style.textArea}
+          placeholder="Enter your body"
+          {...register('body')}
+          defaultValue={watch('body')}
+        />
+      );
+    }
+  }, [activeHeader, watch('headers')]);
 
   return (
     <>
