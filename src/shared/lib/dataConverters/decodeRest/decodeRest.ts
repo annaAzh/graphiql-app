@@ -13,7 +13,7 @@ export const decodeRest = (data: DecodeRestProps) => {
   const url = decode64(requestedUrl);
   let headers: StringObject | undefined;
   let body: StringObject | undefined = undefined;
-  let variables: HeadersItem[] | undefined;
+  let variables: Required<HeadersItem>[] | undefined;
 
   if (requestedHeaders) {
     const keys = Object.keys(requestedHeaders);
@@ -33,7 +33,13 @@ export const decodeRest = (data: DecodeRestProps) => {
     if (encodedBody.variables) {
       encodedBody.variables.forEach((variable) => {
         if (!variable.key || !variable.value) return;
-        variables = variables ? [...variables, variable] : [variable];
+        const requiredVariable: Required<HeadersItem> = {
+          key: variable.key,
+          value: variable.value,
+        };
+        variables = variables
+          ? [...variables, requiredVariable]
+          : [requiredVariable];
       });
     }
   }

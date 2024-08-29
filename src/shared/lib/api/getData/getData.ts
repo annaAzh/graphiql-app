@@ -20,7 +20,6 @@ export const getData = async (
 
     let body = rest.body;
     variables?.forEach((variable) => {
-      if (!variable.key || !variable.value) return;
       body = { ...body, [variable.key]: variable.value };
     });
 
