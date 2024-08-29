@@ -38,8 +38,11 @@
 }
 
 .url {
-  max-width: 450px;
   overflow: hidden;
+  min-width: 450px;
+  max-width: 650px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .empty {
