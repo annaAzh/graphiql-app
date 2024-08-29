@@ -27,6 +27,7 @@ export const Notification: FC<NotificationProps> = ({ error }) => {
         vertical: 'top',
         horizontal: 'center',
       }}
+      sx={{ mt: '8rem' }}
     >
       <Alert
         color="error"
