@@ -14,3 +14,8 @@ export type IntrospectionQueryRequest = {
   operationName: string;
   query: string;
 };
+
+export type GraphQlResponse = {
+  status: number;
+  data?: Record<string, unknown>;
+};

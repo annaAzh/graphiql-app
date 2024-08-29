@@ -1,4 +1,8 @@
 import { FC } from 'react';
+import { fetchGraphQlData } from 'shared/lib/api';
+import { decode64 } from 'shared/lib/dataConverters';
+import { KeyValueGraphQl } from 'shared/types/graphQl';
+import { ResponseBlock } from 'widgets/GraphQl/ui/components/ResponseBlock';
 
 type Props = {
   params: { graphReq: [string, string] };
@@ -8,7 +12,36 @@ type Props = {
 const GraphQlPage: FC<Props> = async ({ params, searchParams }) => {
   try {
     const { graphReq } = params;
-    console.log(searchParams, 'searchParams', graphReq, 'graphReq');
+
+    const baseUrl = decode64(decodeURIComponent(graphReq[0]));
+    const query = decode64(decodeURIComponent(graphReq[1]));
+    const requestHeaders: KeyValueGraphQl[] = [];
+
+    if (searchParams) {
+      for (const key in searchParams) {
+        requestHeaders.push({
+          key,
+          value: decode64(decodeURIComponent(searchParams[key])),
+        });
+      }
+    }
+
+    const data = {
+      baseUrl,
+      query,
+      requestHeaders,
+    };
+
+    const result = await fetchGraphQlData(data);
+
+    return (
+      result && (
+        <ResponseBlock
+          value={JSON.stringify(result.data, null, 2)}
+          status={result.status}
+        />
+      )
+    );
   } catch {
     return <>Error</>;
   }

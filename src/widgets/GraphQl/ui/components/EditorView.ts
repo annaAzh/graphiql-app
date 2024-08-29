@@ -8,6 +8,7 @@ const myTheme = EditorView.theme(
     },
     '.cm-content': {
       caretColor: 'var(--main-color-4)',
+      fontSize: '16px',
     },
     '&.cm-focused .cm-cursor': {
       borderLeftColor: '#0e9',
