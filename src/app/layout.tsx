@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Header } from 'widgets/Header';
 import 'shared/styles/global.scss';
 
 export const metadata = {
@@ -9,7 +10,10 @@ export const metadata = {
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 };
