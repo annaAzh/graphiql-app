@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import LogoGitW from 'shared/assets/svg/github_logo_w.svg';
 import LogoGitM from 'shared/assets/svg/github_logo_m.svg';
-import LogoRSS from '../../../shared/assets/svg/rss-logo.svg';
+import LogoRSS from 'shared/assets/svg/rss-logo.svg';
 import styles from './Footer.module.scss';
 import { Title } from 'shared/components';
 
