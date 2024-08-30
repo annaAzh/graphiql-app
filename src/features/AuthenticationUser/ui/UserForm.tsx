@@ -11,7 +11,7 @@ import { DataFormLogin, DataFormRegister } from 'shared/types/form';
 import { Button, Notification, Title } from 'shared/components';
 import { auth, registerUser } from 'shared/lib/api';
 import { Path } from 'shared/types/path';
-import './UserForm.scss';
+import styles from './UserForm.module.scss';
 
 interface FormProps {
   isLogin: boolean;
@@ -19,7 +19,7 @@ interface FormProps {
 
 export const UserForm: FC<FormProps> = ({ isLogin }) => {
   const [error, setError] = useState<string | null>(null);
-  const [cookies, setCookie] = useCookies<string>(['user']);
+  const [, setCookie] = useCookies<string>(['user']);
   const [user] = useAuthState(auth);
   const { control, handleSubmit, reset, formState } = useForm<
     DataFormLogin | DataFormRegister
@@ -34,8 +34,6 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
   useEffect(() => {
     if (user) redirect(Path.MAIN);
   }, [user]);
-
-  if (cookies) return;
 
   const onSubmit = async (
     data: DataFormLogin | DataFormRegister
@@ -53,7 +51,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
   };
 
   return (
-    <>
+    <div className={styles.containerUseForm}>
       {error && <Notification error={error} />}
       <Box component={'form'} onSubmit={handleSubmit(onSubmit)} noValidate>
         <Title text={!isLogin ? 'Sign Up' : 'Sign In'} />
@@ -116,6 +114,6 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
           {'Submit'}
         </Button>
       </Box>
-    </>
+    </div>
   );
 };
