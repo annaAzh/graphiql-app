@@ -7,7 +7,8 @@ export type RequestGraphQLData = {
 };
 
 export type KeyValueGraphQl = {
-  [key: string]: string;
+  key?: string;
+  value?: string;
 };
 
 export type IntrospectionQueryRequest = {

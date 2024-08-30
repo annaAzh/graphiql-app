@@ -2,17 +2,9 @@ import { FC, ReactNode, useState } from 'react';
 import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { HeadersEditor } from 'features/HeadersEditor';
 import { KeyValueGraphQl, RequestGraphQLData } from 'shared/types/graphQl';
-import { HeadersItem } from 'shared/types/restful';
 import CodeMirror from '@uiw/react-codemirror';
 import { myTheme } from '.';
 import style from './PropsArea.module.scss';
-
-const convertToKeyValueGraphQl = (items: HeadersItem[]): KeyValueGraphQl[] => {
-  return items.map((item) => ({
-    key: item.key || '',
-    value: item.value || '',
-  }));
-};
 
 const headers: (keyof Pick<
   RequestGraphQLData,
@@ -33,8 +25,8 @@ export const PropsArea: FC<PropsAreaProps> = ({ setValue, watch }) => {
       <HeadersEditor
         key="requestHeaders"
         initialValue={watch('requestHeaders')}
-        callback={(value: HeadersItem[]) =>
-          setValue('requestHeaders', convertToKeyValueGraphQl(value))
+        callback={(value: KeyValueGraphQl[]) =>
+          setValue('requestHeaders', value)
         }
       />
     );
@@ -43,9 +35,7 @@ export const PropsArea: FC<PropsAreaProps> = ({ setValue, watch }) => {
       <HeadersEditor
         key="variables"
         initialValue={watch('variables')}
-        callback={(value: HeadersItem[]) =>
-          setValue('variables', convertToKeyValueGraphQl(value))
-        }
+        callback={(value: KeyValueGraphQl[]) => setValue('variables', value)}
       />
     );
   } else {
