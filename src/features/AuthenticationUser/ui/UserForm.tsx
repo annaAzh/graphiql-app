@@ -38,7 +38,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
   const onSubmit = async (
     data: DataFormLogin | DataFormRegister
   ): Promise<void> => {
-    if ('name' in data) {
+    if (!isLogin && 'name' in data) {
       const res = await registerUser(data.name, data.email, data.password);
       if (typeof res === 'string') {
         setError(res);
