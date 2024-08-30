@@ -3,6 +3,7 @@ interface RestfulType {
   type?: string;
   headers?: HeadersItem[];
   body?: string;
+  variables?: HeadersItem[];
 }
 
 interface HeadersItem {

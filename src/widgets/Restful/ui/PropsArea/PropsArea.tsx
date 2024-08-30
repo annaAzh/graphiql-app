@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import style from './PropsArea.module.scss';
 import {
   UseFormSetValue,
@@ -9,8 +9,9 @@ import {
 import { HeadersItem, RestfulType } from 'shared/types/restful';
 import { HeadersEditor } from 'features/HeadersEditor';
 
-const headers: (keyof Pick<RestfulType, 'headers' | 'body'>)[] = [
+const headers: (keyof Pick<RestfulType, 'headers' | 'body' | 'variables'>)[] = [
   'headers',
+  'variables',
   'body',
 ];
 
@@ -26,10 +27,34 @@ export const PropsArea: FC<PropsAreaProps> = ({
   register,
 }) => {
   const [activeHeader, setActiveHeader] = useState(headers[0]);
-  const initHeaders = watch('headers');
-  const initBody = watch('body');
+  let content: ReactNode;
 
-  const updateHeaders = (value: HeadersItem[]) => setValue('headers', value);
+  if (activeHeader === 'headers') {
+    content = (
+      <HeadersEditor
+        key="headers"
+        initialValue={watch('headers')}
+        callback={(value: HeadersItem[]) => setValue('headers', value)}
+      />
+    );
+  } else if (activeHeader === 'variables') {
+    content = (
+      <HeadersEditor
+        key="variables"
+        initialValue={watch('variables')}
+        callback={(value: HeadersItem[]) => setValue('variables', value)}
+      />
+    );
+  } else {
+    content = (
+      <textarea
+        className={style.textArea}
+        placeholder="Enter your body"
+        {...register('body')}
+        value={watch('body')}
+      />
+    );
+  }
 
   return (
     <>
@@ -44,16 +69,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
           </p>
         ))}
       </div>
-      {activeHeader === 'headers' ? (
-        <HeadersEditor initialValue={initHeaders} callback={updateHeaders} />
-      ) : (
-        <textarea
-          className={style.textArea}
-          placeholder="Enter your body"
-          {...register('body')}
-          value={initBody}
-        ></textarea>
-      )}
+      {content}
     </>
   );
 };
