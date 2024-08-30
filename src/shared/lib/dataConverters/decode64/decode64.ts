@@ -1,3 +1,3 @@
 export const decode64 = (value: string) => {
-  return Buffer.from(value, 'base64').toString();
+  return Buffer.from(decodeURIComponent(value), 'base64').toString();
 };

@@ -54,7 +54,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
     <div className={styles.containerUseForm}>
       {error && <Notification error={error} />}
       <Box component={'form'} onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Title text={!isLogin ? 'Sign Up' : 'Sign In'} />
+        <Title>{!isLogin ? 'Sign Up' : 'Sign In'}</Title>
         {!isLogin && (
           <Controller
             name="name"

@@ -5,4 +5,5 @@ export enum Path {
   MAIN = '/',
   SIGN_UP = 'SignUp',
   SIGN_IN = 'SignIn',
+  HISTORY = 'history',
 }
