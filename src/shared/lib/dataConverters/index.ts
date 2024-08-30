@@ -1,3 +1,5 @@
+export { getErrorMessage } from './getErrorMessage/getErrorMessage';
+
 export { decodeRest } from './decodeRest/decodeRest';
 
 export { encodeRest } from './encodeRest/encodeRest';
