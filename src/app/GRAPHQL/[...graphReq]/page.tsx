@@ -16,13 +16,22 @@ const GraphQlPage: FC<Props> = async ({ params, searchParams }) => {
     const baseUrl = decode64(decodeURIComponent(graphReq[0]));
     const query = decode64(decodeURIComponent(graphReq[1]));
     const requestHeaders: KeyValueGraphQl[] = [];
+    const requestVariables: KeyValueGraphQl[] = [];
 
     if (searchParams) {
       for (const key in searchParams) {
-        requestHeaders.push({
-          key,
-          value: decode64(decodeURIComponent(searchParams[key])),
-        });
+        if (key.startsWith('header_')) {
+          requestHeaders.push({
+            key: key.replace(/header_/, ''),
+            value: decode64(decodeURIComponent(searchParams[key])),
+          });
+        }
+        if (key.startsWith('variable_')) {
+          requestVariables.push({
+            key: key.replace(/variable_/, ''),
+            value: decode64(decodeURIComponent(searchParams[key])),
+          });
+        }
       }
     }
 

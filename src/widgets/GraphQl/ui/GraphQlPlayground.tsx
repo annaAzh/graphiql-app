@@ -1,7 +1,6 @@
 'use client';
 
-import CodeMirror from '@uiw/react-codemirror';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { Button } from 'shared/components';
@@ -11,24 +10,23 @@ import {
   DEFAULT_URL_GRAPHQL_EXAMPLE,
 } from 'shared/constants';
 import { encode64 } from 'shared/lib/dataConverters';
-import { KeyValueBlock, myTheme } from './components';
+import { PropsArea } from './components';
 import style from './GraphQlPlayground.module.scss';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
   const { handleSubmit, register, watch, setValue } =
-    useForm<RequestGraphQLData>();
-
-  useEffect(() => {
-    register('query', {
-      value: DEFAULT_QUERY_GRAPHQL_EXAMPLE,
+    useForm<RequestGraphQLData>({
+      defaultValues: {
+        query: DEFAULT_QUERY_GRAPHQL_EXAMPLE,
+        baseUrl: DEFAULT_URL_GRAPHQL_EXAMPLE,
+      },
     });
-  }, [register]);
 
-  const queryValue = watch('query', DEFAULT_QUERY_GRAPHQL_EXAMPLE);
+  const queryValue = watch('query');
 
   const onSubmitHandler = async (data: RequestGraphQLData) => {
-    const { baseUrl, requestHeaders } = data;
+    const { baseUrl, requestHeaders, variables } = data;
 
     const encodedUrl = encode64(baseUrl);
     const encodedQuery = encode64(queryValue);
@@ -38,8 +36,19 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
       requestHeaders.forEach((header) => {
         if (header.key && header.value) {
           queryParams.append(
-            encodeURIComponent(header.key),
+            `header_${encodeURIComponent(header.key)}`,
             encode64(header.value)
+          );
+        }
+      });
+    }
+
+    if (variables) {
+      variables.forEach((variable) => {
+        if (variable.key && variable.value) {
+          queryParams.append(
+            `variable_${encodeURIComponent(variable.key)}`,
+            encode64(variable.value)
           );
         }
       });
@@ -70,27 +79,9 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
               send
             </Button>
           </div>
-
-          <CodeMirror
-            value={queryValue}
-            theme={myTheme}
-            width="100%"
-            height="300px"
-            onChange={(value) => setValue('query', value)}
-          />
-          <KeyValueBlock
-            setValue={setValue}
-            watch={watch}
-            title="Headers"
-            formField="requestHeaders"
-          />
-          <KeyValueBlock
-            setValue={setValue}
-            watch={watch}
-            title="Variables"
-            formField="variables"
-          />
+          <PropsArea setValue={setValue} watch={watch} />
         </form>
+
         {children}
       </div>
     </>

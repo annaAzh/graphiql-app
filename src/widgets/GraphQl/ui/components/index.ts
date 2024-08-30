@@ -1,2 +1,2 @@
-export { KeyValueBlock } from './KeyValueBlock';
 export { myTheme } from './EditorView';
+export { PropsArea } from './PropsArea';

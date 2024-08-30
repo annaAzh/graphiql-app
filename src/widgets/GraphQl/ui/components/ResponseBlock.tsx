@@ -19,7 +19,7 @@ export const ResponseBlock: FC<Props> = ({ value, status }) => {
           value={value}
           theme={myTheme}
           width="100%"
-          height="300px"
+          height="200px"
           readOnly={true}
         />
       </div>
