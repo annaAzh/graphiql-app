@@ -13,15 +13,22 @@ const fetchGraphQlData = async ({
 }: RequestGraphQLData): Promise<GraphQlResponse | undefined> => {
   const url = baseUrl;
   const headersObject: KeyValueGraphQl = {};
+  const variablesObject: KeyValueGraphQl = {};
   if (requestHeaders) {
     requestHeaders.forEach(({ key, value }) => {
       headersObject[key] = value;
     });
   }
 
+  if (variables) {
+    variables.forEach(({ key, value }) => {
+      variablesObject[key] = value;
+    });
+  }
+
   const body = {
     query,
-    variables: variables || {},
+    variables: variablesObject,
   };
 
   const headers = {
