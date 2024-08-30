@@ -3,7 +3,7 @@
 .MuiBox-root {
   @include flex($flexDirection: column, $alignItems: center);
   width: 300px;
-  padding: 4%;
+  padding: 2% 1%;
   margin: auto;
   color: var(--main-color-4);
   background-color: var(--main-color-2);
