@@ -9,7 +9,7 @@ import { Title } from 'shared/components';
 export const Footer = () => {
   return (
     <footer className={styles.footer}>
-      <div className={styles.containerGitLogo}>
+      <div>
         <Link href="https://github.com/annaAzh">
           <Image src={LogoGitW} alt="Anna" width={55} height={55} />
         </Link>
