@@ -1,18 +1,26 @@
 'use client';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useCookies } from 'react-cookie';
+import { redirect } from 'next/navigation';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Box, TextField } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schemaLogin, schemaRegister } from 'shared/constants';
 import { DataFormLogin, DataFormRegister } from 'shared/types/form';
-import { Button, Title } from 'shared/components';
-import './UserForm.scss';
+import { Button, Notification, Title } from 'shared/components';
+import { auth, registerUser } from 'shared/lib/api';
+import { Path } from 'shared/types/path';
+import styles from './UserForm.module.scss';
 
 interface FormProps {
   isLogin: boolean;
 }
 
 export const UserForm: FC<FormProps> = ({ isLogin }) => {
+  const [error, setError] = useState<string | null>(null);
+  const [, setCookie] = useCookies<string>(['user']);
+  const [user] = useAuthState(auth);
   const { control, handleSubmit, reset, formState } = useForm<
     DataFormLogin | DataFormRegister
   >({
@@ -23,17 +31,51 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
     mode: 'all',
   });
 
-  const onSubmit = (data: DataFormLogin | DataFormRegister) => {
-    console.log(data);
-    reset();
+  useEffect(() => {
+    if (user) redirect(Path.MAIN);
+  }, [user]);
+
+  const onSubmit = async (
+    data: DataFormLogin | DataFormRegister
+  ): Promise<void> => {
+    if ('name' in data) {
+      const res = await registerUser(data.name, data.email, data.password);
+      if (typeof res === 'string') {
+        setError(res);
+        setTimeout(() => setError(null), 6000);
+      } else {
+        setCookie('user', res);
+        reset();
+      }
+    }
   };
 
   return (
-    <Box component={'form'} onSubmit={handleSubmit(onSubmit)} noValidate>
-      <Title text={!isLogin ? 'Sign Up' : 'Sign In'} />
-      {!isLogin && (
+    <div className={styles.containerUseForm}>
+      {error && <Notification error={error} />}
+      <Box component={'form'} onSubmit={handleSubmit(onSubmit)} noValidate>
+        <Title text={!isLogin ? 'Sign Up' : 'Sign In'} />
+        {!isLogin && (
+          <Controller
+            name="name"
+            control={control}
+            render={({ field, fieldState: { error } }) => (
+              <TextField
+                color="secondary"
+                error={!!error}
+                margin="normal"
+                required
+                fullWidth
+                label={'Name'}
+                {...field}
+                sx={{ minHeight: '5rem' }}
+                helperText={error?.message}
+              />
+            )}
+          />
+        )}
         <Controller
-          name="name"
+          name="email"
           control={control}
           render={({ field, fieldState: { error } }) => (
             <TextField
@@ -42,53 +84,36 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
               margin="normal"
               required
               fullWidth
-              label={'Name'}
+              label={'Email'}
               {...field}
               sx={{ minHeight: '5rem' }}
               helperText={error?.message}
             />
           )}
         />
-      )}
-      <Controller
-        name="email"
-        control={control}
-        render={({ field, fieldState: { error } }) => (
-          <TextField
-            color="secondary"
-            error={!!error}
-            margin="normal"
-            required
-            fullWidth
-            label={'Email'}
-            {...field}
-            sx={{ minHeight: '5rem' }}
-            helperText={error?.message}
-          />
-        )}
-      />
-      <Controller
-        name="password"
-        control={control}
-        render={({ field, fieldState: { error } }) => (
-          <TextField
-            color="secondary"
-            error={!!error}
-            margin="normal"
-            required
-            fullWidth
-            label={'Password'}
-            type="password"
-            {...field}
-            sx={{ minHeight: '5rem' }}
-            helperText={error?.message}
-            autoComplete="true"
-          />
-        )}
-      />
-      <Button type={'submit'} size="lg" disabled={!formState.isValid}>
-        {'Submit'}
-      </Button>
-    </Box>
+        <Controller
+          name="password"
+          control={control}
+          render={({ field, fieldState: { error } }) => (
+            <TextField
+              color="secondary"
+              error={!!error}
+              margin="normal"
+              required
+              fullWidth
+              label={'Password'}
+              type="password"
+              {...field}
+              sx={{ minHeight: '5rem' }}
+              helperText={error?.message}
+              autoComplete="true"
+            />
+          )}
+        />
+        <Button type={'submit'} size="lg" disabled={!formState.isValid}>
+          {'Submit'}
+        </Button>
+      </Box>
+    </div>
   );
 };
