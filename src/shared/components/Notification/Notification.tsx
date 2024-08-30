@@ -1,3 +1,4 @@
+'use client';
 import { Alert, Snackbar, SnackbarCloseReason } from '@mui/material';
 import { FC, useState } from 'react';
 
