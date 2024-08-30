@@ -4,9 +4,6 @@ import 'shared/styles/global.scss';
 
 export const metadata = {
   title: 'Graphiql',
-  icons: {
-    icon: '/favicon.png',
-  },
 };
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
