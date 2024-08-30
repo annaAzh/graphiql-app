@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Header } from 'widgets/Header';
+import { Footer } from 'widgets/Footer';
 import 'shared/styles/global.scss';
 
 export const metadata = {
@@ -13,6 +14,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
       <body>
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
