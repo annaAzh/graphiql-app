@@ -12,6 +12,7 @@ import {
 import { encode64 } from 'shared/lib/dataConverters';
 import { PropsArea } from './components';
 import style from './GraphQlPlayground.module.scss';
+import { Path } from 'shared/types/path';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
@@ -54,7 +55,7 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
       });
     }
 
-    let url = `/GRAPHQL/${encodedUrl}/${encodedQuery}`;
+    let url = `/${Path.GRAPH}/${encodedUrl}/${encodedQuery}`;
     if (queryParams.toString()) {
       url += `?${queryParams.toString()}`;
     }

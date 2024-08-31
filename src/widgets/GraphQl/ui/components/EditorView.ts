@@ -6,6 +6,10 @@ const myTheme = EditorView.theme(
       color: 'var(--main-color-1)',
       backgroundColor: 'var(--main-color-4)',
     },
+    '& .cm-scroller': {
+      scrollbarWidth: 'thin',
+      scrollbarColor: `var(--magenta) var(--main-color-4)`,
+    },
     '.cm-content': {
       caretColor: 'var(--main-color-4)',
       fontSize: '16px',
