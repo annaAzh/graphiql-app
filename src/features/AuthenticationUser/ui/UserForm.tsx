@@ -9,9 +9,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { schemaLogin, schemaRegister } from 'shared/constants';
 import { DataFormLogin, DataFormRegister } from 'shared/types/form';
 import { Button, Notification, Title } from 'shared/components';
-import { auth, registerUser } from 'shared/lib/api';
+import { auth, logInUser, registerUser } from 'shared/lib/api';
 import { Path } from 'shared/types/path';
 import styles from './UserForm.module.scss';
+import { User } from 'firebase/auth';
 
 interface FormProps {
   isLogin: boolean;
@@ -38,15 +39,20 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
   const onSubmit = async (
     data: DataFormLogin | DataFormRegister
   ): Promise<void> => {
+    let res: User | string;
+
     if (!isLogin && 'name' in data) {
-      const res = await registerUser(data.name, data.email, data.password);
-      if (typeof res === 'string') {
-        setError(res);
-        setTimeout(() => setError(null), 6000);
-      } else {
-        setCookie('user', res);
-        reset();
-      }
+      res = await registerUser(data.name, data.email, data.password);
+    } else {
+      res = await logInUser(data.email, data.password);
+    }
+
+    if (typeof res === 'string') {
+      setError(res);
+      setTimeout(() => setError(null), 6000);
+    } else {
+      setCookie('user', res);
+      reset();
     }
   };
 
