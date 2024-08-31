@@ -4,7 +4,9 @@ import { Footer } from 'widgets/Footer';
 import 'shared/styles/global.scss';
 
 export const metadata = {
-  title: 'Graphiql',
+  title: 'Graphiql-app',
+  description:
+    'Final project at RSS School using Next.js and creating a REST/GraphQL client.',
 };
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
