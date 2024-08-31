@@ -2,7 +2,8 @@ import { FC } from 'react';
 import { fetchGraphQlData } from 'shared/lib/api';
 import { decode64 } from 'shared/lib/dataConverters';
 import { KeyValueGraphQl } from 'shared/types/graphQl';
-import { ResponseBlock } from 'widgets/GraphQl/ui/components/ResponseBlock';
+import { ResponseResult } from 'features/ResponseResult';
+import { Path } from 'shared/types/path';
 
 type Props = {
   params: { graphReq: [string, string] };
@@ -46,9 +47,12 @@ const GraphQlPage: FC<Props> = async ({ params, searchParams }) => {
 
     return (
       result && (
-        <ResponseBlock
-          value={JSON.stringify(result.data, null, 2)}
-          status={result.status}
+        <ResponseResult
+          data={{
+            body: JSON.stringify(result?.data, null, 2),
+            status: result.status,
+          }}
+          redactor={Path.GRAPH}
         />
       )
     );

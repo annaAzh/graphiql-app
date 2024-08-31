@@ -3,8 +3,9 @@ import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { HeadersEditor } from 'features/HeadersEditor';
 import { KeyValueGraphQl, RequestGraphQLData } from 'shared/types/graphQl';
 import CodeMirror from '@uiw/react-codemirror';
-import { myTheme } from '.';
 import style from './PropsArea.module.scss';
+import { myTheme } from 'shared/styles/codemirror/EditorView';
+import { Path } from 'shared/types/path';
 
 const headers: (keyof Pick<
   RequestGraphQLData,
@@ -19,6 +20,8 @@ interface PropsAreaProps {
 export const PropsArea: FC<PropsAreaProps> = ({ setValue, watch }) => {
   const [activeHeader, setActiveHeader] = useState(headers[2]);
   let content: ReactNode;
+
+  const dynamicTheme = myTheme(Path.GRAPH);
 
   if (activeHeader === 'requestHeaders') {
     content = (
@@ -41,7 +44,7 @@ export const PropsArea: FC<PropsAreaProps> = ({ setValue, watch }) => {
   } else {
     content = (
       <CodeMirror
-        theme={myTheme}
+        theme={dynamicTheme}
         value={watch('query')}
         width="100%"
         height="200px"
