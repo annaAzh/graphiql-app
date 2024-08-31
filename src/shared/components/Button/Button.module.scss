@@ -28,12 +28,14 @@
   }
 
   &.outlined {
-    background-color: transparent;
-    border: 1px solid var(--magenta);
-    color: var(--primary);
+    border: 1px solid var(--main-color-1);
+    border-radius: 3px;
+    padding: 3px 5px;
 
     &:hover {
-      background-color: var(--magenta);
+      color: var(--grey);
+      border: 1px solid var(--grey);
+      cursor: pointer;
     }
   }
 

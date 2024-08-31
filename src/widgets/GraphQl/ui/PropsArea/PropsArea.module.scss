@@ -1,0 +1,15 @@
+@import '../../../../shared/styles/common.scss';
+
+.headers {
+  @include flex(center, $gap: 15%);
+  padding: 10px 0;
+
+  p:hover:not(.active) {
+    cursor: pointer;
+  }
+
+  .active {
+    pointer-events: none;
+    color: var(--magenta);
+  }
+}

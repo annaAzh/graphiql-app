@@ -1,19 +1,39 @@
-import { FC } from 'react';
-import style from './ResponseResult.module.scss';
-import { RestResponse } from 'shared/types/restful';
+'use client';
 
-interface ResponseResultProps {
-  data: RestResponse;
-}
-export const ResponseResult: FC<ResponseResultProps> = ({ data }) => {
+import { FC } from 'react';
+import CodeMirror from '@uiw/react-codemirror';
+import { myTheme } from 'shared/styles/codemirror/EditorView';
+import style from './ResponseResult.module.scss';
+import { Path } from 'shared/types/path';
+
+type Props = {
+  data: {
+    body: string;
+    status: number;
+  };
+  redactor?: string;
+};
+
+export const ResponseResult: FC<Props> = ({
+  data,
+  redactor = `${Path.REST}`,
+}) => {
   const { status, body } = data;
+
+  const dynamicTheme = myTheme(redactor);
+
   return (
-    <div className={style.result}>
-      <p>status: {status}</p>
-      <br />
-      <pre>
-        <code>{body}</code>
-      </pre>
+    <div className={style.container}>
+      <p className={style.status_text}>Status: {status}</p>
+      <div style={{ width: '100%' }}>
+        <CodeMirror
+          value={body}
+          theme={dynamicTheme}
+          width="100%"
+          height="200px"
+          readOnly={true}
+        />
+      </div>
     </div>
   );
 };

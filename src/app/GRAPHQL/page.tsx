@@ -1,5 +1,5 @@
-const Graph = () => {
-  return <div style={{ color: 'red' }}>GraphQL</div>;
+const GraphQl = () => {
+  return <></>;
 };
 
-export default Graph;
+export default GraphQl;
