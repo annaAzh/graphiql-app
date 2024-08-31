@@ -2,52 +2,63 @@
 import { FC, ReactNode, useEffect } from 'react';
 import style from './Restful.module.scss';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { DEFAULT_URL_EXAMPLE, VALID_METHODS } from 'shared/constants';
-import { encode64 } from 'shared/lib/dataConverters';
-import { RestfulType } from 'shared/types/restful';
+import { decodeRest, encodeRest } from 'shared/lib/dataConverters';
+import { RestfulMethods, RestfulType } from 'shared/types/restful';
 import { PropsArea } from './PropsArea/PropsArea';
+import { setLocalStoreState } from 'shared/lib/storeState/storeState';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { restSchema } from 'shared/constants/restSchema';
 
 interface RestfulProps {
   children: ReactNode;
 }
 
 export const Restful: FC<RestfulProps> = ({ children }) => {
-  const { register, handleSubmit, setValue, watch } = useForm({ mode: 'all' });
-  useEffect(() => {
-    setValue('url', DEFAULT_URL_EXAMPLE);
-    setValue('type', VALID_METHODS[0]);
-  }, []);
+  const params: {
+    req: [RestfulMethods, string, string] | [RestfulMethods, string];
+  } = useParams();
+  const searchParams = useSearchParams();
   const navigate = useRouter();
+  const { register, handleSubmit, setValue, watch } = useForm<RestfulType>({
+    resolver: yupResolver<RestfulType>(restSchema),
+    mode: 'all',
+  });
   const selectedOption = watch('type');
-  const onSubmit: SubmitHandler<RestfulType> = ({
-    url,
-    type,
-    headers,
-    body,
-  }) => {
-    const encodedUrl = encode64(url);
-    const encodedBody = encode64(body);
-    let encodedHeaders: string | undefined = undefined;
-
-    if (headers) {
-      encodedHeaders = '';
-      headers.forEach((header, index) => {
-        if (header.key !== undefined && header.value !== undefined) {
-          if (index === 0) encodedHeaders += '?';
-          else encodedHeaders += '&';
-
-          encodedHeaders += `${header.key}=${encode64(header.value)}`;
-        }
-      });
-    }
-
-    if (encodedHeaders) {
-      navigate.push(`/${type}/${encodedUrl}/${encodedBody}${encodedHeaders}`);
-    } else {
-      navigate.push(`/${type}/${encodedUrl}/${encodedBody}`);
-    }
+  const onSubmit: SubmitHandler<RestfulType> = async (data) => {
+    setLocalStoreState(data);
+    const path = await encodeRest(data);
+    navigate.push(path);
   };
+
+  useEffect(() => {
+    const method = params.req[0];
+    if (method === 'REST' || params.req.length < 2) {
+      setValue('url', DEFAULT_URL_EXAMPLE);
+      setValue('type', VALID_METHODS[0]);
+    } else {
+      const requestedUrl = params.req[1];
+      const requestedBody = params.req[2];
+      const requestedHeaders = Object.fromEntries(searchParams.entries());
+      const { headers, body, url, variables } = decodeRest({
+        requestedUrl,
+        requestedBody,
+        requestedHeaders,
+      });
+
+      setValue('url', url);
+      setValue('type', method);
+      if (variables) setValue('variables', [...variables, {}]);
+      if (body) setValue('body', JSON.stringify(body, null, 2));
+      if (headers) {
+        const formattedHeaders = Object.entries(headers).map((header) => {
+          return { key: header[0], value: header[1] };
+        });
+        setValue('headers', [...formattedHeaders, {}]);
+      }
+    }
+  }, []);
 
   return (
     <div className={style.postman}>

@@ -2,14 +2,15 @@ import { ResponseResult } from 'features/ResponseResult';
 import { VALID_METHODS } from 'shared/constants';
 import { getData } from 'shared/lib/api';
 import { Path } from 'shared/types/path';
-import { RestResponse, ValidMethods } from 'shared/types/restful';
+import { RestResponse, StringObject, ValidMethods } from 'shared/types/restful';
+import { notFound } from 'next/navigation';
 
 const RestfulPage = async ({
   params,
   searchParams,
 }: {
   params: { req: [ValidMethods, string, string] | [ValidMethods, string] };
-  searchParams?: { [key: string]: string };
+  searchParams?: StringObject;
 }) => {
   try {
     const { req } = params;
@@ -32,7 +33,7 @@ const RestfulPage = async ({
 
     return result && <ResponseResult data={result} />;
   } catch {
-    return <>Error</>;
+    notFound();
   }
 };
 

@@ -17,3 +17,37 @@
     opacity: 0.5;
   }
 }
+
+.colorful {
+  &-GET {
+    color: var(--green);
+  }
+
+  &-POST {
+    color: var(--deep-yellow);
+  }
+
+  &-PUT {
+    color: var(--blue);
+  }
+
+  &-PATCH {
+    color: var(--grape);
+  }
+
+  &-DELETE {
+    color: var(--orange);
+  }
+
+  &-HEAD {
+    color: var(--green);
+  }
+
+  &-OPTIONS {
+    color: var(--magenta);
+  }
+
+  &-GRAPHQL {
+    color: var(--grape);
+  }
+}

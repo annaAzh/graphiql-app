@@ -1,0 +1,19 @@
+@import '../../../shared/styles/common.scss';
+
+.footer {
+  @include flex($alignItems: center, $justifyContent: space-between);
+  padding: 0.5% 1%;
+  border-top: 1px solid var(--main-color-2);
+
+  h2 {
+    margin-right: 7%;
+  }
+
+  div {
+    @include flex($alignItems: center, $gap: 10px);
+  }
+
+  img {
+    border-radius: 100%;
+  }
+}

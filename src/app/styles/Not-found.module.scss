@@ -1,0 +1,10 @@
+@import '../../shared/styles/common.scss';
+
+.wrapper {
+  font-size: 40px;
+  font-family: 'Permanent Marker';
+  font-weight: bold;
+  color: var(--red);
+  @include flex(center, $flexGrow: 1, $alignItems: center);
+  background: var(--main-color-4);
+}

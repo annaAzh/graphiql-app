@@ -1,10 +1,10 @@
 import clsx from 'clsx';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 type TitleSize = 'h5' | 'h4' | 'h3' | 'h2' | 'h1';
 
 interface Props {
-  text: string;
+  children: ReactNode;
   size?: TitleSize;
   className?: string;
 }
@@ -25,9 +25,13 @@ const sizeToClassNameMap: Record<TitleSize, string> = {
   h1: 'text-h1',
 };
 
-export const Title: React.FC<Props> = ({ text, size = 'h2', className }) => {
+export const Title: React.FC<Props> = ({
+  children,
+  size = 'h2',
+  className,
+}) => {
   const Tag = sizeToTagMap[size];
   const sizeClassName = sizeToClassNameMap[size];
 
-  return <Tag className={clsx(sizeClassName, className)}>{text}</Tag>;
+  return <Tag className={clsx(sizeClassName, className)}>{children}</Tag>;
 };
