@@ -1,15 +1,15 @@
 @import '../../../shared/styles/common.scss';
 
 .containerUseForm {
+  margin: auto;
+
   form {
     @include flex($flexDirection: column, $alignItems: center);
     width: 300px;
-    padding: 2% 1%;
-    margin: 10% auto;
+    padding: 4%;
     color: var(--main-color-4);
     background-color: var(--main-color-2);
     border-radius: 4px;
-
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus,
