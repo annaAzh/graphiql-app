@@ -49,19 +49,3 @@ body {
   background: var(--main-color-4);
   color: var(--main-color-1);
 }
-
-.main {
-  @include flex(
-    $flexDirection: column,
-    $alignItems: center,
-    $gap: 50px,
-    $justifyContent: center
-  );
-  min-height: 80vh;
-  padding: 1%;
-  margin: auto;
-
-  h1 {
-    font-size: 32px;
-  }
-}
