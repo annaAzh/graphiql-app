@@ -67,3 +67,56 @@
   color: var(--magenta);
   margin: 20px auto;
 }
+
+.sidebar {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  z-index: 10;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  gap: 20px;
+}
+
+.docs {
+  min-width: 200px;
+  left: -1000px;
+  position: absolute;
+  opacity: 0;
+  width: 500px;
+  transition: all 0.3s ease-in;
+  font-size: 18px;
+  line-height: 120%;
+  max-height: 700px;
+
+  &.shown {
+    display: flex;
+    flex: 0.33 1 0%;
+    left: 0;
+    display: block;
+    position: static;
+    width: auto;
+    opacity: 1;
+  }
+}
+
+.sessions {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  max-width: 820px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.section {
+  display: flex;
+  flex-grow: 1;
+  padding: 40px 20px 20px;
+  position: relative;
+}

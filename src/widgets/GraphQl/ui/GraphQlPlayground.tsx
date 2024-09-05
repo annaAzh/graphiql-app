@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { Button } from 'shared/components';
@@ -13,6 +13,12 @@ import { encode64 } from 'shared/lib/dataConverters';
 import style from './GraphQlPlayground.module.scss';
 import { Path } from 'shared/types/path';
 import { PropsArea } from './PropsArea/PropsArea';
+import { SDLInput } from './SDLInput/SDLInput';
+import { fetchSDLSchema } from 'shared/lib/api/graphQLRequest/graphQlShema';
+import { DocExplorer, GraphiQLProvider } from '@graphiql/react';
+import { createGraphiQLFetcher } from '@graphiql/toolkit';
+import { IntrospectionQuery } from 'graphql';
+import './docsExplorer.scss';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
@@ -25,6 +31,7 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
     });
 
   const queryValue = watch('query');
+  const sdlUrl = watch('baseUrl') + '?sdl';
 
   const onSubmitHandler = async (data: RequestGraphQLData) => {
     const { baseUrl, requestHeaders, variables } = data;
@@ -62,30 +69,76 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
     navigate.push(url);
   };
 
+  const [schema, setSchema] = useState<IntrospectionQuery | null>(null);
+  const [shownDocs, setDocsShown] = useState<boolean>(false);
+
+  const getSchema = async () => {
+    try {
+      const data = await fetchSDLSchema(sdlUrl);
+
+      if (data?.data) {
+        setSchema(data.data);
+      }
+    } catch {
+      setSchema(null);
+      return <>Error</>;
+    }
+  };
+
   return (
-    <>
-      <h3 className={style.main_title}>GraphQl Playground</h3>
-      <div className={style.container}>
-        <form onSubmit={handleSubmit(onSubmitHandler)} className={style.form}>
-          <div className={style.url_wrapper}>
-            <input
-              {...register('baseUrl')}
-              placeholder="https://url..."
-              defaultValue={DEFAULT_URL_GRAPHQL_EXAMPLE}
-              type="text"
-              className={style.input}
-            />
+    <section className={style.section}>
+      <div style={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
+        <div className={style.sidebar}>
+          {schema && (
+            <Button onClick={() => setDocsShown(!shownDocs)}>docs</Button>
+          )}
+        </div>
 
-            <Button variant="outlined" size="lg" type="submit">
-              send
-            </Button>
+        <div className={style.main}>
+          <div
+            className={
+              shownDocs
+                ? `${style.docs} ${style.shown} custom-doc-explorer`
+                : `${style.docs} custom-doc-explorer`
+            }
+          >
+            {shownDocs && (
+              <GraphiQLProvider
+                fetcher={createGraphiQLFetcher({ url: sdlUrl })}
+              >
+                <DocExplorer />
+              </GraphiQLProvider>
+            )}
           </div>
-          <PropsArea setValue={setValue} watch={watch} />
-        </form>
+          <div className={style.sessions}>
+            <h3 className={style.main_title}>GraphQl Playground</h3>
+            <div className={style.container}>
+              <form
+                onSubmit={handleSubmit(onSubmitHandler)}
+                className={style.form}
+              >
+                <div className={style.url_wrapper}>
+                  <input
+                    {...register('baseUrl')}
+                    placeholder="https://url..."
+                    defaultValue={DEFAULT_URL_GRAPHQL_EXAMPLE}
+                    type="text"
+                    className={style.input}
+                  />
+                  <Button variant="outlined" size="lg" type="submit">
+                    send
+                  </Button>
+                </div>
+                <SDLInput watch={watch} onClick={getSchema} />
+                <PropsArea setValue={setValue} watch={watch} />
+              </form>
 
-        {children}
+              {children}
+            </div>
+          </div>
+        </div>
       </div>
-    </>
+    </section>
   );
 };
 
