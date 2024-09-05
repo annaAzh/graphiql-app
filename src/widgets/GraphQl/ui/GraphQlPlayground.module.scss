@@ -85,10 +85,8 @@
 
 .docs {
   min-width: 200px;
-  left: -1000px;
   position: absolute;
   opacity: 0;
-  width: 500px;
   transition: all 0.3s ease-in;
   font-size: 18px;
   line-height: 120%;
@@ -96,10 +94,6 @@
 
   &.shown {
     display: flex;
-    flex: 0.33 1 0%;
-    left: 0;
-    display: block;
-    position: static;
     width: auto;
     opacity: 1;
   }
@@ -119,4 +113,19 @@
   flex-grow: 1;
   padding: 40px 20px 20px;
   position: relative;
+}
+
+.drawer {
+  height: 100%;
+  background-color: var(--main-color-4);
+  color: var(--main-color-2);
+}
+
+.close_btn {
+  margin-bottom: 20px;
+  margin-left: auto;
+
+  & > svg {
+    margin-right: 0;
+  }
 }

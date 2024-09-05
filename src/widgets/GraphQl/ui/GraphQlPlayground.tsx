@@ -19,6 +19,8 @@ import { DocExplorer, GraphiQLProvider } from '@graphiql/react';
 import { createGraphiQLFetcher } from '@graphiql/toolkit';
 import { IntrospectionQuery } from 'graphql';
 import './docsExplorer.scss';
+import { Box, Drawer } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
@@ -104,11 +106,28 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
             }
           >
             {shownDocs && (
-              <GraphiQLProvider
-                fetcher={createGraphiQLFetcher({ url: sdlUrl })}
-              >
-                <DocExplorer />
-              </GraphiQLProvider>
+              <Drawer open={shownDocs} onClose={() => setDocsShown(!shownDocs)}>
+                <Box
+                  className={style.drawer}
+                  sx={{ width: 360 }}
+                  p={2}
+                  role="presentation"
+                >
+                  <Button
+                    variant="outlined"
+                    size="lg"
+                    onClick={() => setDocsShown(!shownDocs)}
+                    className={style.close_btn}
+                  >
+                    <CloseIcon />
+                  </Button>
+                  <GraphiQLProvider
+                    fetcher={createGraphiQLFetcher({ url: sdlUrl })}
+                  >
+                    <DocExplorer />
+                  </GraphiQLProvider>
+                </Box>
+              </Drawer>
             )}
           </div>
           <div className={style.sessions}>
