@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { VALID_METHODS } from 'shared/constants';
 import { RestResponse, StringObject, ValidMethods } from 'shared/types/restful';
 import { decodeRest } from 'shared/lib/dataConverters';
+import { checkIsValidJson } from 'shared/lib/utils';
 
 export const getData = async (
   type: ValidMethods,
@@ -12,16 +13,52 @@ export const getData = async (
   try {
     if (!VALID_METHODS.includes(type)) return;
 
-    const { url, headers, variables, ...rest } = decodeRest({
+    const {
+      url,
+      headers,
+      variables,
+      body: decodedBody,
+    } = await decodeRest({
       requestedUrl,
       requestedBody,
       requestedHeaders,
     });
 
-    let body = rest.body;
-    variables?.forEach((variable) => {
-      body = { ...body, [variable.key]: variable.value };
-    });
+    let body: string | StringObject | undefined;
+    let formattedBody: StringObject | undefined;
+
+    const isValid = await checkIsValidJson(decodedBody?.trim());
+    if (decodedBody) {
+      if (isValid) formattedBody = JSON.parse(decodedBody);
+      else body = decodedBody;
+    }
+
+    if (variables && formattedBody) {
+      const values = Object.values(formattedBody);
+      const keys = Object.keys(formattedBody);
+
+      values.forEach((item, index) => {
+        const current = typeof item === 'string' ? item.trim() : item;
+        if (
+          current[0] === '{' &&
+          current[1] === '{' &&
+          current[current.length - 1] === '}' &&
+          current[current.length - 2] === '}'
+        ) {
+          const key = current.replaceAll('{', '').replaceAll('}', '');
+          variables.forEach((variable) => {
+            if (variable.key.trim() === key) {
+              formattedBody = {
+                ...formattedBody,
+                [keys[index]]: variable.value,
+              };
+            }
+          });
+        }
+      });
+    }
+
+    body = formattedBody;
 
     let res: AxiosResponse | undefined;
 
