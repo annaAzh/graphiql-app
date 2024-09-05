@@ -30,6 +30,9 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
       },
     });
 
+  const [schema, setSchema] = useState<IntrospectionQuery | null>(null);
+  const [shownDocs, setDocsShown] = useState<boolean>(false);
+
   const queryValue = watch('query');
   const sdlUrl = watch('baseUrl') + '?sdl';
 
@@ -69,15 +72,13 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
     navigate.push(url);
   };
 
-  const [schema, setSchema] = useState<IntrospectionQuery | null>(null);
-  const [shownDocs, setDocsShown] = useState<boolean>(false);
-
   const getSchema = async () => {
     try {
       const data = await fetchSDLSchema(sdlUrl);
 
       if (data?.data) {
         setSchema(data.data);
+        setDocsShown(true);
       }
     } catch {
       setSchema(null);
@@ -129,7 +130,11 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
                     send
                   </Button>
                 </div>
-                <SDLInput watch={watch} onClick={getSchema} />
+                <SDLInput
+                  watch={watch}
+                  onClick={getSchema}
+                  setValue={setValue}
+                />
                 <PropsArea setValue={setValue} watch={watch} />
               </form>
 
