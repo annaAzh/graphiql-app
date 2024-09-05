@@ -53,8 +53,8 @@ export const SDLInput: FC<Props> = ({ watch, onClick, setValue }) => {
         type="text"
         className={style.input}
       />
-      <Button variant="outlined" size="sm" type="button" onClick={onClick}>
-        get docs
+      <Button variant="outlined" size="lg" type="button" onClick={onClick}>
+        docs
       </Button>
     </div>
   );
