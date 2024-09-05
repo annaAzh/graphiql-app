@@ -10,14 +10,16 @@ type Props = {
 };
 
 export const SDLInput: FC<Props> = ({ watch, onClick }) => {
-  const [sdlUrl, setSdlUrl] = useState<string>('');
+  const baseUrl = watch('baseUrl');
+  const [sdlUrl, setSdlUrl] = useState<string>(`${baseUrl}?sdl`);
 
   useEffect(() => {
-    const baseUrl = watch('baseUrl');
     if (baseUrl) {
       setSdlUrl(`${baseUrl}?sdl`);
+    } else {
+      setSdlUrl(`?sdl`);
     }
-  }, [watch]);
+  }, [baseUrl]);
 
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
