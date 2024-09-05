@@ -3,16 +3,15 @@ import { FC, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 import { redirect } from 'next/navigation';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { Box, TextField } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { User } from 'firebase/auth';
 import { schemaLogin, schemaRegister } from 'shared/constants';
 import { DataFormLogin, DataFormRegister } from 'shared/types/form';
 import { Button, Notification, Title } from 'shared/components';
-import { auth, logInUser, registerUser } from 'shared/lib/api';
+import { logInUser, registerUser } from 'shared/lib/api';
 import { Path } from 'shared/types/path';
 import styles from './UserForm.module.scss';
-import { User } from 'firebase/auth';
 
 interface FormProps {
   isLogin: boolean;
@@ -20,8 +19,7 @@ interface FormProps {
 
 export const UserForm: FC<FormProps> = ({ isLogin }) => {
   const [error, setError] = useState<string | null>(null);
-  const [, setCookie] = useCookies<string>(['user']);
-  const [user] = useAuthState(auth);
+  const [cookies, setCookie] = useCookies<string>(['user']);
   const { control, handleSubmit, reset, formState } = useForm<
     DataFormLogin | DataFormRegister
   >({
@@ -33,8 +31,8 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
   });
 
   useEffect(() => {
-    if (user) redirect(Path.MAIN);
-  }, [user]);
+    if (cookies) redirect(Path.MAIN);
+  }, [cookies]);
 
   const onSubmit = async (
     data: DataFormLogin | DataFormRegister
@@ -49,9 +47,12 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
 
     if (typeof res === 'string') {
       setError(res);
-      setTimeout(() => setError(null), 6000);
+      setTimeout(() => setError(null), 5000);
     } else {
-      setCookie('user', res);
+      const { expirationTime } = await res.getIdTokenResult();
+      setCookie('user', res, {
+        expires: new Date(expirationTime),
+      });
       reset();
     }
   };
