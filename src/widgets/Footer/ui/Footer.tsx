@@ -20,7 +20,7 @@ export const Footer = () => {
           <Image src={LogoGitW} alt="Irina" width={55} height={55} />
         </Link>
       </div>
-      <Title text={'2024'} />
+      <Title>2024</Title>
       <Link href="https://rs.school/courses/reactjs">
         <Image src={LogoRSS} alt="logoRSS" width={55} height={55} />
       </Link>

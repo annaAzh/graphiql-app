@@ -50,7 +50,7 @@ export const HistoryList = () => {
           <p>{`You haven't executed any requests`}</p>
           <p>{`It's empty here. Try:`}</p>
           <div className={style.buttons}>
-            <Button>
+            <Button variant="secondary">
               <Link href={Path.REST}>REST Client</Link>
             </Button>
             <Button>
