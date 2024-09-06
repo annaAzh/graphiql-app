@@ -16,7 +16,7 @@ import { PropsArea } from './PropsArea/PropsArea';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
-  const { handleSubmit, register, watch, setValue, getValues } =
+  const { handleSubmit, register, watch, setValue } =
     useForm<RequestGraphQLData>({
       defaultValues: {
         query: DEFAULT_QUERY_GRAPHQL_EXAMPLE,
@@ -80,7 +80,7 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
               send
             </Button>
           </div>
-          <PropsArea setValue={setValue} watch={watch} getValues={getValues} />
+          <PropsArea setValue={setValue} watch={watch} />
         </form>
 
         {children}

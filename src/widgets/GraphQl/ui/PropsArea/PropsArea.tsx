@@ -1,9 +1,5 @@
 import { FC, ReactNode, useState } from 'react';
-import {
-  UseFormGetValues,
-  UseFormSetValue,
-  UseFormWatch,
-} from 'react-hook-form';
+import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { HeadersEditor } from 'features/HeadersEditor';
 import { KeyValueGraphQl, RequestGraphQLData } from 'shared/types/graphQl';
 import CodeMirror from '@uiw/react-codemirror';
@@ -22,14 +18,9 @@ const headers: (keyof Pick<
 interface PropsAreaProps {
   setValue: UseFormSetValue<RequestGraphQLData>;
   watch: UseFormWatch<RequestGraphQLData>;
-  getValues: UseFormGetValues<RequestGraphQLData>;
 }
 
-export const PropsArea: FC<PropsAreaProps> = ({
-  setValue,
-  watch,
-  getValues,
-}) => {
+export const PropsArea: FC<PropsAreaProps> = ({ setValue, watch }) => {
   const [activeHeader, setActiveHeader] = useState(headers[2]);
   let content: ReactNode;
 
@@ -73,7 +64,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
             size="small"
             variant="outlined"
             onClick={() => {
-              const prevQuery = getValues('query');
+              const prevQuery = watch('query');
 
               if (prevQuery) {
                 const prettyQuery = prettifying(prevQuery);
