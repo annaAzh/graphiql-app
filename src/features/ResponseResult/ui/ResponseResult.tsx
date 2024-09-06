@@ -1,39 +1,47 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { myTheme } from 'shared/styles/codemirror/EditorView';
 import style from './ResponseResult.module.scss';
 import { Path } from 'shared/types/path';
+import { addResult, getResult, ResultResponse } from 'entities/Result';
+import { useAppDispatch, useAppSelector } from 'shared/lib/hooks';
 
 type Props = {
-  data: {
-    body: string;
-    status: number;
-  };
+  response?: ResultResponse;
   redactor?: string;
 };
 
 export const ResponseResult: FC<Props> = ({
-  data,
+  response,
   redactor = `${Path.REST}`,
 }) => {
-  const { status, body } = data;
-
   const dynamicTheme = myTheme(redactor);
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(getResult);
+
+  useEffect(() => {
+    if (!response) return;
+    dispatch(addResult(response));
+  }, []);
 
   return (
-    <div className={style.container}>
-      <p className={style.status_text}>Status: {status}</p>
-      <div style={{ width: '100%' }}>
-        <CodeMirror
-          value={body}
-          theme={dynamicTheme}
-          width="100%"
-          height="200px"
-          readOnly={true}
-        />
-      </div>
-    </div>
+    <>
+      {data && (
+        <div className={style.container}>
+          <p className={style.status_text}>Status: {data.status}</p>
+          <div style={{ width: '100%' }}>
+            <CodeMirror
+              value={data.body}
+              theme={dynamicTheme}
+              width="100%"
+              height="200px"
+              readOnly={true}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 };

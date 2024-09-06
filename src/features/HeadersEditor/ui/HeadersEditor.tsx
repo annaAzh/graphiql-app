@@ -15,6 +15,7 @@ export const HeadersEditor: FC<HeadersEditorProps> = ({
 
   const setValue = (key: keyof HeadersItem, index: number, value: string) => {
     if (index === data.length - 1) setData((prev) => [...prev, {}]);
+
     setData((prev) => {
       const newValue = [...prev];
       newValue.splice(index, 1, { ...data[index], [key]: value });

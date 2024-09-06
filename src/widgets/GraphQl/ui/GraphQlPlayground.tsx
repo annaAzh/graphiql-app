@@ -21,9 +21,11 @@ import { IntrospectionQuery } from 'graphql';
 import './docsExplorer.scss';
 import { Box, Drawer } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { useClearResult } from 'shared/lib/hooks';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
+  useClearResult();
   const { handleSubmit, register, watch, setValue } =
     useForm<RequestGraphQLData>({
       defaultValues: {
