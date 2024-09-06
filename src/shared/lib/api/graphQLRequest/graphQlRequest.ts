@@ -41,7 +41,7 @@ const fetchGraphQlData = async ({
     headers,
   });
 
-  return { status: res.status, data: res.data };
+  return { status: res.status, data: res.data.data };
 };
 
 export { fetchGraphQlData };

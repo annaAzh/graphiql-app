@@ -62,7 +62,7 @@ export const PropsArea: FC<PropsAreaProps> = ({ setValue, watch }) => {
             className={activeHeader === header ? style.active : undefined}
             onClick={() => setActiveHeader(header)}
           >
-            {header}
+            {header === 'requestHeaders' ? 'headers' : header}
           </p>
         ))}
       </div>
