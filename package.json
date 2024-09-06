@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@graphiql/react": "^0.26.2",
-    "@mui/icons-material": "^6.0.2",
     "axios": "^1.7.5",
     "firebase": "^10.13.1",
     "graphiql": "^3.7.1",
@@ -30,7 +29,8 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@hookform/resolvers": "^3.9.0",
-    "@mui/material": "^5.16.7",
+    "@mui/icons-material": "^6.0.2",
+    "@mui/material": "^6.0.2",
     "@next/eslint-plugin-next": "^14.2.6",
     "@reduxjs/toolkit": "^2.2.7",
     "@testing-library/dom": "^10.4.0",
