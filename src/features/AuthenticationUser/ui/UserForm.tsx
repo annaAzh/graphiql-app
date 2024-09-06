@@ -31,8 +31,8 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
   });
 
   useEffect(() => {
-    if (cookies) redirect(Path.MAIN);
-  }, [cookies]);
+    if (cookies.user) redirect(Path.MAIN);
+  }, [cookies.user]);
 
   const onSubmit = async (
     data: DataFormLogin | DataFormRegister

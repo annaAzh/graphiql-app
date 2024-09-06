@@ -57,22 +57,22 @@ export const Header: FC = () => {
           <option value={'en'}>EN</option>
           <option value={'ru'}>RU</option>
         </select>
-        {!user ? (
-          <>
-            <Button size="lg">
-              <Link href={Path.SIGN_IN}>Sign In</Link>
-            </Button>
-            <Button size="lg">
-              <Link href={Path.SIGN_UP}>Sign Up</Link>
-            </Button>
-          </>
-        ) : (
+        {cookies.user && user ? (
           <>
             <Button size="lg">
               <Link href={Path.MAIN}>Main Page</Link>
             </Button>
             <Button size="lg" onClick={onClickLogOut}>
               Sign Out
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button size="lg">
+              <Link href={Path.SIGN_IN}>Sign In</Link>
+            </Button>
+            <Button size="lg">
+              <Link href={Path.SIGN_UP}>Sign Up</Link>
             </Button>
           </>
         )}

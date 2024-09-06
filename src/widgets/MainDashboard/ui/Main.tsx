@@ -16,7 +16,7 @@ export const Main = () => {
     <>
       <Title size="h1">{`Welcome${name ? ` Back, ${name}` : ''}!`}</Title>
       <div className={styles.containerButtons}>
-        {cookies ? (
+        {cookies.user && user ? (
           <>
             <Button variant="secondary">
               <Link href={Path.REST}>REST Client</Link>
