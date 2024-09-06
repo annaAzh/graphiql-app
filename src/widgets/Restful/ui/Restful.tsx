@@ -1,5 +1,5 @@
 'use client';
-import { FC, ReactNode, useEffect } from 'react';
+import { FC, ReactNode } from 'react';
 import style from './Restful.module.scss';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
@@ -11,8 +11,7 @@ import { setLocalStoreState } from 'shared/lib/storeState/storeState';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { restSchema } from 'shared/constants/restSchema';
 import { useEncodeProps } from './PropsArea/useEncodeProps';
-import { useAppDispatch } from 'shared/lib/hooks';
-import { clearResult } from 'entities/Result';
+import { useClearResult } from 'shared/lib/hooks';
 import { useRestoreValues } from './PropsArea/useRestoreValues';
 
 interface RestfulProps {
@@ -32,14 +31,8 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
     const path = encodeRest(data);
     navigate.push(path);
   };
-  const dispatch = useAppDispatch();
   useRestoreValues({ setValue });
-
-  useEffect(() => {
-    return () => {
-      dispatch(clearResult());
-    };
-  }, []);
+  useClearResult();
 
   return (
     <div className={style.postman}>

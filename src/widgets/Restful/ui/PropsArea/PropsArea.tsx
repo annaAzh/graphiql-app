@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import style from './PropsArea.module.scss';
 import {
   UseFormSetValue,
@@ -31,21 +31,21 @@ export const PropsArea: FC<PropsAreaProps> = ({
   setEncodeValue,
 }) => {
   const [activeHeader, setActiveHeader] = useState(headers[0]);
-  const [content, setContent] = useState<ReactNode>(null);
+  const [headerKey, setHeaderKey] = useState(0);
   const watchHeaders = watch('headers');
   const watchVariables = watch('variables');
 
-  useEffect(() => {
+  const content = useMemo(() => {
     if (activeHeader === 'headers') {
-      setContent(
+      return (
         <HeadersEditor
-          key="headers"
+          key={headerKey}
           initialValue={watchHeaders}
           callback={(value: HeadersItem[]) => setValue('headers', value)}
         />
       );
     } else if (activeHeader === 'variables') {
-      setContent(
+      return (
         <HeadersEditor
           key="variables"
           initialValue={watchVariables}
@@ -53,7 +53,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
         />
       );
     } else {
-      setContent(
+      return (
         <textarea
           className={style.textArea}
           placeholder="Enter your body"
@@ -63,10 +63,11 @@ export const PropsArea: FC<PropsAreaProps> = ({
         />
       );
     }
-  }, [activeHeader, watchHeaders]);
+  }, [activeHeader, headerKey]);
 
   useEffect(() => {
     if (!watchHeaders) return;
+    if (!headerKey) setHeaderKey((prev) => (prev += 1));
     setEncodeValue('headers', watchHeaders);
   }, [watchHeaders]);
 
