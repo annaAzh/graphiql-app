@@ -13,9 +13,11 @@ import { encode64 } from 'shared/lib/dataConverters';
 import style from './GraphQlPlayground.module.scss';
 import { Path } from 'shared/types/path';
 import { PropsArea } from './PropsArea/PropsArea';
+import { useClearResult } from 'shared/lib/hooks';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
+  useClearResult();
   const { handleSubmit, register, watch, setValue } =
     useForm<RequestGraphQLData>({
       defaultValues: {

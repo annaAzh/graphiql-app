@@ -15,14 +15,12 @@ export const HistoryList = () => {
 
   useEffect(() => {
     const save = getLocalStoreState();
-    if (save) {
-      setList(save);
-    }
+    if (save) setList(save);
   }, []);
 
   const clickHandler = async (index: number) => {
-    if (list && list[index].type !== 'GRAPHQL') {
-      const path = await encodeRest(list[index]);
+    if (list && list[index].method !== 'GRAPHQL') {
+      const path = encodeRest(list[index]);
       navigate.push(path);
     }
   };
@@ -34,14 +32,14 @@ export const HistoryList = () => {
           <Title size="h3" className={style.label}>
             History Requests
           </Title>
-          {list.map(({ type, url }, index) => (
+          {list.map(({ method, url }, index) => (
             <div
               key={index}
               className={style.line}
               onClick={() => clickHandler(index)}
             >
-              <div className={`${style.type} ${style[`colorful-${type}`]}`}>
-                {type}
+              <div className={`${style.type} ${style[`colorful-${method}`]}`}>
+                {method}
               </div>
               <div className={style.url}>{url}</div>
             </div>

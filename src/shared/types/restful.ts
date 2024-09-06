@@ -1,6 +1,6 @@
 interface RestfulType {
   url: string;
-  type: ValidMethods;
+  method: ValidMethods;
   headers?: HeadersItem[];
   body?: string;
   variables?: HeadersItem[];
@@ -22,6 +22,8 @@ type ValidMethods =
 
 type RestfulMethods = ValidMethods | 'REST';
 
+type PartialRest = Partial<RestfulType>;
+
 interface RestResponse {
   status: number;
   body: string;
@@ -38,4 +40,5 @@ export {
   type RestResponse,
   type StringObject,
   type RestfulMethods,
+  type PartialRest,
 };

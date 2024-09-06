@@ -4,7 +4,7 @@ import { ValidMethods } from 'shared/types/restful';
 
 export const restSchema = yup.object().shape({
   url: yup.string().required('url is required'),
-  type: yup
+  method: yup
     .mixed<ValidMethods>()
     .required('type is required')
     .test('type', 'type must be valid', (value) =>

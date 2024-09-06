@@ -48,7 +48,7 @@ const GraphQlPage: FC<Props> = async ({ params, searchParams }) => {
     return (
       result && (
         <ResponseResult
-          data={{
+          response={{
             body: JSON.stringify(result?.data, null, 2),
             status: result.status,
           }}
