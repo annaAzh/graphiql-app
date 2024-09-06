@@ -1,0 +1,6 @@
+@import '../../../shared/styles/common.scss';
+
+.spinner {
+  @include flex($alignItems: center, $flexDirection: column, $gap: 30px);
+  margin: auto;
+}

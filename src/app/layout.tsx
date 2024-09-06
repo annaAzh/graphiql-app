@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Header } from 'widgets/Header';
 import { Footer } from 'widgets/Footer';
+import styles from './styles/Main.module.scss';
 import 'shared/styles/global.scss';
 import { StoreProvider } from 'core';
 
@@ -15,7 +16,11 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     <html lang="en">
       <body>
         <Header />
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <main className={styles.main}>
+            {children}
+          </main>
+        </StoreProvider>
         <Footer />
       </body>
     </html>
