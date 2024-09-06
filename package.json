@@ -14,6 +14,7 @@
   "dependencies": {
     "@graphiql/react": "^0.26.2",
     "axios": "^1.7.5",
+    "js-beautify": "^1.15.1",
     "firebase": "^10.13.1",
     "graphiql": "^3.7.1",
     "graphql": "^16.9.0",
