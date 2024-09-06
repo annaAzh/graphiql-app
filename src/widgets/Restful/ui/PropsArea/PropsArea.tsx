@@ -1,11 +1,11 @@
-import { FC, ReactNode, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import style from './PropsArea.module.scss';
 import {
   UseFormSetValue,
   UseFormWatch,
   UseFormRegister,
 } from 'react-hook-form';
-import { HeadersItem, RestfulType } from 'shared/types/restful';
+import { HeadersItem, PartialRest, RestfulType } from 'shared/types/restful';
 import { HeadersEditor } from 'features/HeadersEditor';
 
 const headers: (keyof Pick<RestfulType, 'headers' | 'body' | 'variables'>)[] = [
@@ -18,44 +18,66 @@ interface PropsAreaProps {
   setValue: UseFormSetValue<RestfulType>;
   watch: UseFormWatch<RestfulType>;
   register: UseFormRegister<RestfulType>;
+  setEncodeValue: (
+    key: keyof PartialRest,
+    value: string | HeadersItem[] | undefined
+  ) => void;
 }
 
 export const PropsArea: FC<PropsAreaProps> = ({
   setValue,
   watch,
   register,
+  setEncodeValue,
 }) => {
   const [activeHeader, setActiveHeader] = useState(headers[0]);
-  const [content, setContent] = useState<ReactNode>(null);
+  const [headerKey, setHeaderKey] = useState(0);
+  const watchHeaders = watch('headers');
+  const watchVariables = watch('variables');
 
-  useEffect(() => {
+  const content = useMemo(() => {
     if (activeHeader === 'headers') {
-      setContent(
+      return (
         <HeadersEditor
-          key="headers"
-          initialValue={watch('headers')}
+          key={headerKey}
+          initialValue={watchHeaders}
           callback={(value: HeadersItem[]) => setValue('headers', value)}
         />
       );
     } else if (activeHeader === 'variables') {
-      setContent(
+      return (
         <HeadersEditor
           key="variables"
-          initialValue={watch('variables')}
+          initialValue={watchVariables}
           callback={(value: HeadersItem[]) => setValue('variables', value)}
         />
       );
     } else {
-      setContent(
+      return (
         <textarea
           className={style.textArea}
           placeholder="Enter your body"
           {...register('body')}
+          onBlur={(e) => bodyHandler(e.target.value)}
           defaultValue={watch('body')}
         />
       );
     }
-  }, [activeHeader, watch('headers')]);
+  }, [activeHeader, headerKey]);
+
+  useEffect(() => {
+    if (!watchHeaders) return;
+    if (!headerKey) setHeaderKey((prev) => (prev += 1));
+    setEncodeValue('headers', watchHeaders);
+  }, [watchHeaders]);
+
+  useEffect(() => {
+    setEncodeValue('variables', watchVariables);
+  }, [watchVariables]);
+
+  const bodyHandler = (value: string) => {
+    setEncodeValue('body', value);
+  };
 
   return (
     <>

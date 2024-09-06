@@ -1,7 +1,7 @@
 import { RestfulType } from './restful';
 
-interface HistoryGraphSave extends Omit<RestfulType, 'type'> {
-  type: 'GRAPHQL';
+interface HistoryGraphSave extends Omit<RestfulType, 'method'> {
+  method: 'GRAPHQL';
 }
 
 type HistorySave = RestfulType | HistoryGraphSave;

@@ -8,11 +8,11 @@ interface DecodeRestProps {
   requestedBody?: string;
 }
 
-export const decodeRest = (data: DecodeRestProps) => {
+export const decodeRest = async (data: DecodeRestProps) => {
   const { requestedUrl, requestedBody, requestedHeaders } = data;
   const url = decode64(requestedUrl);
   let headers: StringObject | undefined;
-  let body: StringObject | undefined = undefined;
+  let body: string | undefined;
   let variables: Required<HeadersItem>[] | undefined;
 
   if (requestedHeaders) {
@@ -29,7 +29,9 @@ export const decodeRest = (data: DecodeRestProps) => {
 
   if (requestedBody) {
     const encodedBody: BodyUrlType = JSON.parse(decode64(requestedBody));
-    if (encodedBody.body) body = { ...JSON.parse(encodedBody.body) };
+    if (encodedBody.body) {
+      body = encodedBody.body;
+    }
     if (encodedBody.variables) {
       encodedBody.variables.forEach((variable) => {
         if (!variable.key || !variable.value) return;

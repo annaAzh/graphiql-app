@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Header } from 'widgets/Header';
 import { Footer } from 'widgets/Footer';
 import 'shared/styles/global.scss';
+import { StoreProvider } from 'core';
 
 export const metadata = {
   title: 'Graphiql-app',
@@ -14,7 +15,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     <html lang="en">
       <body>
         <Header />
-        {children}
+        <StoreProvider>{children}</StoreProvider>
         <Footer />
       </body>
     </html>

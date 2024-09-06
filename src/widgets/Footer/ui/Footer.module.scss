@@ -2,6 +2,7 @@
 
 .footer {
   @include flex($alignItems: center, $justifyContent: space-between);
+  flex-shrink: 1;
   padding: 0.5% 1%;
   border-top: 1px solid var(--main-color-2);
 
