@@ -27,7 +27,7 @@ const GraphQlPage: FC<Props> = async ({ params, searchParams }) => {
         <ResponseResult
           response={{
             body: JSON.stringify(result?.data, null, 2),
-            status: result.status,
+            status: +result.status,
           }}
           redactor={Path.GRAPH}
         />

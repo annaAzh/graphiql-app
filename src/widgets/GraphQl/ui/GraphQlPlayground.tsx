@@ -24,6 +24,7 @@ import { useEncodeProps } from 'shared/lib/hooks/useEncodeProps/useEncodeProps';
 import { setLocalStoreState } from 'shared/lib/storeState/storeState';
 import { encodeGraphql } from 'shared/lib/dataConverters/encodeGraphQl/encodeQraphQl';
 import { HistoryGraphSave } from 'shared/types/app';
+import { useRestoreValues } from './PropsArea/useRestoreValues';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
@@ -60,6 +61,8 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
     const path = encodeGraphql(data);
     navigate.push(path);
   };
+
+  useRestoreValues({ setValue });
 
   const getSchema = async () => {
     try {
@@ -134,7 +137,6 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
                   <input
                     {...register('url')}
                     placeholder="https://url..."
-                    defaultValue={DEFAULT_URL_GRAPHQL_EXAMPLE}
                     type="text"
                     className={style.input}
                   />
