@@ -13,6 +13,7 @@ import { restSchema } from 'shared/constants/restSchema';
 import { useEncodeProps } from './PropsArea/useEncodeProps';
 import { useClearResult } from 'shared/lib/hooks';
 import { useRestoreValues } from './PropsArea/useRestoreValues';
+import { useCookies } from 'react-cookie';
 
 interface RestfulProps {
   children: ReactNode;
@@ -20,6 +21,7 @@ interface RestfulProps {
 
 export const Restful: FC<RestfulProps> = ({ children }) => {
   const navigate = useRouter();
+  const [cookies] = useCookies<string>(['user']);
   const { register, handleSubmit, setValue, watch } = useForm<RestfulType>({
     resolver: yupResolver<RestfulType>(restSchema),
     mode: 'onSubmit',
@@ -27,7 +29,7 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
   const { setEncodeValue } = useEncodeProps();
   const selectedOption = watch('method');
   const onSubmit: SubmitHandler<RestfulType> = (data) => {
-    setLocalStoreState(data);
+    setLocalStoreState(data, cookies.user.uid);
     const path = encodeRest(data);
     navigate.push(path);
   };
