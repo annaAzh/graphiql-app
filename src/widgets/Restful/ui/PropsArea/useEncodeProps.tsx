@@ -16,7 +16,8 @@ export const useEncodeProps = () => {
   };
 
   useEffect(() => {
-    if (!state) return;
+    if (!Object.keys(state).length) return;
+
     const path = encodeRest(state);
 
     navigate.push(`/${Path.REST}${path}`);

@@ -1,15 +1,16 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { VALID_METHODS } from 'shared/constants';
-import { RestResponse, StringObject, ValidMethods } from 'shared/types/restful';
+import { StringObject, ValidMethods } from 'shared/types/restful';
 import { decodeRest } from 'shared/lib/dataConverters';
 import { checkIsValidJson } from 'shared/lib/utils';
+import { ResultResponse } from 'entities/Result';
 
 export const getData = async (
   type: ValidMethods,
   requestedUrl: string,
   requestedHeaders?: StringObject,
   requestedBody?: string
-): Promise<RestResponse | undefined> => {
+): Promise<ResultResponse | undefined> => {
   try {
     if (!VALID_METHODS.includes(type)) return;
 
@@ -94,6 +95,8 @@ export const getData = async (
   } catch (e) {
     return e instanceof AxiosError && e && e.response
       ? { status: e.response.status, body: e.response.statusText }
-      : undefined;
+      : e instanceof Error
+        ? { status: e.name, body: e.message }
+        : undefined;
   }
 };
