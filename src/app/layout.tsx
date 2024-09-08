@@ -17,9 +17,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
       <body>
         <Header />
         <StoreProvider>
-          <main className={styles.main}>
-            {children}
-          </main>
+          <main className={styles.main}>{children}</main>
         </StoreProvider>
         <Footer />
       </body>
