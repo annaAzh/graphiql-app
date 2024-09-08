@@ -2,8 +2,7 @@ import { EditorView } from '@codemirror/view';
 import { Path } from 'shared/types/path';
 
 const myTheme = (redactor: string = `${Path.REST}`) => {
-  const color =
-    redactor === `${Path.GRAPH}` ? 'var(--magenta)' : 'var(--denim)';
+  const color = redactor === `${Path.GRAPH}` ? 'var(--magenta)' : 'var(--blue)';
 
   return EditorView.theme(
     {

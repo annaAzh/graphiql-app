@@ -4,7 +4,7 @@ interface ResultSchema {
 
 interface ResultResponse {
   body: string;
-  status: number;
+  status: number | string;
 }
 
 export { type ResultSchema, type ResultResponse };

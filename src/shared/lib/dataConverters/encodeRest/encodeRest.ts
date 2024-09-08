@@ -6,7 +6,7 @@ import { encodeHeaders } from '../encodeHeaders/encodeHeaders';
 export const encodeRest = (data: Partial<RestfulType>) => {
   const { url, method, headers, body, variables } = data;
 
-  const encodedUrl = url ? encode64(url) : undefined;
+  const encodedUrl = encode64(url);
   let encodedHeaders: string | undefined;
   if (headers) encodedHeaders = encodeHeaders(headers);
   const encodedBody: string | undefined = encodeBody({

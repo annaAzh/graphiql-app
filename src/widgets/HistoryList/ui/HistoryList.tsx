@@ -8,13 +8,15 @@ import { encodeRest } from 'shared/lib/dataConverters';
 import Link from 'next/link';
 import { Path } from 'shared/types/path';
 import { Button, Title } from 'shared/components';
+import { useCookies } from 'react-cookie';
 
 export const HistoryList = () => {
   const navigate = useRouter();
   const [list, setList] = useState<HistorySave[]>();
+  const [cookies] = useCookies<string>(['user']);
 
   useEffect(() => {
-    const save = getLocalStoreState();
+    const save = getLocalStoreState(cookies.user.uid);
     if (save) setList(save);
   }, []);
 
