@@ -10,9 +10,9 @@ import { PropsArea } from './PropsArea/PropsArea';
 import { setLocalStoreState } from 'shared/lib/storeState/storeState';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { restSchema } from 'shared/constants/restSchema';
-import { useEncodeProps } from './PropsArea/useEncodeProps';
 import { useClearResult } from 'shared/lib/hooks';
 import { useRestoreValues } from './PropsArea/useRestoreValues';
+import { useEncodeProps } from 'shared/lib/hooks/useEncodeProps/useEncodeProps';
 
 interface RestfulProps {
   children: ReactNode;

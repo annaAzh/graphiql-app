@@ -1,7 +1,11 @@
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, useEffect, useState } from 'react';
 import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { HeadersEditor } from 'features/HeadersEditor';
-import { KeyValueGraphQl, RequestGraphQLData } from 'shared/types/graphQl';
+import {
+  KeyValueGraphQl,
+  PartialGraphQL,
+  RequestGraphQLData,
+} from 'shared/types/graphQl';
 import CodeMirror from '@uiw/react-codemirror';
 import style from './PropsArea.module.scss';
 import { myTheme } from 'shared/styles/codemirror/EditorView';
@@ -18,19 +22,55 @@ const headers: (keyof Pick<
 interface PropsAreaProps {
   setValue: UseFormSetValue<RequestGraphQLData>;
   watch: UseFormWatch<RequestGraphQLData>;
+  setEncodeValue: (
+    key: keyof PartialGraphQL,
+    value: string | KeyValueGraphQl[] | undefined
+  ) => void;
 }
 
-export const PropsArea: FC<PropsAreaProps> = ({ setValue, watch }) => {
+export const PropsArea: FC<PropsAreaProps> = ({
+  setValue,
+  watch,
+  setEncodeValue,
+}) => {
   const [activeHeader, setActiveHeader] = useState(headers[2]);
+  const [headerKey, setHeaderKey] = useState(0);
   let content: ReactNode;
-
   const dynamicTheme = myTheme(Path.GRAPH);
+  const query = watch('query');
+  const variables = watch('variables');
+  const requestHeaders = watch('requestHeaders');
+
+  const prettifyValue = () => {
+    const prevQuery = watch('query');
+
+    if (prevQuery) {
+      const prettyQuery = prettifying(prevQuery);
+      if (prettyQuery !== prevQuery) {
+        setValue('query', prettyQuery);
+      }
+    }
+  };
+
+  const handleQuery = () => {
+    setEncodeValue('query', query);
+  };
+
+  useEffect(() => {
+    if (!requestHeaders) return;
+    if (!headerKey) setHeaderKey((prev) => (prev += 1));
+    setEncodeValue('requestHeaders', requestHeaders);
+  }, [requestHeaders]);
+
+  useEffect(() => {
+    setEncodeValue('variables', variables);
+  }, [variables]);
 
   if (activeHeader === 'requestHeaders') {
     content = (
       <HeadersEditor
         key="requestHeaders"
-        initialValue={watch('requestHeaders')}
+        initialValue={requestHeaders}
         callback={(value: KeyValueGraphQl[]) =>
           setValue('requestHeaders', value)
         }
@@ -40,7 +80,7 @@ export const PropsArea: FC<PropsAreaProps> = ({ setValue, watch }) => {
     content = (
       <HeadersEditor
         key="variables"
-        initialValue={watch('variables')}
+        initialValue={variables}
         callback={(value: KeyValueGraphQl[]) => setValue('variables', value)}
       />
     );
@@ -49,31 +89,19 @@ export const PropsArea: FC<PropsAreaProps> = ({ setValue, watch }) => {
       <div style={{ display: 'flex', gap: '10px' }}>
         <CodeMirror
           theme={dynamicTheme}
-          value={watch('query')}
+          value={query}
           width="100%"
           height="200px"
           onChange={(value) => setValue('query', value)}
           style={{ width: '100%' }}
+          onBlur={handleQuery}
         />
         <div
           style={{
             marginLeft: 'auto',
           }}
         >
-          <Button
-            size="small"
-            variant="outlined"
-            onClick={() => {
-              const prevQuery = watch('query');
-
-              if (prevQuery) {
-                const prettyQuery = prettifying(prevQuery);
-                if (prettyQuery !== prevQuery) {
-                  setValue('query', prettyQuery);
-                }
-              }
-            }}
-          >
+          <Button size="small" variant="outlined" onClick={prettifyValue}>
             <AutoFixHighIcon fontSize="small" />
           </Button>
         </div>

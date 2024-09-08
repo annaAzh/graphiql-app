@@ -26,3 +26,7 @@ export type GraphQlResponse = {
   status: number;
   data?: IntrospectionQuery;
 };
+
+export type PartialGraphQL = Partial<RequestGraphQLData>;
+
+export type SerachParams = { [key: string]: string };

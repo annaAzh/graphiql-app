@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { Button } from 'shared/components';
@@ -9,9 +9,7 @@ import {
   DEFAULT_QUERY_GRAPHQL_EXAMPLE,
   DEFAULT_URL_GRAPHQL_EXAMPLE,
 } from 'shared/constants';
-import { encode64 } from 'shared/lib/dataConverters';
 import style from './GraphQlPlayground.module.scss';
-import { Path } from 'shared/types/path';
 import { PropsArea } from './PropsArea/PropsArea';
 import { SDLInput } from './SDLInput/SDLInput';
 import { fetchSDLSchema } from 'shared/lib/api/graphQLRequest/graphQlShema';
@@ -22,6 +20,10 @@ import './docsExplorer.scss';
 import { Box, Drawer } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useClearResult } from 'shared/lib/hooks';
+import { useEncodeProps } from 'shared/lib/hooks/useEncodeProps/useEncodeProps';
+import { setLocalStoreState } from 'shared/lib/storeState/storeState';
+import { encodeGraphql } from 'shared/lib/dataConverters/encodeGraphQl/encodeQraphQl';
+import { HistoryGraphSave } from 'shared/types/app';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
@@ -32,48 +34,31 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
         query: DEFAULT_QUERY_GRAPHQL_EXAMPLE,
         baseUrl: DEFAULT_URL_GRAPHQL_EXAMPLE,
       },
+      mode: 'onSubmit',
     });
 
   const [schema, setSchema] = useState<IntrospectionQuery | null>(null);
   const [shownDocs, setDocsShown] = useState<boolean>(false);
+  const { setEncodeValue } = useEncodeProps('GRAPHQL');
+  const baseUrl = watch('baseUrl');
 
   const queryValue = watch('query');
-  const sdlUrl = watch('baseUrl') + '?sdl';
+  const sdlUrl = baseUrl + '?sdl';
 
   const onSubmitHandler = async (data: RequestGraphQLData) => {
-    const { baseUrl, requestHeaders, variables } = data;
+    const { baseUrl, requestHeaders, variables, query } = data;
 
-    const encodedUrl = encode64(baseUrl);
-    const encodedQuery = encode64(queryValue);
-    const queryParams = new URLSearchParams();
+    const newData: HistoryGraphSave = {
+      url: baseUrl,
+      headers: requestHeaders,
+      variables,
+      body: query,
+      method: 'GRAPHQL',
+    };
 
-    if (requestHeaders) {
-      requestHeaders.forEach((header) => {
-        if (header.key && header.value) {
-          queryParams.append(
-            `header_${encodeURIComponent(header.key)}`,
-            encode64(header.value)
-          );
-        }
-      });
-    }
-
-    if (variables) {
-      variables.forEach((variable) => {
-        if (variable.key && variable.value) {
-          queryParams.append(
-            `variable_${encodeURIComponent(variable.key)}`,
-            encode64(variable.value)
-          );
-        }
-      });
-    }
-
-    let url = `/${Path.GRAPH}/${encodedUrl}/${encodedQuery}`;
-    if (queryParams.toString()) {
-      url += `?${queryParams.toString()}`;
-    }
-    navigate.push(url);
+    setLocalStoreState(newData);
+    const path = encodeGraphql(data);
+    navigate.push(path);
   };
 
   const getSchema = async () => {
@@ -89,6 +74,15 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
       return <>Error</>;
     }
   };
+
+  useEffect(() => {
+    if (baseUrl) {
+      setEncodeValue('url', baseUrl);
+    }
+    if (queryValue) {
+      setEncodeValue('query', queryValue);
+    }
+  }, []);
 
   return (
     <section className={style.section}>
@@ -156,7 +150,11 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
                   onClick={getSchema}
                   setValue={setValue}
                 />
-                <PropsArea setValue={setValue} watch={watch} />
+                <PropsArea
+                  setValue={setValue}
+                  watch={watch}
+                  setEncodeValue={setEncodeValue}
+                />
               </form>
 
               {children}
