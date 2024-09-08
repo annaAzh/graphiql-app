@@ -4,13 +4,6 @@
   @include flex($flexDirection: column, $gap: 20px, $alignItems: flex-start);
   margin: auto;
   padding: 1%;
-
-  h2 {
-    font-size: 30px;
-    font-family: 'Alfa Slab One';
-    margin: 0 auto;
-    color: var(--red);
-  }
 }
 
 .form {

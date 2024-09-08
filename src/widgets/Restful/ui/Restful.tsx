@@ -36,7 +36,6 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
 
   return (
     <div className={style.postman}>
-      <h2>REST Client</h2>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={style.upperSection}>
           <select
