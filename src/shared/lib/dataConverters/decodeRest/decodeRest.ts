@@ -21,7 +21,7 @@ export const decodeRest = async (data: DecodeRestProps) => {
 
     if (keys.length && values.length) {
       keys.forEach((key) => {
-        const value = decode64(requestedHeaders[key]);
+        const value = decodeURIComponent(requestedHeaders[key]);
         headers = { ...headers, [key]: value };
       });
     }
