@@ -63,7 +63,6 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
         <PropsArea
           setValue={setValue}
           watch={watch}
-          register={register}
           setEncodeValue={setEncodeValue}
         />
         <div>{children}</div>
