@@ -31,8 +31,8 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const { handleSubmit, register, watch, setValue } =
     useForm<RequestGraphQLData>({
       defaultValues: {
-        query: DEFAULT_QUERY_GRAPHQL_EXAMPLE,
-        baseUrl: DEFAULT_URL_GRAPHQL_EXAMPLE,
+        body: DEFAULT_QUERY_GRAPHQL_EXAMPLE,
+        url: DEFAULT_URL_GRAPHQL_EXAMPLE,
       },
       mode: 'onSubmit',
     });
@@ -40,19 +40,19 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const [schema, setSchema] = useState<IntrospectionQuery | null>(null);
   const [shownDocs, setDocsShown] = useState<boolean>(false);
   const { setEncodeValue } = useEncodeProps('GRAPHQL');
-  const baseUrl = watch('baseUrl');
+  const url = watch('url');
 
-  const queryValue = watch('query');
-  const sdlUrl = baseUrl + '?sdl';
+  const queryValue = watch('body');
+  const sdlUrl = url + '?sdl';
 
   const onSubmitHandler = async (data: RequestGraphQLData) => {
-    const { baseUrl, requestHeaders, variables, query } = data;
+    const { url, headers, variables } = data;
 
     const newData: HistoryGraphSave = {
-      url: baseUrl,
-      headers: requestHeaders,
+      url,
+      headers,
       variables,
-      body: query,
+      body: queryValue,
       method: 'GRAPHQL',
     };
 
@@ -65,7 +65,7 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
     try {
       const data = await fetchSDLSchema(sdlUrl);
 
-      if (data?.data) {
+      if (data?.data && typeof data.data !== 'string') {
         setSchema(data.data);
         setDocsShown(true);
       }
@@ -76,11 +76,8 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   };
 
   useEffect(() => {
-    if (baseUrl) {
-      setEncodeValue('url', baseUrl);
-    }
     if (queryValue) {
-      setEncodeValue('query', queryValue);
+      setEncodeValue('body', queryValue);
     }
   }, []);
 
@@ -135,7 +132,7 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
               >
                 <div className={style.url_wrapper}>
                   <input
-                    {...register('baseUrl')}
+                    {...register('url')}
                     placeholder="https://url..."
                     defaultValue={DEFAULT_URL_GRAPHQL_EXAMPLE}
                     type="text"

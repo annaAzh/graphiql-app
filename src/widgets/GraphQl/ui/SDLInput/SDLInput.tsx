@@ -11,20 +11,20 @@ type Props = {
 };
 
 export const SDLInput: FC<Props> = ({ watch, onClick, setValue }) => {
-  const baseUrl = watch('baseUrl');
-  const [sdlUrl, setSdlUrl] = useState<string>(`${baseUrl}?sdl`);
+  const url = watch('url');
+  const [sdlUrl, setSdlUrl] = useState<string>(`${url}?sdl`);
 
   useEffect(() => {
-    if (baseUrl) {
-      setSdlUrl(`${baseUrl}?sdl`);
+    if (url) {
+      setSdlUrl(`${url}?sdl`);
     } else {
       setSdlUrl(`?sdl`);
     }
-  }, [baseUrl]);
+  }, [url]);
 
   useEffect(() => {
-    if (sdlUrl !== baseUrl) {
-      setValue('baseUrl', sdlUrl.replace(/\?sdl/, ''));
+    if (sdlUrl !== url) {
+      setValue('url', sdlUrl.replace(/\?sdl/, ''));
     }
   }, [sdlUrl]);
 

@@ -5,14 +5,9 @@ import { encodeHeaders } from '../encodeHeaders/encodeHeaders';
 import { RequestGraphQLData } from 'shared/types/graphQl';
 
 export const encodeGraphql = (data: Partial<RequestGraphQLData>) => {
-  const {
-    baseUrl: url,
-    requestHeaders: headers,
-    query: body,
-    variables,
-  } = data;
+  const { url, headers, body, variables } = data;
 
-  const encodedUrl = url ? encode64(url) : undefined;
+  const encodedUrl = url ? encode64(decodeURIComponent(url)) : undefined;
   let encodedHeaders: string | undefined;
   if (headers) encodedHeaders = encodeHeaders(headers);
   const encodedBody: string | undefined = encodeBody({
@@ -25,5 +20,6 @@ export const encodeGraphql = (data: Partial<RequestGraphQLData>) => {
   if (encodedUrl) path += `/${encodedUrl}`;
   if (encodedBody) path += `/${encodedBody}`;
   if (encodedHeaders) path += `/${encodedHeaders}`;
+
   return path;
 };

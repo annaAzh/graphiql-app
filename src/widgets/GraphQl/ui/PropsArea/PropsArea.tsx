@@ -16,8 +16,8 @@ import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 
 const headers: (keyof Pick<
   RequestGraphQLData,
-  'requestHeaders' | 'query' | 'variables'
->)[] = ['requestHeaders', 'variables', 'query'];
+  'headers' | 'body' | 'variables'
+>)[] = ['headers', 'variables', 'body'];
 
 interface PropsAreaProps {
   setValue: UseFormSetValue<RequestGraphQLData>;
@@ -37,43 +37,41 @@ export const PropsArea: FC<PropsAreaProps> = ({
   const [headerKey, setHeaderKey] = useState(0);
   let content: ReactNode;
   const dynamicTheme = myTheme(Path.GRAPH);
-  const query = watch('query');
+  const query = watch('body');
   const variables = watch('variables');
-  const requestHeaders = watch('requestHeaders');
+  const requestHeaders = watch('headers');
 
   const prettifyValue = () => {
-    const prevQuery = watch('query');
+    const prevQuery = watch('body');
 
     if (prevQuery) {
       const prettyQuery = prettifying(prevQuery);
       if (prettyQuery !== prevQuery) {
-        setValue('query', prettyQuery);
+        setValue('body', prettyQuery);
       }
     }
   };
 
   const handleQuery = () => {
-    setEncodeValue('query', query);
+    setEncodeValue('body', query);
   };
 
   useEffect(() => {
     if (!requestHeaders) return;
     if (!headerKey) setHeaderKey((prev) => (prev += 1));
-    setEncodeValue('requestHeaders', requestHeaders);
+    setEncodeValue('headers', requestHeaders);
   }, [requestHeaders]);
 
   useEffect(() => {
     setEncodeValue('variables', variables);
   }, [variables]);
 
-  if (activeHeader === 'requestHeaders') {
+  if (activeHeader === 'headers') {
     content = (
       <HeadersEditor
-        key="requestHeaders"
+        key="headers"
         initialValue={requestHeaders}
-        callback={(value: KeyValueGraphQl[]) =>
-          setValue('requestHeaders', value)
-        }
+        callback={(value: KeyValueGraphQl[]) => setValue('headers', value)}
       />
     );
   } else if (activeHeader === 'variables') {
@@ -92,7 +90,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
           value={query}
           width="100%"
           height="200px"
-          onChange={(value) => setValue('query', value)}
+          onChange={(value) => setValue('body', value)}
           style={{ width: '100%' }}
           onBlur={handleQuery}
         />
@@ -118,7 +116,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
             className={activeHeader === header ? style.active : undefined}
             onClick={() => setActiveHeader(header)}
           >
-            {header === 'requestHeaders' ? 'headers' : header}
+            {header === 'body' ? 'query' : header}
           </p>
         ))}
       </div>

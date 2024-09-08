@@ -8,6 +8,7 @@ import { encodeRest } from 'shared/lib/dataConverters';
 import Link from 'next/link';
 import { Path } from 'shared/types/path';
 import { Button, Title } from 'shared/components';
+import { encodeGraphql } from 'shared/lib/dataConverters/encodeGraphQl/encodeQraphQl';
 
 export const HistoryList = () => {
   const navigate = useRouter();
@@ -21,6 +22,11 @@ export const HistoryList = () => {
   const clickHandler = async (index: number) => {
     if (list && list[index].method !== 'GRAPHQL') {
       const path = encodeRest(list[index]);
+      navigate.push(path);
+    }
+
+    if (list && list[index].method === 'GRAPHQL') {
+      const path = encodeGraphql(list[index]);
       navigate.push(path);
     }
   };

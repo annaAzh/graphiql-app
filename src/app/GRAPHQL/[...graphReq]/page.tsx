@@ -4,6 +4,7 @@ import { ResponseResult } from 'features/ResponseResult';
 import { Path } from 'shared/types/path';
 import { encodeUrlGraphQl } from 'shared/lib/dataConverters/encodeUrlGraphQl/encodeUrlGraphQl';
 import { SerachParams } from 'shared/types/graphQl';
+import { notFound } from 'next/navigation';
 
 type Props = {
   params: { graphReq: [string, string] };
@@ -11,8 +12,13 @@ type Props = {
 };
 
 const GraphQlPage: FC<Props> = async ({ params, searchParams }) => {
+  const { graphReq } = params;
+
+  if (!graphReq[1]) {
+    return <ResponseResult redactor={Path.GRAPH} />;
+  }
+
   try {
-    const { graphReq } = params;
     const data = encodeUrlGraphQl(graphReq[0], graphReq[1], searchParams);
     const result = await fetchGraphQlData(data);
 
@@ -28,7 +34,7 @@ const GraphQlPage: FC<Props> = async ({ params, searchParams }) => {
       )
     );
   } catch {
-    return <>Error</>;
+    notFound();
   }
 };
 

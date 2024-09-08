@@ -1,10 +1,10 @@
 import { IntrospectionQuery } from 'graphql';
 
 export type RequestGraphQLData = {
-  baseUrl: string;
-  query?: string;
+  url: string;
+  body?: string;
   variables?: KeyValueGraphQl[];
-  requestHeaders?: KeyValueGraphQl[];
+  headers?: KeyValueGraphQl[];
   operationName?: string;
 };
 
@@ -23,8 +23,8 @@ export type GraphQlSchemaResponse = {
 };
 
 export type GraphQlResponse = {
-  status: number;
-  data?: IntrospectionQuery;
+  status: number | string;
+  data?: IntrospectionQuery | string;
 };
 
 export type PartialGraphQL = Partial<RequestGraphQLData>;

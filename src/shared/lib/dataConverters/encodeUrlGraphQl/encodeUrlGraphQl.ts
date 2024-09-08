@@ -6,9 +6,9 @@ export const encodeUrlGraphQl = (
   body: string,
   searchParams: SerachParams | undefined
 ) => {
-  const baseUrl = decode64(decodeURIComponent(url));
+  const parsedUrl = decode64(decodeURIComponent(url));
   const {
-    body: query,
+    body: queryBody,
     variables: requestVariables,
   }: { body: string; variables: { key: string; value: string }[] } = JSON.parse(
     decode64(decodeURIComponent(body))
@@ -26,8 +26,8 @@ export const encodeUrlGraphQl = (
   }
 
   const data = {
-    baseUrl,
-    query,
+    url: parsedUrl,
+    body: queryBody,
     requestHeaders,
     variables: requestVariables,
   };
