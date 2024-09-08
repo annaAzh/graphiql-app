@@ -50,7 +50,12 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
               </option>
             ))}
           </select>
-          <input className={style.curl} type="text" {...register('url')} />
+          <input
+            className={style.curl}
+            type="text"
+            {...register('url')}
+            onChange={(e) => setEncodeValue('url', e.target.value)}
+          />
           <button className="common-btn" type="submit">
             send
           </button>
