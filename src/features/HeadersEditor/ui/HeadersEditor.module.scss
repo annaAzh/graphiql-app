@@ -14,6 +14,7 @@
 
 .line {
   @include flex(space-between, $gap: 10px);
+  max-height: 35px;
 
   input {
     @include flex($flexGrow: 1);
@@ -21,5 +22,29 @@
     font-size: 16px;
     font-weight: bold;
     padding: 2px 5px;
+  }
+
+  &:hover {
+    .cross {
+      visibility: visible;
+    }
+  }
+}
+
+.cross {
+  visibility: hidden;
+  margin: auto;
+  border: 1px solid var(--main-color-4);
+  border-radius: 4px;
+  font-size: 23px;
+  padding: 4px 12px;
+  font-weight: 900;
+  background: var(--grape);
+  color: var(--main-color-1);
+
+  &:hover {
+    cursor: pointer;
+    background: var(--red);
+    color: var(--main-color-1);
   }
 }

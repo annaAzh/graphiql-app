@@ -14,6 +14,7 @@ import { useClearResult } from 'shared/lib/hooks';
 import { useRestoreValues } from './PropsArea/useRestoreValues';
 import { useEncodeProps } from 'shared/lib/hooks/useEncodeProps/useEncodeProps';
 import { rubik_doodle } from 'shared/styles/fonts/fonts';
+import { useCookies } from 'react-cookie';
 
 interface RestfulProps {
   children: ReactNode;
@@ -21,6 +22,7 @@ interface RestfulProps {
 
 export const Restful: FC<RestfulProps> = ({ children }) => {
   const navigate = useRouter();
+  const [cookies] = useCookies<string>(['user']);
   const { register, handleSubmit, setValue, watch } = useForm<RestfulType>({
     resolver: yupResolver<RestfulType>(restSchema),
     mode: 'onSubmit',
@@ -28,7 +30,7 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
   const { setEncodeValue } = useEncodeProps();
   const selectedOption = watch('method');
   const onSubmit: SubmitHandler<RestfulType> = (data) => {
-    setLocalStoreState(data);
+    setLocalStoreState(data, cookies.user.uid);
     const path = encodeRest(data);
     navigate.push(path);
   };
@@ -51,7 +53,12 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
               </option>
             ))}
           </select>
-          <input className={style.curl} type="text" {...register('url')} />
+          <input
+            className={style.curl}
+            type="text"
+            {...register('url')}
+            onChange={(e) => setEncodeValue('url', e.target.value)}
+          />
           <button className="common-btn" type="submit">
             send
           </button>
@@ -59,7 +66,6 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
         <PropsArea
           setValue={setValue}
           watch={watch}
-          register={register}
           setEncodeValue={setEncodeValue}
         />
         <div>{children}</div>

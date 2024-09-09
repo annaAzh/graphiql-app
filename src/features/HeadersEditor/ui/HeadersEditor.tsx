@@ -23,6 +23,14 @@ export const HeadersEditor: FC<HeadersEditorProps> = ({
     });
   };
 
+  const removeHandler = (index: number) => {
+    setData((prev) => {
+      const newValue = [...prev];
+      newValue.splice(index, 1);
+      return newValue;
+    });
+  };
+
   useEffect(() => callback(data), [data]);
 
   return (
@@ -41,6 +49,11 @@ export const HeadersEditor: FC<HeadersEditorProps> = ({
             onChange={(e) => setValue('value', index, e.target.value)}
             value={data[index].value || ''}
           />
+          {data.length - 1 ? (
+            <div className={style.cross} onClick={() => removeHandler(index)}>
+              X
+            </div>
+          ) : null}
         </div>
       ))}
     </div>
