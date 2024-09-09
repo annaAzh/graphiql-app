@@ -6,13 +6,10 @@ import {
   PartialGraphQL,
   RequestGraphQLData,
 } from 'shared/types/graphQl';
-import CodeMirror from '@uiw/react-codemirror';
 import style from './PropsArea.module.scss';
 import { myTheme } from 'shared/styles/codemirror/EditorView';
 import { Path } from 'shared/types/path';
-import { Button } from '@mui/material';
-import { prettifying } from 'shared/lib/dataConverters';
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import { BodyEditor } from 'features/BodyEditor';
 
 const headers: (keyof Pick<
   RequestGraphQLData,
@@ -40,17 +37,6 @@ export const PropsArea: FC<PropsAreaProps> = ({
   const query = watch('body');
   const variables = watch('variables');
   const requestHeaders = watch('headers');
-
-  const prettifyValue = () => {
-    const prevQuery = watch('body');
-
-    if (prevQuery) {
-      const prettyQuery = prettifying(prevQuery);
-      if (prettyQuery !== prevQuery) {
-        setValue('body', prettyQuery);
-      }
-    }
-  };
 
   const handleQuery = () => {
     setEncodeValue('body', query);
@@ -84,26 +70,12 @@ export const PropsArea: FC<PropsAreaProps> = ({
     );
   } else {
     content = (
-      <div style={{ display: 'flex', gap: '10px' }}>
-        <CodeMirror
-          theme={dynamicTheme}
-          value={query}
-          width="100%"
-          height="200px"
-          onChange={(value) => setValue('body', value)}
-          style={{ width: '100%' }}
-          onBlur={handleQuery}
-        />
-        <div
-          style={{
-            marginLeft: 'auto',
-          }}
-        >
-          <Button size="small" variant="outlined" onClick={prettifyValue}>
-            <AutoFixHighIcon fontSize="small" />
-          </Button>
-        </div>
-      </div>
+      <BodyEditor
+        dynamicTheme={dynamicTheme}
+        onBlurCalllBack={handleQuery}
+        watch={watch}
+        setValue={setValue}
+      />
     );
   }
 
