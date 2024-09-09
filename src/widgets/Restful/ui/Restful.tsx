@@ -13,6 +13,7 @@ import { restSchema } from 'shared/constants/restSchema';
 import { useClearResult } from 'shared/lib/hooks';
 import { useRestoreValues } from './PropsArea/useRestoreValues';
 import { useEncodeProps } from 'shared/lib/hooks/useEncodeProps/useEncodeProps';
+import { rubik_doodle } from 'shared/styles/fonts/fonts';
 
 interface RestfulProps {
   children: ReactNode;
@@ -36,7 +37,7 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
 
   return (
     <div className={style.postman}>
-      <h2>REST Client</h2>
+      <h2 className={rubik_doodle.className}>REST Client</h2>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={style.upperSection}>
           <select

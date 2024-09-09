@@ -25,6 +25,8 @@ import { setLocalStoreState } from 'shared/lib/storeState/storeState';
 import { encodeGraphql } from 'shared/lib/dataConverters/encodeGraphQl/encodeQraphQl';
 import { HistoryGraphSave } from 'shared/types/app';
 import { useRestoreValues } from './PropsArea/useRestoreValues';
+import clsx from 'clsx';
+import { rubik_doodle } from 'shared/styles/fonts/fonts';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
@@ -127,7 +129,9 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
             )}
           </div>
           <div className={style.sessions}>
-            <h3 className={style.main_title}>GraphQl Playground</h3>
+            <h3 className={clsx(style.main_title, rubik_doodle.className)}>
+              GraphQl Playground
+            </h3>
             <div className={style.container}>
               <form
                 onSubmit={handleSubmit(onSubmitHandler)}
