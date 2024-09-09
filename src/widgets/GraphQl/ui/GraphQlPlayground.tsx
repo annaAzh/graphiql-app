@@ -13,12 +13,7 @@ import style from './GraphQlPlayground.module.scss';
 import { PropsArea } from './PropsArea/PropsArea';
 import { SDLInput } from './SDLInput/SDLInput';
 import { fetchSDLSchema } from 'shared/lib/api/graphQLRequest/graphQlShema';
-import { DocExplorer, GraphiQLProvider } from '@graphiql/react';
-import { createGraphiQLFetcher } from '@graphiql/toolkit';
 import { IntrospectionQuery } from 'graphql';
-import './docsExplorer.scss';
-import { Box, Drawer } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 import { useClearResult } from 'shared/lib/hooks';
 import { useEncodeProps } from 'shared/lib/hooks/useEncodeProps/useEncodeProps';
 import { setLocalStoreState } from 'shared/lib/storeState/storeState';
@@ -27,6 +22,7 @@ import { HistoryGraphSave } from 'shared/types/app';
 import { useRestoreValues } from './PropsArea/useRestoreValues';
 import clsx from 'clsx';
 import { rubik_doodle } from 'shared/styles/fonts/fonts';
+import { DocsGraphQl } from './DocsGraphQl/DocsGraphQl';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
@@ -68,15 +64,18 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
 
   const getSchema = async () => {
     try {
-      const data = await fetchSDLSchema(sdlUrl);
+      const result = await fetchSDLSchema(sdlUrl);
 
-      if (data?.data && typeof data.data !== 'string') {
-        setSchema(data.data);
-        setDocsShown(true);
+      if (result) {
+        const { status, data } = result;
+
+        if (status === 200 && data && typeof data !== 'string') {
+          setSchema(data);
+          setDocsShown(true);
+        }
       }
     } catch {
       setSchema(null);
-      return <>Error</>;
     }
   };
 
@@ -96,38 +95,12 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
         </div>
 
         <div className={style.main}>
-          <div
-            className={
-              shownDocs
-                ? `${style.docs} ${style.shown} custom-doc-explorer`
-                : `${style.docs} custom-doc-explorer`
-            }
-          >
-            {shownDocs && (
-              <Drawer open={shownDocs} onClose={() => setDocsShown(!shownDocs)}>
-                <Box
-                  className={style.drawer}
-                  sx={{ width: 360 }}
-                  p={2}
-                  role="presentation"
-                >
-                  <Button
-                    variant="outlined"
-                    size="lg"
-                    onClick={() => setDocsShown(!shownDocs)}
-                    className={style.close_btn}
-                  >
-                    <CloseIcon />
-                  </Button>
-                  <GraphiQLProvider
-                    fetcher={createGraphiQLFetcher({ url: sdlUrl })}
-                  >
-                    <DocExplorer />
-                  </GraphiQLProvider>
-                </Box>
-              </Drawer>
-            )}
-          </div>
+          <DocsGraphQl
+            sdlUrl={sdlUrl}
+            shownDocs={shownDocs}
+            onClose={() => setDocsShown(!shownDocs)}
+            onClickShowDocs={() => setDocsShown(!shownDocs)}
+          />
           <div className={style.sessions}>
             <h3 className={clsx(style.main_title, rubik_doodle.className)}>
               GraphQl Playground
