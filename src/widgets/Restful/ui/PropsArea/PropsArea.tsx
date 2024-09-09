@@ -3,12 +3,9 @@ import style from './PropsArea.module.scss';
 import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { HeadersItem, PartialRest, RestfulType } from 'shared/types/restful';
 import { HeadersEditor } from 'features/HeadersEditor';
-import CodeMirror from '@uiw/react-codemirror';
-import { Button } from '@mui/material';
-import { prettifying } from 'shared/lib/dataConverters';
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { myTheme } from 'shared/styles/codemirror/EditorView';
 import { Path } from 'shared/types/path';
+import { BodyEditor } from 'features/BodyEditor';
 
 const headers: (keyof Pick<RestfulType, 'headers' | 'body' | 'variables'>)[] = [
   'headers',
@@ -37,10 +34,9 @@ export const PropsArea: FC<PropsAreaProps> = ({
   const watchVariables = watch('variables');
   const watchBody = watch('body');
 
-  const prettyHandler = () => {
-    if (!watchBody) return;
-    const prettyQuery = prettifying(watchBody);
-    if (prettyQuery !== watchBody) setValue('body', prettyQuery);
+  const bodyHandler = () => {
+    setEncodeValue('body', watchBody);
+    setValue('body', watchBody);
   };
 
   const content = useMemo(() => {
@@ -62,25 +58,12 @@ export const PropsArea: FC<PropsAreaProps> = ({
       );
     } else {
       return (
-        <div style={{ display: 'flex', gap: '10px' }} key="body">
-          <CodeMirror
-            theme={dynamicTheme}
-            value={watch('body')}
-            width="100%"
-            height="200px"
-            onBlur={(e) => bodyHandler(e.target.innerText)}
-            style={{ width: '100%' }}
-          />
-          <div
-            style={{
-              marginLeft: 'auto',
-            }}
-          >
-            <Button size="small" variant="outlined" onClick={prettyHandler}>
-              <AutoFixHighIcon fontSize="small" />
-            </Button>
-          </div>
-        </div>
+        <BodyEditor
+          dynamicTheme={dynamicTheme}
+          onBlurCalllBack={bodyHandler}
+          watch={watch}
+          setValue={setValue}
+        />
       );
     }
   }, [activeHeader, headerKey, watchBody]);
@@ -94,11 +77,6 @@ export const PropsArea: FC<PropsAreaProps> = ({
   useEffect(() => {
     setEncodeValue('variables', watchVariables);
   }, [watchVariables]);
-
-  const bodyHandler = (value: string) => {
-    setEncodeValue('body', value);
-    setValue('body', value);
-  };
 
   return (
     <>

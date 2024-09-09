@@ -40,6 +40,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
 
   const handleQuery = () => {
     setEncodeValue('body', query);
+    setValue('body', query);
   };
 
   useEffect(() => {

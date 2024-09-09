@@ -23,6 +23,7 @@ import { useRestoreValues } from './PropsArea/useRestoreValues';
 import clsx from 'clsx';
 import { rubik_doodle } from 'shared/styles/fonts/fonts';
 import { DocsGraphQl } from './DocsGraphQl/DocsGraphQl';
+import { useCookies } from 'react-cookie';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
@@ -40,6 +41,7 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const [shownDocs, setDocsShown] = useState<boolean>(false);
   const { setEncodeValue } = useEncodeProps('GRAPHQL');
   const url = watch('url');
+  const [cookies] = useCookies<string>(['user']);
 
   const queryValue = watch('body');
   const sdlUrl = url + '?sdl';
@@ -55,7 +57,7 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
       method: 'GRAPHQL',
     };
 
-    setLocalStoreState(newData);
+    setLocalStoreState(newData, cookies.user.uid);
     const path = encodeGraphql(data);
     navigate.push(path);
   };
