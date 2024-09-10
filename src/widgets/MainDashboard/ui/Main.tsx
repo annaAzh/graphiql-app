@@ -1,14 +1,12 @@
 'use client';
+import Link from 'next/link';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from 'shared/lib/api';
-import styles from './Main.module.scss';
-import { Button, Title } from 'shared/components';
-import Link from 'next/link';
 import { Path } from 'shared/types/path';
-import { useCookies } from 'react-cookie';
+import { Button, Title } from 'shared/components';
+import styles from './Main.module.scss';
 
 export const Main = () => {
-  const [cookies] = useCookies<string>(['user']);
   const [user] = useAuthState(auth);
   const name = user?.displayName;
 
@@ -16,7 +14,7 @@ export const Main = () => {
     <>
       <Title size="h1">{`Welcome${name ? ` Back, ${name}` : ''}!`}</Title>
       <div className={styles.containerButtons}>
-        {cookies.user && user ? (
+        {user ? (
           <>
             <Button variant="secondary">
               <Link href={Path.REST}>REST Client</Link>
