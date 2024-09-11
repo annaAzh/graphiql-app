@@ -1,18 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PRIVATE_PAGES, PUBLIC_PAGES } from 'shared/constants';
-import { auth } from 'shared/lib/api';
 
 export default function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
-  const user = auth.currentUser;
+  const cookies = req.cookies.get('user')?.value;
   const isProtectedRoute = PRIVATE_PAGES.includes(path);
   const isPublicRoute = PUBLIC_PAGES.includes(path);
 
-  if (isProtectedRoute && !user) {
+  if (isProtectedRoute && !cookies) {
     return NextResponse.redirect(new URL('/', req.nextUrl));
   }
 
-  if (isPublicRoute && user) {
+  if (isPublicRoute && cookies) {
     return NextResponse.redirect(new URL('/', req.nextUrl));
   }
 
