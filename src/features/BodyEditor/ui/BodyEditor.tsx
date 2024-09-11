@@ -35,11 +35,15 @@ export const BodyEditor: FC<Props> = ({
         className={styles.code_editor}
         theme={dynamicTheme}
         value={watchBody}
-        // onBlur={onBlurCalllBack}
         onBlur={(e) => onBlurCallBack(e.target.innerText)}
       />
       <div className={styles.button_container}>
-        <Button size="small" variant="outlined" onClick={prettyHandler}>
+        <Button
+          data-testid="prettifyBtn"
+          size="small"
+          variant="outlined"
+          onClick={prettyHandler}
+        >
           <AutoFixHighIcon fontSize="small" />
         </Button>
       </div>

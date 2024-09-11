@@ -46,6 +46,7 @@ export const SDLInput: FC<Props> = ({ watch, onClick, setValue }) => {
   return (
     <div className={style.url_wrapper} style={{ marginTop: '6px' }}>
       <input
+        data-testid="sdl_input"
         placeholder="https://url..."
         value={sdlUrl}
         onChange={handleUrlChange}
