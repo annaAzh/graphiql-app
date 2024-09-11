@@ -20,7 +20,7 @@ export const useEncodeProps = (mode: Mode = 'REST') => {
   };
 
   useEffect(() => {
-    if (!state) return;
+    if (!Object.keys(state).length) return;
     if (mode === 'REST') {
       const path = encodeRest(state);
       navigate.push(`/${Path.REST}${path}`);
@@ -28,7 +28,7 @@ export const useEncodeProps = (mode: Mode = 'REST') => {
       const path = encodeGraphql(state);
       navigate.push(`${path}`);
     }
-  }, [state, mode]);
+  }, [state]);
 
   return { setEncodeValue };
 };
