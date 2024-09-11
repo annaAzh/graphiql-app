@@ -10,26 +10,11 @@ import { Button } from 'shared/components';
 import { auth, logoutUser } from 'shared/lib/api';
 import { ButtonLogOut } from 'features/LogOutUser';
 import styles from './Header.module.scss';
-import { redirect, usePathname } from 'next/navigation';
-import { PRIVATE_PAGES, PUBLIC_PAGES } from 'shared/constants';
 
 export const Header: FC = () => {
-  const params = usePathname();
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [cookies] = useCookies<string>(['user']);
   const [user] = useAuthState(auth);
-
-  useEffect(() => {
-    if (user) {
-      if (PUBLIC_PAGES.includes(params) && params !== Path.MAIN) {
-        redirect(Path.MAIN);
-      }
-    } else {
-      if (PRIVATE_PAGES.includes(params) && params !== Path.MAIN) {
-        redirect(Path.MAIN);
-      }
-    }
-  }, [params, user]);
 
   useEffect(() => {
     if (!cookies.user && user) {
