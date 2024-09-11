@@ -8,10 +8,10 @@ import { notFound } from 'next/navigation';
 
 type Props = {
   params: { graphReq: [string, string] };
-  headersParams?: HeadersParams;
+  searchParams?: HeadersParams;
 };
 
-const GraphQlPage: FC<Props> = async ({ params, headersParams }) => {
+const GraphQlPage: FC<Props> = async ({ params, searchParams }) => {
   const { graphReq } = params;
 
   if (!graphReq[1]) {
@@ -19,7 +19,7 @@ const GraphQlPage: FC<Props> = async ({ params, headersParams }) => {
   }
 
   try {
-    const data = encodeUrlGraphQl(graphReq[0], graphReq[1], headersParams);
+    const data = encodeUrlGraphQl(graphReq[0], graphReq[1], searchParams);
     const result = await fetchGraphQlData(data);
 
     return (
