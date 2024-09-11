@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "next lint",
     "prettier-fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,html}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test:ui": "vitest --ui",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@graphiql/react": "^0.26.2",

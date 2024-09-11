@@ -1,9 +1,6 @@
 @import './variables/reset.scss';
 @import './common.scss';
 
-@include google-font('Poppins');
-@include google-font('Permanent Marker');
-
 :root {
   --main-color-0: #f6f2f6;
   --main-color-1: #dee2e6;
@@ -42,7 +39,6 @@
 body {
   @include flex($flexDirection: column);
   position: relative;
-  font-family: 'Poppins';
   min-height: 100vh;
   font-size: 20px;
   background: var(--main-color-4);

@@ -4,6 +4,7 @@ import { Footer } from 'widgets/Footer';
 import styles from './styles/Main.module.scss';
 import 'shared/styles/global.scss';
 import { StoreProvider } from 'core';
+import { rubik } from 'shared/styles/fonts/fonts';
 
 export const metadata = {
   title: 'Graphiql-app',
@@ -14,7 +15,7 @@ export const metadata = {
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
-      <body>
+      <body className={rubik.className}>
         <Header />
         <StoreProvider>
           <main className={styles.main}>{children}</main>

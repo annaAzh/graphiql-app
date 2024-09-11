@@ -1,48 +1,25 @@
 import { FC } from 'react';
 import { fetchGraphQlData } from 'shared/lib/api';
-import { decode64 } from 'shared/lib/dataConverters';
-import { KeyValueGraphQl } from 'shared/types/graphQl';
 import { ResponseResult } from 'features/ResponseResult';
 import { Path } from 'shared/types/path';
+import { encodeUrlGraphQl } from 'shared/lib/dataConverters/encodeUrlGraphQl/encodeUrlGraphQl';
+import { HeadersParams } from 'shared/types/graphQl';
+import { notFound } from 'next/navigation';
 
 type Props = {
   params: { graphReq: [string, string] };
-  searchParams?: { [key: string]: string };
+  searchParams?: HeadersParams;
 };
 
 const GraphQlPage: FC<Props> = async ({ params, searchParams }) => {
+  const { graphReq } = params;
+
+  if (!graphReq[1]) {
+    return <ResponseResult redactor={Path.GRAPH} />;
+  }
+
   try {
-    const { graphReq } = params;
-
-    const baseUrl = decode64(decodeURIComponent(graphReq[0]));
-    const query = decode64(decodeURIComponent(graphReq[1]));
-    const requestHeaders: KeyValueGraphQl[] = [];
-    const requestVariables: KeyValueGraphQl[] = [];
-
-    if (searchParams) {
-      for (const key in searchParams) {
-        if (key.startsWith('header_')) {
-          requestHeaders.push({
-            key: key.replace(/header_/, ''),
-            value: decode64(decodeURIComponent(searchParams[key])),
-          });
-        }
-        if (key.startsWith('variable_')) {
-          requestVariables.push({
-            key: key.replace(/variable_/, ''),
-            value: decode64(decodeURIComponent(searchParams[key])),
-          });
-        }
-      }
-    }
-
-    const data = {
-      baseUrl,
-      query,
-      requestHeaders,
-      variables: requestVariables,
-    };
-
+    const data = encodeUrlGraphQl(graphReq[0], graphReq[1], searchParams);
     const result = await fetchGraphQlData(data);
 
     return (
@@ -50,14 +27,14 @@ const GraphQlPage: FC<Props> = async ({ params, searchParams }) => {
         <ResponseResult
           response={{
             body: JSON.stringify(result?.data, null, 2),
-            status: result.status,
+            status: +result.status,
           }}
           redactor={Path.GRAPH}
         />
       )
     );
   } catch {
-    return <>Error</>;
+    notFound();
   }
 };
 
