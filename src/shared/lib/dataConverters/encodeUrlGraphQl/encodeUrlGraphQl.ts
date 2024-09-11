@@ -1,10 +1,10 @@
-import { KeyValueGraphQl, SerachParams } from 'shared/types/graphQl';
+import { KeyValueGraphQl, HeadersParams } from 'shared/types/graphQl';
 import { decode64 } from '../decode64/decode64';
 
 export const encodeUrlGraphQl = (
   url: string,
   body: string,
-  searchParams: SerachParams | undefined
+  searchParams: HeadersParams | undefined
 ) => {
   const parsedUrl = decode64(decodeURIComponent(url));
   const {
