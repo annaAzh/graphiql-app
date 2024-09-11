@@ -4,7 +4,6 @@ import { decode64, encode64 } from '../dataConverters';
 const STORE_KEY = '#21sdcK';
 
 const setLocalStoreState = (value: HistorySave, user: string): void => {
-  console.log('user = ', user);
   const prevState = getLocalStoreState(user) || [];
   prevState.unshift(value);
 

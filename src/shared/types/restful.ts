@@ -1,6 +1,6 @@
 interface RestfulType {
   url: string;
-  method: ValidMethods;
+  method?: ValidMethods;
   headers?: HeadersItem[];
   body?: string;
   variables?: HeadersItem[];
