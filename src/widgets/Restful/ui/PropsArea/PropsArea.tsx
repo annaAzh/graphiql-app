@@ -34,9 +34,9 @@ export const PropsArea: FC<PropsAreaProps> = ({
   const watchVariables = watch('variables');
   const watchBody = watch('body');
 
-  const bodyHandler = () => {
-    setEncodeValue('body', watchBody);
-    setValue('body', watchBody);
+  const bodyHandler = (value: string) => {
+    setEncodeValue('body', value);
+    setValue('body', value);
   };
 
   const content = useMemo(() => {
@@ -60,7 +60,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
       return (
         <BodyEditor
           dynamicTheme={dynamicTheme}
-          onBlurCalllBack={bodyHandler}
+          onBlurCallBack={bodyHandler}
           watch={watch}
           setValue={setValue}
         />

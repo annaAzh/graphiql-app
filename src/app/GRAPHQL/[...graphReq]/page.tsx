@@ -3,15 +3,15 @@ import { fetchGraphQlData } from 'shared/lib/api';
 import { ResponseResult } from 'features/ResponseResult';
 import { Path } from 'shared/types/path';
 import { encodeUrlGraphQl } from 'shared/lib/dataConverters/encodeUrlGraphQl/encodeUrlGraphQl';
-import { SerachParams } from 'shared/types/graphQl';
+import { HeadersParams } from 'shared/types/graphQl';
 import { notFound } from 'next/navigation';
 
 type Props = {
   params: { graphReq: [string, string] };
-  searchParams?: SerachParams;
+  headersParams?: HeadersParams;
 };
 
-const GraphQlPage: FC<Props> = async ({ params, searchParams }) => {
+const GraphQlPage: FC<Props> = async ({ params, headersParams }) => {
   const { graphReq } = params;
 
   if (!graphReq[1]) {
@@ -19,7 +19,7 @@ const GraphQlPage: FC<Props> = async ({ params, searchParams }) => {
   }
 
   try {
-    const data = encodeUrlGraphQl(graphReq[0], graphReq[1], searchParams);
+    const data = encodeUrlGraphQl(graphReq[0], graphReq[1], headersParams);
     const result = await fetchGraphQlData(data);
 
     return (

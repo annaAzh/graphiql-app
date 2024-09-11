@@ -12,12 +12,12 @@ type Props = {
   dynamicTheme: Extension;
   watch: UseFormWatch<RequestGraphQLData | RestfulType>;
   setValue: UseFormSetValue<RequestGraphQLData | RestfulType>;
-  onBlurCalllBack: () => void;
+  onBlurCallBack: (value: string) => void;
 };
 
 export const BodyEditor: FC<Props> = ({
   dynamicTheme,
-  onBlurCalllBack,
+  onBlurCallBack,
   watch,
   setValue,
 }) => {
@@ -35,7 +35,8 @@ export const BodyEditor: FC<Props> = ({
         className={styles.code_editor}
         theme={dynamicTheme}
         value={watchBody}
-        onBlur={onBlurCalllBack}
+        // onBlur={onBlurCalllBack}
+        onBlur={(e) => onBlurCallBack(e.target.innerText)}
       />
       <div className={styles.button_container}>
         <Button size="small" variant="outlined" onClick={prettyHandler}>

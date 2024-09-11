@@ -29,4 +29,4 @@ export type GraphQlResponse = {
 
 export type PartialGraphQL = Partial<RequestGraphQLData>;
 
-export type SerachParams = { [key: string]: string };
+export type HeadersParams = { [key: string]: string };

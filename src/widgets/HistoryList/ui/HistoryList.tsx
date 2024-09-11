@@ -10,6 +10,7 @@ import { Path } from 'shared/types/path';
 import { Button, Title } from 'shared/components';
 import { encodeGraphql } from 'shared/lib/dataConverters/encodeGraphQl/encodeQraphQl';
 import { useCookies } from 'react-cookie';
+import { VALID_METHODS } from 'shared/constants';
 
 export const HistoryList = () => {
   const navigate = useRouter();
@@ -22,15 +23,17 @@ export const HistoryList = () => {
   }, []);
 
   const clickHandler = async (index: number) => {
-    if (list && list[index].method !== 'GRAPHQL') {
-      const path = encodeRest(list[index]);
-      navigate.push(path);
+    if (!list) return;
+    const method = list[index].method;
+    let path: string | undefined;
+    if (method === 'GRAPHQL') {
+      path = encodeGraphql(list[index]);
+    } else if (method && VALID_METHODS.includes(method)) {
+      path = encodeRest(list[index]);
+    } else {
+      path = Path.NOT_FOUND;
     }
-
-    if (list && list[index].method === 'GRAPHQL') {
-      const path = encodeGraphql(list[index]);
-      navigate.push(path);
-    }
+    navigate.push(path);
   };
 
   return (

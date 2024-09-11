@@ -34,13 +34,12 @@ export const PropsArea: FC<PropsAreaProps> = ({
   const [headerKey, setHeaderKey] = useState(0);
   let content: ReactNode;
   const dynamicTheme = myTheme(Path.GRAPH);
-  const query = watch('body');
   const variables = watch('variables');
   const requestHeaders = watch('headers');
 
-  const handleQuery = () => {
-    setEncodeValue('body', query);
-    setValue('body', query);
+  const handleQuery = (value: string) => {
+    setEncodeValue('body', value);
+    setValue('body', value);
   };
 
   useEffect(() => {
@@ -73,7 +72,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
     content = (
       <BodyEditor
         dynamicTheme={dynamicTheme}
-        onBlurCalllBack={handleQuery}
+        onBlurCallBack={handleQuery}
         watch={watch}
         setValue={setValue}
       />
