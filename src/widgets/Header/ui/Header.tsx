@@ -10,6 +10,7 @@ import { Button } from 'shared/components';
 import { auth, logoutUser } from 'shared/lib/api';
 import { ButtonLogOut } from 'features/LogOutUser';
 import styles from './Header.module.scss';
+import { LanguageChanger } from 'features/SwitchLanguage';
 
 export const Header: FC = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -44,10 +45,7 @@ export const Header: FC = () => {
         <Image src={Logo} alt="logo" priority width={170} height={55} />
       </Link>
       <div className={styles.dashboard}>
-        <select defaultValue={'en'}>
-          <option value={'en'}>EN</option>
-          <option value={'ru'}>RU</option>
-        </select>
+        <LanguageChanger />
         {user ? (
           <>
             <Button size="lg">
