@@ -1,1 +1,18 @@
-{"History":"History","InvalidPath":"Invalid required path","Loading":"Loading...","LogOutMessage":"Do you really want to log out?","Main":"Main","No":"No","NotFound":"Page hasn't been found","REST":"REST Client","send":"send","SignIn":"Sign In","SignOut":"Sign Out","SignUp":"Sign Up","Status":"Status:","Welcome":"Welcome","WelcomeBack":"Welcome Back","Yes":"Yes"}
+{
+  "History":"History",
+  "InvalidPath":"Invalid required path",
+  "Loading":"Loading...",
+  "LogOutMessage":"Do you really want to log out?",
+  "Main":"Main",
+  "No":"No",
+  "NotFound":"Page hasn't been found",
+  "REST":"REST Client",
+  "GraphiQL": "GraphiQL Client",
+  "send":"send",
+  "SignIn":"Sign In",
+  "SignOut":"Sign Out",
+  "SignUp":"Sign Up",
+  "Status":"Status:",
+  "Welcome":"Welcome !",
+  "WelcomeBack":"Welcome Back",
+  "Yes":"Yes"}
