@@ -1,8 +1,8 @@
 'use client';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Box, TextField } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { User } from 'firebase/auth';
@@ -18,8 +18,9 @@ interface FormProps {
 }
 
 export const UserForm: FC<FormProps> = ({ isLogin }) => {
+  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
-  const [cookies, setCookie] = useCookies<string>(['user']);
+  const [, setCookie] = useCookies<string>(['user']);
   const { control, handleSubmit, reset, formState } = useForm<
     DataFormLogin | DataFormRegister
   >({
@@ -29,10 +30,6 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
     ),
     mode: 'all',
   });
-
-  useEffect(() => {
-    if (cookies.user) redirect(Path.MAIN);
-  }, [cookies.user]);
 
   const onSubmit = async (
     data: DataFormLogin | DataFormRegister
@@ -53,6 +50,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
       setCookie('user', res, {
         expires: new Date(expirationTime),
       });
+      router.push(Path.MAIN);
       reset();
     }
   };
