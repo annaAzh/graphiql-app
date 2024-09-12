@@ -1,8 +1,11 @@
-{
+{ 
+  "body": "тело",
+  "docs": "документы",
   "History":"История",
   "HistoryDescription1": "Вы не выполнили ни одного запроса",
   "HistoryDescription2":"Здесь пусто. Попробуйте:",
   "HistoryRequests": "История запросов",
+  "headers": "заголовки",
   "InvalidPath":"Неверный путь",
   "lengthPassword": "не менее 8 символов",
   "Key":"ключ",
@@ -18,7 +21,9 @@
   "NumberPassword": "как минимум одна цифра",
   "REST":"REST-клиент",
   "GraphiQL": "GraphiQL-клиент",
-  "send":"отправлять",
+  "GraphQlPlayground": "GraphQl Playground",
+  "query": "запрос",
+  "send":"отправить",
   "SignIn":"Войти",
   "SignOut":"Выйти",
   "SignUp":"Зарегистрироваться",
@@ -34,5 +39,6 @@
   "PasswordRequired":"пароль обязателен",
   "Uppercase": "как минимум одна заглавная буква",
   "Value":"значение",
+  "variables": "переменные",
   "Yes":"Да"
 }

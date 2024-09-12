@@ -1,8 +1,11 @@
 {
+  "body": "body",
+  "docs": "docs",
   "History":"History",
   "HistoryDescription1": "You haven't executed any requests",
   "HistoryDescription2":"It's empty here. Try:",
   "HistoryRequests": "History Requests",
+  "headers": "headers",
   "Key":"key",
   "InvalidPath":"Invalid required path",
   "lengthPassword":"length must be at least 8 characters",
@@ -18,6 +21,7 @@
   "NumberPassword":"at least one number",
   "REST":"REST Client",
   "GraphiQL": "GraphiQL Client",
+  "query": "query",
   "send":"send",
   "SignIn":"Sign In",
   "SignOut":"Sign Out",
@@ -34,4 +38,5 @@
   "PasswordRequired": "password is required",
   "Uppercase": "at least one uppercase letter",
   "Value":"value",
+  "variables": "variables",
   "Yes":"Yes"}
