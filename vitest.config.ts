@@ -10,7 +10,12 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text'],
       include: ['**/src/**'],
-      exclude: ['**/index.ts', '**/src/shared/types/**'],
+      exclude: [
+        '**/index.ts',
+        '**/src/shared/types/**',
+        '.next/server/src',
+        'middleware.js',
+      ],
     },
     globals: true,
     environment: 'jsdom',
