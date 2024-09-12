@@ -11,7 +11,7 @@ export const Spinner: FC = () => {
       <Image
         src={svgSpinner}
         alt="spinner"
-        priority={true}
+        priority={false}
         width={250}
         height={250}
       />

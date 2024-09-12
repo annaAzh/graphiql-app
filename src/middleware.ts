@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PRIVATE_PAGES, PUBLIC_PAGES } from 'shared/constants';
+import { Path } from 'shared/types/path';
 
 export default function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
@@ -8,11 +9,11 @@ export default function middleware(req: NextRequest) {
   const isPublicRoute = PUBLIC_PAGES.includes(path);
 
   if (isProtectedRoute && !cookies) {
-    return NextResponse.redirect(new URL('/', req.nextUrl));
+    return NextResponse.redirect(new URL(Path.MAIN, req.nextUrl));
   }
 
   if (isPublicRoute && cookies) {
-    return NextResponse.redirect(new URL('/', req.nextUrl));
+    return NextResponse.redirect(new URL(Path.MAIN, req.nextUrl));
   }
 
   return NextResponse.next();
