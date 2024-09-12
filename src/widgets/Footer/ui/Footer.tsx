@@ -11,18 +11,18 @@ export const Footer = () => {
     <footer className={styles.footer}>
       <div>
         <Link href="https://github.com/annaAzh">
-          <Image src={LogoGitW} alt="Anna" width={55} height={55} />
+          <Image src={LogoGitW} alt="Anna" width={45} height={45} />
         </Link>
         <Link href="https://github.com/rRedq">
-          <Image src={LogoGitM} alt="Andrei" width={55} height={55} />
+          <Image src={LogoGitM} alt="Andrei" width={45} height={45} />
         </Link>
         <Link href="https://github.com/IrinaFileva">
-          <Image src={LogoGitW} alt="Irina" width={55} height={55} />
+          <Image src={LogoGitW} alt="Irina" width={45} height={45} />
         </Link>
       </div>
       <Title>2024</Title>
       <Link href="https://rs.school/courses/reactjs">
-        <Image src={LogoRSS} alt="logoRSS" width={55} height={55} />
+        <Image src={LogoRSS} alt="logoRSS" width={45} height={45} />
       </Link>
     </footer>
   );

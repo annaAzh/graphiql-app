@@ -8,7 +8,13 @@ export const Spinner: FC = () => {
   return (
     <div className={styles.spinner}>
       <h2>Loading...</h2>
-      <Image src={svgSpinner} alt="spinner" width={250} height={250} />
+      <Image
+        src={svgSpinner}
+        alt="spinner"
+        priority={false}
+        width={250}
+        height={250}
+      />
     </div>
   );
 };
