@@ -7,7 +7,6 @@
   "HistoryRequests": "History Requests",
   "headers": "headers",
   "Key":"key",
-  "InvalidPath":"Invalid required path",
   "lengthPassword":"length must be at least 8 characters",
   "Lowercase":"at least one lowercase letter",
   "Loading":"Loading...",
