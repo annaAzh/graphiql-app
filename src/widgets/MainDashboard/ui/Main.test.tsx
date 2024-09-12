@@ -4,14 +4,6 @@ import { Main } from './Main';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCookies } from 'react-cookie';
 
-vi.mock('react-firebase-hooks/auth', () => ({
-  useAuthState: vi.fn(),
-}));
-
-vi.mock('react-cookie', () => ({
-  useCookies: vi.fn(),
-}));
-
 describe('test main component', () => {
   it('should render main component with sign in and sign up buttons', async () => {
     (useAuthState as ReturnType<typeof vi.fn>).mockImplementation(() => [null]);
