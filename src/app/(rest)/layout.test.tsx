@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import RestLayout from './layout';
 import { StoreProvider } from 'core';
 
@@ -18,7 +18,7 @@ vi.mock('next/navigation', async (importOriginal) => {
   };
 });
 
-test('a', async () => {
+test('testing RestLayout', async () => {
   const testText = 'testText';
   const { getByText } = render(
     <StoreProvider>
@@ -27,6 +27,4 @@ test('a', async () => {
   );
 
   expect(getByText(testText)).toBeInTheDocument();
-
-  screen.debug();
 });
