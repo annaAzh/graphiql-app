@@ -1,6 +1,9 @@
 {
   "History":"История",
-  "InvalidPath":"Неверный требуемый путь",
+  "HistoryDescription1": "Вы не выполнили ни одного запроса",
+  "HistoryDescription2":"Здесь пусто. Попробуйте:",
+  "HistoryRequests": "История запросов",
+  "InvalidPath":"Неверный путь",
   "lengthPassword": "не менее 8 символов",
   "Lowercase": "как минимум одна строчная буква",
   "Loading":"Загрузка...",

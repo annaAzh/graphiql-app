@@ -1,5 +1,8 @@
 {
   "History":"History",
+  "HistoryDescription1": "You haven't executed any requests",
+  "HistoryDescription2":"It's empty here. Try:",
+  "HistoryRequests": "History Requests",
   "InvalidPath":"Invalid required path",
   "lengthPassword":"length must be at least 8 characters",
   "Lowercase":"at least one lowercase letter",
