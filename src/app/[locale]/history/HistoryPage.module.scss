@@ -1,4 +1,4 @@
-@import '../../shared/styles/common.scss';
+@import '../../../shared/styles/common.scss';
 
 .historyPage {
   @include flex($flexDirection: column, $alignItems: center, $gap: 20px);
