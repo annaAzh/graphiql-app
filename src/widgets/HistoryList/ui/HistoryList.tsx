@@ -33,6 +33,7 @@ export const HistoryList = () => {
     } else {
       path = Path.NOT_FOUND;
     }
+
     navigate.push(path);
   };
 

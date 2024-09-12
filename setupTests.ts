@@ -1,12 +1,13 @@
 import '@testing-library/jest-dom';
 import { useCookies } from 'react-cookie';
+import { mockUserWithId } from 'shared/__mock__';
 
 beforeAll(() => {
   vi.mock('react-cookie', () => ({
     useCookies: vi.fn(),
   }));
   (useCookies as ReturnType<typeof vi.fn>).mockImplementation(() => [
-    { user: { uid: 'test' } },
+    { user: { uid: mockUserWithId } },
     vi.fn(),
   ]);
 
