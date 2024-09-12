@@ -3,6 +3,7 @@
   "HistoryDescription1": "You haven't executed any requests",
   "HistoryDescription2":"It's empty here. Try:",
   "HistoryRequests": "History Requests",
+  "Key":"key",
   "InvalidPath":"Invalid required path",
   "lengthPassword":"length must be at least 8 characters",
   "Lowercase":"at least one lowercase letter",
@@ -32,4 +33,5 @@
   "Password":"Password",
   "PasswordRequired": "password is required",
   "Uppercase": "at least one uppercase letter",
+  "Value":"value",
   "Yes":"Yes"}
