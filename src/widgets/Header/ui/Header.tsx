@@ -11,11 +11,13 @@ import { auth, logoutUser } from 'shared/lib/api';
 import { ButtonLogOut } from 'features/LogOutUser';
 import styles from './Header.module.scss';
 import { LanguageChanger } from 'features/SwitchLanguage';
+import { useTranslation } from 'react-i18next';
 
 export const Header: FC = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [cookies] = useCookies<string>(['user']);
   const [user] = useAuthState(auth);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!cookies.user && user) {
@@ -48,19 +50,19 @@ export const Header: FC = () => {
         <LanguageChanger />
         {user ? (
           <>
-            <Button size="lg">
-              <Link href={Path.MAIN}>Main Page</Link>
-            </Button>
+            <Link href={Path.MAIN}>
+              <Button size="lg">{t('Main')}</Button>
+            </Link>
             <ButtonLogOut />
           </>
         ) : (
           <>
-            <Button size="lg">
-              <Link href={Path.SIGN_IN}>Sign In</Link>
-            </Button>
-            <Button size="lg">
-              <Link href={Path.SIGN_UP}>Sign Up</Link>
-            </Button>
+            <Link href={Path.SIGN_IN}>
+              <Button size="lg">{t('SignIn')}</Button>
+            </Link>
+            <Link href={Path.SIGN_UP}>
+              <Button size="lg">{t('SignUp')}</Button>
+            </Link>
           </>
         )}
       </div>

@@ -26,8 +26,8 @@ export const LanguageChanger = () => {
 
   return (
     <select defaultValue={currentLocale} onChange={handleChange}>
-      <option value={Locale.EN}>EN</option>
-      <option value={Locale.RU}>RU</option>
+      <option value={'en'}>EN</option>
+      <option value={'ru'}>RU</option>
     </select>
   );
 };
