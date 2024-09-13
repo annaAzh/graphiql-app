@@ -38,4 +38,12 @@
   "Uppercase": "at least one uppercase letter",
   "Value":"value",
   "variables": "variables",
-  "Yes":"Yes"}
+  "Yes":"Yes",
+  "DevNameAnna":"Anna",
+  "DevDescriptionAnna":"Frontend developer. In this project realized everything related to GraphQL",
+  "DevNameAndrew":"Andrew",
+  "DevDescriptionAndrew": "Frontend developer. In this project realized everything related to REST Client",
+  "DevNameIrina":"Irina",
+  "DevDescriptionIrina": "Frontend developer. In this project realized everything related to Authentication user and Internationalization",
+  "DescriptionMainPage": "This project provides a comprehensive client for interacting with GraphQL and REST APIs. It was developed as the final project for the React course at"
+}

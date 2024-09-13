@@ -1,0 +1,16 @@
+@import '../../../shared/styles/common.scss';
+
+.infoSection {
+  @include flex($alignItems: center, $gap: 20px, $flexDirection: column);
+  width: 45%;
+  text-align: center;
+  line-height: 130%;
+
+  a:hover {
+    color: var(--blue);
+  }
+}
+
+.profileList {
+  @include flex($alignItems: center, $gap: 20px);
+}
