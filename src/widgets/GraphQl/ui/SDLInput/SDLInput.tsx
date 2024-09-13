@@ -3,6 +3,7 @@ import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { Button } from 'shared/components';
 import { RequestGraphQLData } from 'shared/types/graphQl';
 import style from '../GraphQlPlayground.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   watch: UseFormWatch<RequestGraphQLData>;
@@ -12,6 +13,7 @@ type Props = {
 
 export const SDLInput: FC<Props> = ({ watch, onClick, setValue }) => {
   const url = watch('url');
+  const { t } = useTranslation();
   const [sdlUrl, setSdlUrl] = useState<string>(`${url}?sdl`);
 
   useEffect(() => {
@@ -55,7 +57,7 @@ export const SDLInput: FC<Props> = ({ watch, onClick, setValue }) => {
         className={style.input}
       />
       <Button variant="outlined" size="lg" type="button" onClick={onClick}>
-        docs
+        {t('docs')}
       </Button>
     </div>
   );

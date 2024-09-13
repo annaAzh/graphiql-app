@@ -6,6 +6,7 @@ import { HeadersEditor } from 'features/HeadersEditor';
 import { myTheme } from 'shared/styles/codemirror/EditorView';
 import { Path } from 'shared/types/path';
 import { BodyEditor } from 'features/BodyEditor';
+import { useTranslation } from 'react-i18next';
 
 const headers: (keyof Pick<RestfulType, 'headers' | 'body' | 'variables'>)[] = [
   'headers',
@@ -33,6 +34,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
   const watchHeaders = watch('headers');
   const watchVariables = watch('variables');
   const watchBody = watch('body');
+  const { t } = useTranslation();
 
   const bodyHandler = (value: string) => {
     setEncodeValue('body', value);
@@ -87,7 +89,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
             className={activeHeader === header ? style.active : undefined}
             onClick={() => setActiveHeader(header)}
           >
-            {header}
+            {t(`${header}`)}
           </p>
         ))}
       </div>

@@ -7,11 +7,13 @@ import { logoutUser } from 'shared/lib/api';
 import { useRouter } from 'next/navigation';
 import { Path } from 'shared/types/path';
 import styles from './ButtonLogOut.module.scss';
+import { useTranslation } from 'react-i18next';
 
 export const ButtonLogOut = () => {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const [, , removeCookie] = useCookies<string>(['user']);
+  const { t } = useTranslation();
 
   const onClickLogOut = () => {
     setOpen(true);
@@ -30,7 +32,7 @@ export const ButtonLogOut = () => {
   return (
     <>
       <Button size="lg" onClick={onClickLogOut}>
-        Sign Out
+        {t('SignOut')}
       </Button>
       <Dialog
         open={open}
@@ -38,15 +40,13 @@ export const ButtonLogOut = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {'Do you really want to log out?'}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{t('LogOutMessage')}</DialogTitle>
         <DialogActions>
           <Button variant="secondary" onClick={handleYesLogOut}>
-            Yes
+            {t('Yes')}
           </Button>
           <Button className={styles.dialogBtnNo} onClick={handleNoLogOut}>
-            No
+            {t('No')}
           </Button>
         </DialogActions>
       </Dialog>

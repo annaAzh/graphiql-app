@@ -1,38 +1,46 @@
+import { TFunction } from 'i18next';
 import * as yup from 'yup';
 
-const name = yup
-  .string()
-  .required('Name is required')
-  .matches(/\p{L}/u, 'only letters are allowed');
+const name = (t: TFunction) => {
+  return yup
+    .string()
+    .required(t('NameRequired'))
+    .matches(/\p{L}/u, t('NameTerms'));
+};
 
-const email = yup
-  .string()
-  .required('Email is required')
-  .matches(
-    /[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+/,
-    'add a valid email (e.g. daizy@gmail.com)'
-  )
-  .email();
+const email = (t: TFunction) => {
+  return yup
+    .string()
+    .required(t('EmailRequired'))
+    .matches(/[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+/, t('EmailTerms'))
+    .email();
+};
 
-const password = yup
-  .string()
-  .required('Password is required')
-  .matches(/\p{Ll}/u, 'at least one lowercase letter')
-  .matches(/\p{Lu}/u, 'at least one uppercase letter')
-  .matches(/[0-9]/, 'at least one number')
-  .matches(
-    /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/,
-    'at least one special character'
-  )
-  .min(8, 'length must be at least 8 characters');
+function password(t: TFunction) {
+  return yup
+    .string()
+    .required(t('PasswordRequired'))
+    .matches(/\p{Ll}/u, t('Lowercase'))
+    .matches(/\p{Lu}/u, t('Uppercase'))
+    .matches(/[0-9]/, t('NumberPassword'))
+    .matches(
+      /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/,
+      t('SpecialCharacterPassword')
+    )
+    .min(8, t('lengthPassword'));
+}
 
-export const schemaLogin = yup.object().shape({
-  email,
-  password,
-});
+export const schemaLogin = (t: TFunction) => {
+  return yup.object().shape({
+    email: email(t),
+    password: password(t),
+  });
+};
 
-export const schemaRegister = yup.object().shape({
-  name,
-  email,
-  password,
-});
+export const schemaRegister = (t: TFunction) => {
+  return yup.object().shape({
+    name: name(t),
+    email: email(t),
+    password: password(t),
+  });
+};

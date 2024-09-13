@@ -11,11 +11,13 @@ import { Button, Title } from 'shared/components';
 import { encodeGraphql } from 'shared/lib/dataConverters/encodeGraphQl/encodeQraphQl';
 import { useCookies } from 'react-cookie';
 import { VALID_METHODS } from 'shared/constants';
+import { useTranslation } from 'react-i18next';
 
 export const HistoryList = () => {
   const navigate = useRouter();
   const [list, setList] = useState<HistorySave[]>();
   const [cookies] = useCookies<string>(['user']);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const save = getLocalStoreState(cookies.user.uid);
@@ -37,39 +39,42 @@ export const HistoryList = () => {
   };
 
   return (
-    <div className={style.historyList}>
-      {list ? (
-        <div className={style.container}>
-          <Title size="h3" className={style.label}>
-            History Requests
-          </Title>
-          {list.map(({ method, url }, index) => (
-            <div
-              key={index}
-              className={style.line}
-              onClick={() => clickHandler(index)}
-            >
-              <div className={`${style.type} ${style[`colorful-${method}`]}`}>
-                {method}
+    <div className={style.historyPage}>
+      <Title>{t('History')}</Title>
+      <div className={style.historyList}>
+        {list ? (
+          <div className={style.container}>
+            <Title size="h3" className={style.label}>
+              {t('HistoryRequests')}
+            </Title>
+            {list.map(({ method, url }, index) => (
+              <div
+                key={index}
+                className={style.line}
+                onClick={() => clickHandler(index)}
+              >
+                <div className={`${style.type} ${style[`colorful-${method}`]}`}>
+                  {method}
+                </div>
+                <div className={style.url}>{url}</div>
               </div>
-              <div className={style.url}>{url}</div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className={style.empty}>
-          <p>{`You haven't executed any requests`}</p>
-          <p>{`It's empty here. Try:`}</p>
-          <div className={style.buttons}>
-            <Button variant="secondary">
-              <Link href={Path.REST}>REST Client</Link>
-            </Button>
-            <Button>
-              <Link href={Path.GRAPH}>GRAPHQL</Link>
-            </Button>
+            ))}
           </div>
-        </div>
-      )}
+        ) : (
+          <div className={style.empty}>
+            <p>{t('HistoryDescription1')}</p>
+            <p>{t('HistoryDescription2')}</p>
+            <div className={style.buttons}>
+              <Link href={Path.REST}>
+                <Button variant="secondary">{t('REST')}</Button>
+              </Link>
+              <Link href={Path.GRAPH}>
+                <Button>{t('GraphiQL')}</Button>
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

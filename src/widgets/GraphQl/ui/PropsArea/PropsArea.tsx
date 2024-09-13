@@ -10,6 +10,7 @@ import style from './PropsArea.module.scss';
 import { myTheme } from 'shared/styles/codemirror/EditorView';
 import { Path } from 'shared/types/path';
 import { BodyEditor } from 'features/BodyEditor';
+import { useTranslation } from 'react-i18next';
 
 const headers: (keyof Pick<
   RequestGraphQLData,
@@ -36,6 +37,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
   const dynamicTheme = myTheme(Path.GRAPH);
   const variables = watch('variables');
   const requestHeaders = watch('headers');
+  const { t } = useTranslation();
 
   const handleQuery = (value: string) => {
     setEncodeValue('body', value);
@@ -88,7 +90,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
             className={activeHeader === header ? style.active : undefined}
             onClick={() => setActiveHeader(header)}
           >
-            {header === 'body' ? 'query' : header}
+            {header === 'body' ? t('query') : t(`${header}`)}
           </p>
         ))}
       </div>

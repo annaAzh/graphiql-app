@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import style from './HeadersEditor.module.scss';
 import { HeadersItem } from 'shared/types/restful';
+import { useTranslation } from 'react-i18next';
 
 interface HeadersEditorProps {
   initialValue?: HeadersItem[];
@@ -12,6 +13,7 @@ export const HeadersEditor: FC<HeadersEditorProps> = ({
   callback,
 }) => {
   const [data, setData] = useState<HeadersItem[]>(initialValue || [{}]);
+  const { t } = useTranslation();
 
   const setValue = (key: keyof HeadersItem, index: number, value: string) => {
     if (index === data.length - 1) setData((prev) => [...prev, {}]);
@@ -39,13 +41,13 @@ export const HeadersEditor: FC<HeadersEditorProps> = ({
         <div className={style.line} key={index}>
           <input
             type="text"
-            placeholder="key"
+            placeholder={t('Key')}
             onChange={(e) => setValue('key', index, e.target.value)}
             value={data[index].key || ''}
           />
           <input
             type="text"
-            placeholder="value"
+            placeholder={t('Value')}
             onChange={(e) => setValue('value', index, e.target.value)}
             value={data[index].value || ''}
           />
