@@ -7,7 +7,7 @@ const mockResponse: ResultResponse = {
   body: 'Test body data',
 };
 
-const mockSaveResponse: RestfulType = {
+const mockSaveResponse: Required<RestfulType> = {
   method: 'GET',
   url: DEFAULT_URL_EXAMPLE,
   headers: [{ key: 'Content-Type', value: 'application/json' }],
