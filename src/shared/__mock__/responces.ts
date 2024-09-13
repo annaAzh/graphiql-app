@@ -1,4 +1,5 @@
 import { ResultResponse } from 'entities/Result';
+import { DEFAULT_URL_EXAMPLE } from 'shared/constants';
 import { RestfulType } from 'shared/types/restful';
 
 const mockResponse: ResultResponse = {
@@ -8,10 +9,10 @@ const mockResponse: ResultResponse = {
 
 const mockSaveResponse: RestfulType = {
   method: 'GET',
-  url: 'https://jsonplaceholder.typicode.com/posts',
-  headers: [{ key: 'test', value: 'test' }],
-  variables: [{ key: 'test', value: 'test' }],
-  body: '{\n  "idc": 15\n}',
+  url: DEFAULT_URL_EXAMPLE,
+  headers: [{ key: 'Content-Type', value: 'application/json' }],
+  variables: [{ key: 'foo', value: '123' }],
+  body: '{\n  "title": "{{foo}} ",\n  "body": "test"\n}',
 };
 
 export { mockSaveResponse, mockResponse };
