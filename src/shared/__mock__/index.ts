@@ -12,3 +12,5 @@ export {
 export { mockResponse, mockSaveResponse } from './responces';
 
 export { mockStore } from './store';
+
+export { mockUrl, mockRequestGraphQLData } from './requests';
