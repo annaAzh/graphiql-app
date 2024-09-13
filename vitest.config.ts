@@ -13,6 +13,7 @@ export default defineConfig({
       exclude: [
         '**/index.ts',
         '**/src/shared/types/**',
+        '** src/entities/Result/model/types/**',
         '.next/server/src',
         'middleware.js',
       ],
