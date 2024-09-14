@@ -92,7 +92,9 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
       <div style={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
         <div className={style.sidebar}>
           {schema && (
-            <Button onClick={() => setDocsShown(!shownDocs)}>docs</Button>
+            <Button data-testid="docs" onClick={() => setDocsShown(!shownDocs)}>
+              docs
+            </Button>
           )}
         </div>
 
@@ -109,17 +111,24 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
             </h3>
             <div className={style.container}>
               <form
+                data-testid="graphql-form"
                 onSubmit={handleSubmit(onSubmitHandler)}
                 className={style.form}
               >
                 <div className={style.url_wrapper}>
                   <input
+                    data-testid="graphql-url"
                     {...register('url')}
                     placeholder="https://url..."
                     type="text"
                     className={style.input}
                   />
-                  <Button variant="outlined" size="lg" type="submit">
+                  <Button
+                    data-testid="graphql-submit"
+                    variant="outlined"
+                    size="lg"
+                    type="submit"
+                  >
                     send
                   </Button>
                 </div>

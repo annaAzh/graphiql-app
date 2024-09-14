@@ -24,6 +24,12 @@ beforeAll(() => {
     return {
       ...actual,
       useRouter: vi.fn().mockImplementation(useRouter),
+      useSearchParams: vi.fn(() => ({
+        get: vi.fn(() => 'mockedSearchParamValue'),
+      })),
+      useParams: vi.fn(() => ({
+        someParam: 'mockedParamValue',
+      })),
     };
   });
 
