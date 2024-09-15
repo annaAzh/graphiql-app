@@ -34,7 +34,6 @@ const fetchGraphQlData = async ({
 
     const headers = {
       ...headersObject,
-      'Content-Type': 'application/json',
     };
 
     const res: AxiosResponse<GraphQlResponse> = await axios.post(url, body, {

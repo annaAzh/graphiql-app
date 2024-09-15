@@ -25,7 +25,6 @@ describe('test fetchGraphQlData function', () => {
       {
         headers: {
           'test-headers': 'test-value',
-          'Content-Type': 'application/json',
         },
       }
     );

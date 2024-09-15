@@ -89,7 +89,10 @@ describe('test props area component from graphql', () => {
 
   it('should set encoded body', () => {
     const mockBodyValue = 'mock body content';
-    mockWatch.mockReturnValueOnce([]).mockReturnValueOnce([]);
+    mockWatch
+      .mockReturnValueOnce([])
+      .mockReturnValueOnce([])
+      .mockReturnValue(mockBodyValue);
 
     render(
       <PropsArea
