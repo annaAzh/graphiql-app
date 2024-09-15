@@ -68,6 +68,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
             control={control}
             render={({ field, fieldState: { error } }) => (
               <TextField
+                data-testid={'nameInput'}
                 color="secondary"
                 error={!!error}
                 margin="normal"
@@ -86,6 +87,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
           control={control}
           render={({ field, fieldState: { error } }) => (
             <TextField
+              data-testid={'emailInput'}
               color="secondary"
               error={!!error}
               margin="normal"
@@ -103,6 +105,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
           control={control}
           render={({ field, fieldState: { error } }) => (
             <TextField
+              data-testid={'passwordInput'}
               color="secondary"
               error={!!error}
               margin="normal"
