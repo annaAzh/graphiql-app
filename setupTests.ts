@@ -14,7 +14,7 @@ beforeAll(() => {
   ]);
 
   vi.mock('react-firebase-hooks/auth', () => ({
-    useAuthState: vi.fn(),
+    useAuthState: vi.fn(() => [{ uid: mockUserWithId }]),
   }));
 
   vi.mock('next/navigation', async (importOriginal) => {
@@ -51,6 +51,7 @@ beforeAll(() => {
   vi.mock('react-i18next', () => ({
     useTranslation: () => {
       return {
+        i18n: {language: 'en'},
         t: (key: keyof typeof translation) => translation[key],
       };
     },
