@@ -1,0 +1,28 @@
+@import '../../../shared/styles/common.scss';
+
+.containerUseForm {
+  margin: auto;
+
+  form {
+    @include flex($flexDirection: column, $alignItems: center);
+    width: 300px;
+    padding: 4%;
+    color: var(--main-color-4);
+    background-color: var(--main-color-2);
+    border-radius: 4px;
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      box-shadow: 0 0 0 30px var(--main-color-2) inset !important;
+    }
+  }
+
+  label {
+    font-size: 18px;
+  }
+
+  button {
+    color: var(--main-color-2) !important;
+  }
+}

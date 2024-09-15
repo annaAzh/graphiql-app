@@ -1,0 +1,27 @@
+@import '../../../../shared/styles/common.scss';
+
+.headers {
+  @include flex(center, $gap: 15%);
+
+  p:hover:not(.active) {
+    cursor: pointer;
+  }
+
+  .active {
+    pointer-events: none;
+    color: var(--blue);
+  }
+}
+
+.textArea {
+  width: 100%;
+  min-height: 200px;
+  background: var(--main-color-1);
+  color: var(--main-color-4);
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  resize: vertical;
+  max-height: 300px;
+}

@@ -1,0 +1,53 @@
+.common-btn {
+  font-size: 18px;
+  border: 1px solid var(--main-color-1);
+  border-radius: 3px;
+  padding: 3px 5px;
+
+  &:hover {
+    color: var(--grey);
+    border: 1px solid var(--grey);
+    cursor: pointer;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    background: var(--grey);
+    color: var(--main-color-4);
+    opacity: 0.5;
+  }
+}
+
+.colorful {
+  &-GET {
+    color: var(--green);
+  }
+
+  &-POST {
+    color: var(--deep-yellow);
+  }
+
+  &-PUT {
+    color: var(--blue);
+  }
+
+  &-PATCH {
+    color: var(--grape);
+  }
+
+  &-DELETE {
+    color: var(--orange);
+  }
+
+  &-HEAD {
+    color: var(--green);
+  }
+
+  &-OPTIONS {
+    color: var(--magenta);
+  }
+
+  &-GRAPHQL {
+    color: var(--grape);
+  }
+}

@@ -1,0 +1,14 @@
+.close_btn {
+  margin-bottom: 20px;
+  margin-left: auto;
+
+  & > svg {
+    margin-right: 0;
+  }
+}
+
+.drawer {
+  height: 100%;
+  background-color: var(--main-color-4);
+  color: var(--main-color-2);
+}
