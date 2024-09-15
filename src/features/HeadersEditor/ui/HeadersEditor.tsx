@@ -52,7 +52,11 @@ export const HeadersEditor: FC<HeadersEditorProps> = ({
             value={data[index].value || ''}
           />
           {data.length - 1 ? (
-            <div className={style.cross} onClick={() => removeHandler(index)}>
+            <div
+              data-testid="closeBtn"
+              className={style.cross}
+              onClick={() => removeHandler(index)}
+            >
               X
             </div>
           ) : null}

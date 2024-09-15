@@ -85,8 +85,6 @@ export const getData = async (
       case 'OPTIONS':
         res = await axios.options(url, headers);
         break;
-      default:
-        res = undefined;
     }
 
     return res

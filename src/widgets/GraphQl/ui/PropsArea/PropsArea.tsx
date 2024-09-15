@@ -39,7 +39,8 @@ export const PropsArea: FC<PropsAreaProps> = ({
   const requestHeaders = watch('headers');
   const { t } = useTranslation();
 
-  const handleQuery = (value: string) => {
+  const handleQuery = () => {
+    const value = watch('body');
     setEncodeValue('body', value);
     setValue('body', value);
   };
@@ -77,6 +78,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
         onBlurCallBack={handleQuery}
         watch={watch}
         setValue={setValue}
+        mode="GRAPHQL"
       />
     );
   }

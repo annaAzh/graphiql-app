@@ -21,15 +21,9 @@ export const DocsGraphQl: FC<Props> = ({
   onClickShowDocs,
 }) => {
   return (
-    <div
-      className={
-        shownDocs
-          ? `${style.docs} ${style.shown} custom-doc-explorer`
-          : `${style.docs} custom-doc-explorer`
-      }
-    >
+    <div className="custom-doc-explorer">
       {shownDocs && (
-        <Drawer open={shownDocs} onClose={onClose}>
+        <Drawer data-testid="docs-drawer" open={shownDocs} onClose={onClose}>
           <Box
             className={style.drawer}
             sx={{ width: 360 }}

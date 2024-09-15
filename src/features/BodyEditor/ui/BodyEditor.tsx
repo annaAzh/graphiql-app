@@ -12,7 +12,8 @@ type Props = {
   dynamicTheme: Extension;
   watch: UseFormWatch<RequestGraphQLData | RestfulType>;
   setValue: UseFormSetValue<RequestGraphQLData | RestfulType>;
-  onBlurCallBack: (value: string) => void;
+  onBlurCallBack: () => void;
+  mode: 'GRAPHQL' | 'REST';
 };
 
 export const BodyEditor: FC<Props> = ({
@@ -20,6 +21,7 @@ export const BodyEditor: FC<Props> = ({
   onBlurCallBack,
   watch,
   setValue,
+  mode,
 }) => {
   const watchBody = watch('body');
 
@@ -30,12 +32,13 @@ export const BodyEditor: FC<Props> = ({
   };
 
   return (
-    <div className={styles.body_editor_container}>
+    <div className={`${styles.body_editor_container} ${styles[mode]}`}>
       <CodeMirror
         className={styles.code_editor}
         theme={dynamicTheme}
         value={watchBody}
-        onBlur={(e) => onBlurCallBack(e.target.innerText)}
+        onChange={(value) => setValue('body', value)}
+        onBlur={() => onBlurCallBack()}
       />
       <div className={styles.button_container}>
         <Button

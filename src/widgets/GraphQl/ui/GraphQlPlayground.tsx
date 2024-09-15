@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { Button } from 'shared/components';
@@ -25,6 +25,7 @@ import { rubik_doodle } from 'shared/styles/fonts/fonts';
 import { DocsGraphQl } from './DocsGraphQl/DocsGraphQl';
 import { useCookies } from 'react-cookie';
 import { useTranslation } from 'react-i18next';
+import { Notification } from 'shared/components';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
@@ -41,6 +42,7 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
 
   const [schema, setSchema] = useState<IntrospectionQuery | null>(null);
   const [shownDocs, setDocsShown] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const { setEncodeValue } = useEncodeProps('GRAPHQL');
   const url = watch('url');
   const [cookies] = useCookies<string>(['user']);
@@ -76,6 +78,11 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
         if (status === 200 && data && typeof data !== 'string') {
           setSchema(data);
           setDocsShown(true);
+        } else {
+          if (typeof data === 'string') {
+            setError(data);
+            setTimeout(() => setError(null), 5000);
+          }
         }
       }
     } catch {
@@ -83,14 +90,9 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
     }
   };
 
-  useEffect(() => {
-    if (queryValue) {
-      setEncodeValue('body', queryValue);
-    }
-  }, []);
-
   return (
     <section className={style.section}>
+      {error && <Notification error={error} />}
       <div style={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
         <div className={style.sidebar}>
           {schema && (
@@ -113,17 +115,24 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
             </h3>
             <div className={style.container}>
               <form
+                data-testid="graphql-form"
                 onSubmit={handleSubmit(onSubmitHandler)}
                 className={style.form}
               >
                 <div className={style.url_wrapper}>
                   <input
+                    data-testid="graphql-url"
                     {...register('url')}
                     placeholder="https://url..."
                     type="text"
                     className={style.input}
                   />
-                  <Button variant="outlined" size="lg" type="submit">
+                  <Button
+                    data-testid="graphql-submit"
+                    variant="outlined"
+                    size="lg"
+                    type="submit"
+                  >
                     {t('send')}
                   </Button>
                 </div>

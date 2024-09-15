@@ -18,7 +18,7 @@ export const encodeRest = (data: Partial<RestfulType>) => {
   if (method) path += `/${method}`;
   if (encodedUrl) path += `/${encodedUrl}`;
   if (encodedBody) path += `/${encodedBody}`;
-  if (encodedHeaders) path += `/${encodedHeaders}`;
+  if (encodedHeaders) path += `${encodedHeaders}`;
 
   return path;
 };

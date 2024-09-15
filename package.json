@@ -10,8 +10,8 @@
     "lint": "next lint",
     "prettier-fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,html}\"",
     "prepare": "husky",
-    "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "test": "vitest --coverage run",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@graphiql/react": "^0.26.2",

@@ -28,21 +28,26 @@ export const decodeRest = async (data: DecodeRestProps) => {
   }
 
   if (requestedBody) {
-    const encodedBody: BodyUrlType = JSON.parse(decode64(requestedBody));
-    if (encodedBody.body) {
-      body = encodedBody.body;
-    }
-    if (encodedBody.variables) {
-      encodedBody.variables.forEach((variable) => {
-        if (!variable.key || !variable.value) return;
-        const requiredVariable: Required<HeadersItem> = {
-          key: variable.key,
-          value: variable.value,
-        };
-        variables = variables
-          ? [...variables, requiredVariable]
-          : [requiredVariable];
-      });
+    try {
+      const encodedBody: BodyUrlType = JSON.parse(decode64(requestedBody));
+      if (encodedBody.body) {
+        body = encodedBody.body;
+      }
+      if (encodedBody.variables) {
+        encodedBody.variables.forEach((variable) => {
+          if (!variable.key || !variable.value) return;
+          const requiredVariable: Required<HeadersItem> = {
+            key: variable.key,
+            value: variable.value,
+          };
+          variables = variables
+            ? [...variables, requiredVariable]
+            : [requiredVariable];
+        });
+      }
+    } catch {
+      body = 'Invalid body';
+      variables = [];
     }
   }
 

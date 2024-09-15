@@ -56,7 +56,13 @@ export const SDLInput: FC<Props> = ({ watch, onClick, setValue }) => {
         type="text"
         className={style.input}
       />
-      <Button variant="outlined" size="lg" type="button" onClick={onClick}>
+      <Button
+        data-testid="get-docs"
+        variant="outlined"
+        size="lg"
+        type="button"
+        onClick={onClick}
+      >
         {t('docs')}
       </Button>
     </div>

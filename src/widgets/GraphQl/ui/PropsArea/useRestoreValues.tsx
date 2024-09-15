@@ -36,7 +36,9 @@ export const useRestoreValues = ({
         const requestedUrl = params.graphReq[0];
         const requestedBody = params.graphReq[1];
 
-        const requestedHeaders = Object.fromEntries(searchParams.entries());
+        const requestedHeaders = searchParams
+          ? Object.fromEntries(searchParams.entries())
+          : {};
         const { headers, body, url, variables } = await decodeRest({
           requestedUrl,
           requestedBody,

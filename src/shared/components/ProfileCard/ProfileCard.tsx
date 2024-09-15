@@ -13,7 +13,7 @@ export const ProfileCard: FC<ProfileCardProps> = ({ name, src }) => {
 
   return (
     <div className={styles.profileCard}>
-      <Image src={src} alt={t(`DevName${name}`)} width={200} height={200} />
+      <Image src={src} alt={name} width={200} height={200} />
       <p>{t(`DevDescription${name}`)}</p>
     </div>
   );
