@@ -118,3 +118,81 @@ Run Tests
 ---
 
 ### REST Example
+
+<details>
+  <summary>Body without variables</summary>
+
+- example `url`:
+
+  ```
+  https://jsonplaceholder.typicode.com/posts
+  ```
+
+- example `method`:
+
+  ```
+  POST
+  ```
+
+- example `body`:
+
+  ```
+  {
+    "title": "{{foo}} ",
+    "body": "test"
+  }
+  ```
+
+  - example `expected result without variables`:
+
+  ```
+  {
+    "title": "{{foo}} ",
+    "body": "test",
+    "id": 101
+  }
+  ```
+
+</details>
+
+<details>
+  <summary>Body with variables</summary>
+
+- example `url`:
+
+  ```
+  https://jsonplaceholder.typicode.com/posts
+  ```
+
+- example `method`:
+
+  ```
+  POST
+  ```
+
+  - example `variables`:
+
+  ```
+  foo: bar
+  ```
+
+- example `body`:
+
+  ```
+  {
+    "title": "{{foo}} ",
+    "body": "test"
+  }
+  ```
+
+  - example `expected result with variables`:
+
+  ```
+  {
+    "title": "bar",
+    "body": "test",
+    "id": 101
+  }
+  ```
+
+</details>
