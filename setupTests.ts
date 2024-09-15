@@ -8,9 +8,9 @@ beforeAll(() => {
     useCookies: vi.fn(),
   }));
   (useCookies as ReturnType<typeof vi.fn>).mockImplementation(() => [
-    { user: { uid: mockUserWithId }},
+    { user: { uid: mockUserWithId } },
     vi.fn(),
-    vi.fn()
+    vi.fn(),
   ]);
 
   vi.mock('react-firebase-hooks/auth', () => ({
@@ -51,7 +51,7 @@ beforeAll(() => {
   vi.mock('react-i18next', () => ({
     useTranslation: () => {
       return {
-        i18n: {language: 'en'},
+        i18n: { language: 'en' },
         t: (key: keyof typeof translation) => translation[key],
       };
     },
