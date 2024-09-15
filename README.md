@@ -185,7 +185,7 @@ Run Tests
   }
   ```
 
-  - example `expected result with variables`:
+- example `expected result with variables`:
 
   ```
   {
