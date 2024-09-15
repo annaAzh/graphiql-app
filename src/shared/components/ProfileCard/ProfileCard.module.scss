@@ -1,0 +1,22 @@
+@import '../../../shared/styles/common.scss';
+
+.profileCard {
+  @include flex($alignItems: center, $flexDirection: column, $gap: 10px);
+  width: 230px;
+  min-height: 370px;
+  border-radius: 4px;
+  border: 1px solid var(--main-color-2);
+  padding: 1%;
+
+  img {
+    border-radius: 100%;
+  }
+
+  p {
+    @include flex($alignItems: center, $justifyContent: center);
+    font-size: 18px;
+    text-align: center;
+    line-height: 130%;
+    flex-grow: 1;
+  }
+}

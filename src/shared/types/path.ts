@@ -7,3 +7,8 @@ export enum Path {
   SIGN_IN = 'SignIn',
   HISTORY = 'history',
 }
+
+export enum Locale {
+  EN = '/',
+  RU = '/ru',
+}

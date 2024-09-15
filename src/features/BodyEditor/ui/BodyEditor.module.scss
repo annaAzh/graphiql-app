@@ -1,0 +1,30 @@
+.body_editor_container {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  width: 100%;
+
+  .code_editor {
+    flex-grow: 1;
+    width: 100%;
+    max-width: 720px;
+    height: 200px;
+    overflow: auto;
+  }
+
+  .button_container {
+    display: flex;
+    flex-shrink: 0;
+    align-self: flex-start;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+
+    .button_container {
+      margin-top: 10px;
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+}

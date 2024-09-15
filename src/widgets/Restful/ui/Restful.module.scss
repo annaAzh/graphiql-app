@@ -4,6 +4,12 @@
   @include flex($flexDirection: column, $gap: 20px, $alignItems: flex-start);
   margin: auto;
   padding: 1%;
+
+  h2 {
+    font-size: 30px;
+    margin: 0 auto;
+    color: var(--blue);
+  }
 }
 
 .form {
@@ -23,7 +29,6 @@
 
 .select {
   @extend .colorful;
-  font-family: 'Poppins';
   font-weight: 900;
   border-radius: 4px;
   padding: 1px;
@@ -35,7 +40,6 @@
 }
 
 .curl {
-  font-family: 'Poppins';
   width: 100%;
   border-radius: 4px;
   padding: 5px;

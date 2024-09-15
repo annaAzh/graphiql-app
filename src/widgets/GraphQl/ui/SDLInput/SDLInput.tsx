@@ -3,6 +3,7 @@ import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { Button } from 'shared/components';
 import { RequestGraphQLData } from 'shared/types/graphQl';
 import style from '../GraphQlPlayground.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   watch: UseFormWatch<RequestGraphQLData>;
@@ -11,20 +12,21 @@ type Props = {
 };
 
 export const SDLInput: FC<Props> = ({ watch, onClick, setValue }) => {
-  const baseUrl = watch('baseUrl');
-  const [sdlUrl, setSdlUrl] = useState<string>(`${baseUrl}?sdl`);
+  const url = watch('url');
+  const { t } = useTranslation();
+  const [sdlUrl, setSdlUrl] = useState<string>(`${url}?sdl`);
 
   useEffect(() => {
-    if (baseUrl) {
-      setSdlUrl(`${baseUrl}?sdl`);
+    if (url) {
+      setSdlUrl(`${url}?sdl`);
     } else {
       setSdlUrl(`?sdl`);
     }
-  }, [baseUrl]);
+  }, [url]);
 
   useEffect(() => {
-    if (sdlUrl !== baseUrl) {
-      setValue('baseUrl', sdlUrl.replace(/\?sdl/, ''));
+    if (sdlUrl !== url) {
+      setValue('url', sdlUrl.replace(/\?sdl/, ''));
     }
   }, [sdlUrl]);
 
@@ -46,6 +48,7 @@ export const SDLInput: FC<Props> = ({ watch, onClick, setValue }) => {
   return (
     <div className={style.url_wrapper} style={{ marginTop: '6px' }}>
       <input
+        data-testid="sdl_input"
         placeholder="https://url..."
         value={sdlUrl}
         onChange={handleUrlChange}
@@ -54,7 +57,7 @@ export const SDLInput: FC<Props> = ({ watch, onClick, setValue }) => {
         className={style.input}
       />
       <Button variant="outlined" size="lg" type="button" onClick={onClick}>
-        docs
+        {t('docs')}
       </Button>
     </div>
   );

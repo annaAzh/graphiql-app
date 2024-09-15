@@ -1,8 +1,8 @@
 'use client';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Box, TextField } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { User } from 'firebase/auth';
@@ -12,27 +12,26 @@ import { Button, Notification, Title } from 'shared/components';
 import { logInUser, registerUser } from 'shared/lib/api';
 import { Path } from 'shared/types/path';
 import styles from './UserForm.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface FormProps {
   isLogin: boolean;
 }
 
 export const UserForm: FC<FormProps> = ({ isLogin }) => {
+  const router = useRouter();
+  const { t } = useTranslation();
   const [error, setError] = useState<string | null>(null);
-  const [cookies, setCookie] = useCookies<string>(['user']);
+  const [, setCookie] = useCookies<string>(['user']);
   const { control, handleSubmit, reset, formState } = useForm<
     DataFormLogin | DataFormRegister
   >({
     defaultValues: { email: '', password: '', name: '' },
     resolver: yupResolver<DataFormLogin | DataFormRegister>(
-      isLogin ? schemaLogin : schemaRegister
+      isLogin ? schemaLogin(t) : schemaRegister(t)
     ),
     mode: 'all',
   });
-
-  useEffect(() => {
-    if (cookies.user) redirect(Path.MAIN);
-  }, [cookies.user]);
 
   const onSubmit = async (
     data: DataFormLogin | DataFormRegister
@@ -53,6 +52,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
       setCookie('user', res, {
         expires: new Date(expirationTime),
       });
+      router.push(Path.MAIN);
       reset();
     }
   };
@@ -61,7 +61,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
     <div className={styles.containerUseForm}>
       {error && <Notification error={error} />}
       <Box component={'form'} onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Title>{!isLogin ? 'Sign Up' : 'Sign In'}</Title>
+        <Title>{!isLogin ? t('SignUp') : t('SignIn')}</Title>
         {!isLogin && (
           <Controller
             name="name"
@@ -73,7 +73,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
                 margin="normal"
                 required
                 fullWidth
-                label={'Name'}
+                label={t('Name')}
                 {...field}
                 sx={{ minHeight: '5rem' }}
                 helperText={error?.message}
@@ -91,7 +91,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
               margin="normal"
               required
               fullWidth
-              label={'Email'}
+              label={t('Email')}
               {...field}
               sx={{ minHeight: '5rem' }}
               helperText={error?.message}
@@ -108,7 +108,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
               margin="normal"
               required
               fullWidth
-              label={'Password'}
+              label={t('Password')}
               type="password"
               {...field}
               sx={{ minHeight: '5rem' }}
@@ -118,7 +118,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
           )}
         />
         <Button type={'submit'} size="lg" disabled={!formState.isValid}>
-          {'Submit'}
+          {t('Submit')}
         </Button>
       </Box>
     </div>

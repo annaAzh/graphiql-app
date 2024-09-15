@@ -12,15 +12,15 @@
     justify-content: $justifyContent;
   }
 
-  @if $flexDirection != row {
+  @if $flexDirection !=row {
     flex-direction: $flexDirection;
   }
 
-  @if $gap != 0 {
+  @if $gap !=0 {
     gap: $gap;
   }
 
-  @if $wrap != nowrap {
+  @if $wrap !=nowrap {
     flex-wrap: $wrap;
   }
 
@@ -31,8 +31,4 @@
   @if $flexGrow {
     flex-grow: $flexGrow;
   }
-}
-
-@mixin google-font($family) {
-  @import url('http://fonts.googleapis.com/css?family=#{$family}');
 }

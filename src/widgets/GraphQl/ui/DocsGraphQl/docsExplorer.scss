@@ -1,0 +1,78 @@
+.custom-doc-explorer {
+  padding-top: 30px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--magenta) var(--main-color-4);
+  overflow-y: scroll;
+
+  .graphiql-doc-explorer-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--main-color-0);
+    margin-bottom: 30px;
+  }
+
+  .graphiql-doc-explorer {
+    overflow-y: scroll;
+    margin-bottom: 10px;
+  }
+
+  .graphiql-doc-explorer-contents {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: var(--main-color-0);
+  }
+
+  .graphiql-doc-explorer-item {
+    padding: 10px;
+    border-bottom: 0.5px solid var(--magenta);
+  }
+
+  .graphiql-doc-explorer-heading {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+}
+
+.graphiql-doc-explorer-section-content {
+  margin-bottom: 10px;
+}
+
+.graphiql-doc-explorer-content {
+  div {
+    padding: 5px 0;
+  }
+
+  a {
+    transition: all 0.3s ease-in;
+  }
+
+  a:hover {
+    color: var(--magenta);
+  }
+
+  p {
+    font-size: 14px;
+  }
+}
+
+.graphiql-doc-explorer-section-title {
+  color: var(--magenta);
+}
+
+.graphiql-doc-explorer-search {
+  display: none;
+}
+
+.graphiql-doc-explorer-back {
+  display: block;
+  margin-bottom: 10px;
+}
+
+svg {
+  margin-right: 10px;
+}
+
+.css-j400xw-MuiPaper-root-MuiDrawer-paper {
+  background-color: var(--main-color-4);
+}
