@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { useCookies } from 'react-cookie';
 import { mockUserWithId } from 'shared/__mock__';
+import translation from './locales/en/default.json';
 
 beforeAll(() => {
   vi.mock('react-cookie', () => ({
@@ -44,5 +45,13 @@ beforeAll(() => {
         fontFamily: 'mocked',
       },
     }),
+  }));
+
+  vi.mock('react-i18next', () => ({
+    useTranslation: () => {
+      return {
+        t: (key: keyof typeof translation) => translation[key],
+      };
+    },
   }));
 });

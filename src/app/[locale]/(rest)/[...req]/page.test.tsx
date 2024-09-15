@@ -1,11 +1,11 @@
 import { StoreProvider } from 'core';
 import { render } from '@testing-library/react';
-import RestfulPage from 'app/(rest)/[...req]/page';
 import { DEFAULT_URL_EXAMPLE } from 'shared/constants';
 import { encode64 } from 'shared/lib/dataConverters';
 import { getData } from 'shared/lib/api';
 import { mockResponse } from 'shared/__mock__';
 import { RestfulMethods } from 'shared/types/restful';
+import RestfulPage from './page';
 
 vi.mock('@uiw/react-codemirror', () => {
   return {

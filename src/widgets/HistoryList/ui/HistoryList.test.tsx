@@ -9,11 +9,11 @@ import { HistorySave } from 'shared/types/app';
 import { Path } from 'shared/types/path';
 
 describe('testing HistoryList', () => {
-  it('should be with empty store', () => {
+  it('should be with empty store', async () => {
     const { getByText } = render(<HistoryList />);
 
     expect(getByText(/REST Client/i)).toBeInTheDocument();
-    expect(getByText(/GRAPHQL/i)).toBeInTheDocument();
+    expect(getByText(/GraphiQL Client/i)).toBeInTheDocument();
   });
   it('should be with response', async () => {
     setLocalStoreState(mockSaveResponse, mockUserWithId);

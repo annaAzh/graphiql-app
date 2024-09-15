@@ -15,6 +15,7 @@ import { useRestoreValues } from './PropsArea/useRestoreValues';
 import { useEncodeProps } from 'shared/lib/hooks/useEncodeProps/useEncodeProps';
 import { rubik_doodle } from 'shared/styles/fonts/fonts';
 import { useCookies } from 'react-cookie';
+import { useTranslation } from 'react-i18next';
 
 interface RestfulProps {
   children: ReactNode;
@@ -34,12 +35,13 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
     const path = encodeRest(data);
     navigate.push(path);
   };
+  const { t } = useTranslation();
   useRestoreValues({ setValue });
   useClearResult();
 
   return (
     <div className={style.postman}>
-      <h2 className={rubik_doodle.className}>REST Client</h2>
+      <h2 className={rubik_doodle.className}>{t('REST')}</h2>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={style.upperSection}>
           <select
@@ -60,7 +62,7 @@ export const Restful: FC<RestfulProps> = ({ children }) => {
             onChange={(e) => setEncodeValue('url', e.target.value)}
           />
           <button className="common-btn" type="submit">
-            send
+            {t('send')}
           </button>
         </div>
         <PropsArea

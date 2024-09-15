@@ -12,6 +12,7 @@ import { Button, Notification, Title } from 'shared/components';
 import { logInUser, registerUser } from 'shared/lib/api';
 import { Path } from 'shared/types/path';
 import styles from './UserForm.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface FormProps {
   isLogin: boolean;
@@ -19,6 +20,7 @@ interface FormProps {
 
 export const UserForm: FC<FormProps> = ({ isLogin }) => {
   const router = useRouter();
+  const { t } = useTranslation();
   const [error, setError] = useState<string | null>(null);
   const [, setCookie] = useCookies<string>(['user']);
   const { control, handleSubmit, reset, formState } = useForm<
@@ -26,7 +28,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
   >({
     defaultValues: { email: '', password: '', name: '' },
     resolver: yupResolver<DataFormLogin | DataFormRegister>(
-      isLogin ? schemaLogin : schemaRegister
+      isLogin ? schemaLogin(t) : schemaRegister(t)
     ),
     mode: 'all',
   });
@@ -59,7 +61,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
     <div className={styles.containerUseForm}>
       {error && <Notification error={error} />}
       <Box component={'form'} onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Title>{!isLogin ? 'Sign Up' : 'Sign In'}</Title>
+        <Title>{!isLogin ? t('SignUp') : t('SignIn')}</Title>
         {!isLogin && (
           <Controller
             name="name"
@@ -71,7 +73,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
                 margin="normal"
                 required
                 fullWidth
-                label={'Name'}
+                label={t('Name')}
                 {...field}
                 sx={{ minHeight: '5rem' }}
                 helperText={error?.message}
@@ -89,7 +91,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
               margin="normal"
               required
               fullWidth
-              label={'Email'}
+              label={t('Email')}
               {...field}
               sx={{ minHeight: '5rem' }}
               helperText={error?.message}
@@ -106,7 +108,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
               margin="normal"
               required
               fullWidth
-              label={'Password'}
+              label={t('Password')}
               type="password"
               {...field}
               sx={{ minHeight: '5rem' }}
@@ -116,7 +118,7 @@ export const UserForm: FC<FormProps> = ({ isLogin }) => {
           )}
         />
         <Button type={'submit'} size="lg" disabled={!formState.isValid}>
-          {'Submit'}
+          {t('Submit')}
         </Button>
       </Box>
     </div>

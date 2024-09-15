@@ -1,14 +1,13 @@
 import { StoreProvider } from 'core';
 import { render } from '@testing-library/react';
-import GraphQlPage from 'app/GRAPHQL/[...graphReq]/page';
 import { encode64 } from 'shared/lib/dataConverters';
-
 import { mockResponse } from 'shared/__mock__';
 import { fetchGraphQlData } from 'shared/lib/api';
 import {
   DEFAULT_QUERY_GRAPHQL_EXAMPLE,
   DEFAULT_URL_GRAPHQL_EXAMPLE,
 } from 'shared/constants';
+import GraphQlPage from './page';
 
 vi.mock('@uiw/react-codemirror', () => {
   return {

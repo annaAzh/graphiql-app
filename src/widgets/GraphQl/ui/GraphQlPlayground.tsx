@@ -24,9 +24,11 @@ import clsx from 'clsx';
 import { rubik_doodle } from 'shared/styles/fonts/fonts';
 import { DocsGraphQl } from './DocsGraphQl/DocsGraphQl';
 import { useCookies } from 'react-cookie';
+import { useTranslation } from 'react-i18next';
 
 const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
   const navigate = useRouter();
+  const { t } = useTranslation();
   useClearResult();
   const { handleSubmit, register, watch, setValue } =
     useForm<RequestGraphQLData>({
@@ -92,8 +94,8 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
       <div style={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
         <div className={style.sidebar}>
           {schema && (
-            <Button data-testid="docs" onClick={() => setDocsShown(!shownDocs)}>
-              docs
+            <Button onClick={() => setDocsShown(!shownDocs)}>
+              {t('docs')}
             </Button>
           )}
         </div>
@@ -107,7 +109,7 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
           />
           <div className={style.sessions}>
             <h3 className={clsx(style.main_title, rubik_doodle.className)}>
-              GraphQl Playground
+              {t('GraphiQL')}
             </h3>
             <div className={style.container}>
               <form
@@ -129,7 +131,7 @@ const GraphQlPlayground = ({ children }: { children?: ReactNode }) => {
                     size="lg"
                     type="submit"
                   >
-                    send
+                    {t('send')}
                   </Button>
                 </div>
                 <SDLInput
