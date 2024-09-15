@@ -138,7 +138,7 @@ Run Tests
 
   ```
   {
-    "title": "{{foo}} ",
+    "title": "{{foo}}",
     "body": "test"
   }
   ```
@@ -147,7 +147,7 @@ Run Tests
 
   ```
   {
-    "title": "{{foo}} ",
+    "title": "{{foo}}",
     "body": "test",
     "id": 101
   }
@@ -180,7 +180,7 @@ Run Tests
 
   ```
   {
-    "title": "{{foo}} ",
+    "title": "{{foo}}",
     "body": "test"
   }
   ```
