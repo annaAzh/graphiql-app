@@ -36,9 +36,9 @@ export const PropsArea: FC<PropsAreaProps> = ({
   const watchBody = watch('body');
   const { t } = useTranslation();
 
-  const bodyHandler = (value: string) => {
-    setEncodeValue('body', value);
-    setValue('body', value);
+  const bodyHandler = () => {
+    setEncodeValue('body', watchBody);
+    setValue('body', watchBody);
   };
 
   const content = useMemo(() => {
@@ -65,6 +65,7 @@ export const PropsArea: FC<PropsAreaProps> = ({
           onBlurCallBack={bodyHandler}
           watch={watch}
           setValue={setValue}
+          mode="REST"
         />
       );
     }
