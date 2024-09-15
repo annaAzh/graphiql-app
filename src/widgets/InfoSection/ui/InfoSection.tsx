@@ -16,7 +16,7 @@ export const InfoSection = () => {
   return (
     <section className={styles.infoSection}>
       <Title>
-        {t('DescriptionMainPage')}{' '}
+        {t('DescriptionMainPage')}
         <Link href={'https://rs.school/'}>RS School</Link>
       </Title>
       <div className={styles.profileList}>

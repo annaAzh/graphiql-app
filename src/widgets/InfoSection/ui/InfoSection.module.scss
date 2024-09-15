@@ -6,6 +6,10 @@
   text-align: center;
   line-height: 130%;
 
+  img {
+    object-fit: cover;
+  }
+
   a:hover {
     color: var(--blue);
   }
