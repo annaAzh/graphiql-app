@@ -8,8 +8,9 @@ beforeAll(() => {
     useCookies: vi.fn(),
   }));
   (useCookies as ReturnType<typeof vi.fn>).mockImplementation(() => [
-    { user: { uid: mockUserWithId } },
+    { user: { uid: mockUserWithId }},
     vi.fn(),
+    vi.fn()
   ]);
 
   vi.mock('react-firebase-hooks/auth', () => ({
