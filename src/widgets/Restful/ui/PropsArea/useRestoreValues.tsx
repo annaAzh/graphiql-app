@@ -18,7 +18,7 @@ export const useRestoreValues = ({
   useEffect(() => {
     (async () => {
       const method = params.req[0];
-      if (method === 'REST' || params.req.length < 2) {
+      if (method === 'REST') {
         setValue('url', DEFAULT_URL_EXAMPLE);
         setValue('method', VALID_METHODS[0]);
       } else {
