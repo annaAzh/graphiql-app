@@ -65,25 +65,25 @@ export const getData = async (
 
     switch (type) {
       case 'GET':
-        res = await axios.get(url, headers);
+        res = await axios.get(url, { headers });
         break;
       case 'POST':
-        res = await axios.post(url, body, headers);
+        res = await axios.post(url, body, { headers });
         break;
       case 'PUT':
-        res = await axios.put(url, body, headers);
+        res = await axios.put(url, body, { headers });
         break;
       case 'PATCH':
-        res = await axios.patch(url, body, headers);
+        res = await axios.patch(url, body, { headers });
         break;
       case 'DELETE':
         res = await axios.delete(url);
         break;
       case 'HEAD':
-        res = await axios.head(url, headers);
+        res = await axios.head(url, { headers });
         break;
       case 'OPTIONS':
-        res = await axios.options(url, headers);
+        res = await axios.options(url, { headers });
         break;
     }
 

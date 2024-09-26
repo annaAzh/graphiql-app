@@ -32,7 +32,9 @@ describe('testing getData', () => {
     const result = await getData(mockMethod, mockUrl, mockHeaders, mockBody);
 
     expect(axios.get).toHaveBeenCalledTimes(1);
-    expect(axios.get).toHaveBeenCalledWith(mockSaveResponse.url, mockHeaders);
+    expect(axios.get).toHaveBeenCalledWith(mockSaveResponse.url, {
+      headers: mockHeaders,
+    });
     expect(result?.status).toBe(200);
   });
   it('should be executed with POST method', async () => {
@@ -42,11 +44,9 @@ describe('testing getData', () => {
     const result = await getData(mockMethod, mockUrl, mockHeaders, mockBody);
 
     expect(axios.post).toHaveBeenCalledTimes(1);
-    expect(axios.post).toHaveBeenCalledWith(
-      mockSaveResponse.url,
-      decodedBody,
-      mockHeaders
-    );
+    expect(axios.post).toHaveBeenCalledWith(mockSaveResponse.url, decodedBody, {
+      headers: mockHeaders,
+    });
     expect(result?.status).toBe(200);
   });
   it('should be executed with PUT method', async () => {
@@ -56,11 +56,9 @@ describe('testing getData', () => {
     const result = await getData(mockMethod, mockUrl, mockHeaders, mockBody);
 
     expect(axios.put).toHaveBeenCalledTimes(1);
-    expect(axios.put).toHaveBeenCalledWith(
-      mockSaveResponse.url,
-      decodedBody,
-      mockHeaders
-    );
+    expect(axios.put).toHaveBeenCalledWith(mockSaveResponse.url, decodedBody, {
+      headers: mockHeaders,
+    });
     expect(result?.status).toBe(200);
   });
   it('should be executed with PATCH method', async () => {
@@ -73,7 +71,9 @@ describe('testing getData', () => {
     expect(axios.patch).toHaveBeenCalledWith(
       mockSaveResponse.url,
       decodedBody,
-      mockHeaders
+      {
+        headers: mockHeaders,
+      }
     );
     expect(result?.status).toBe(200);
   });
@@ -94,7 +94,9 @@ describe('testing getData', () => {
     const result = await getData(mockMethod, mockUrl, mockHeaders, mockBody);
 
     expect(axios.head).toHaveBeenCalledTimes(1);
-    expect(axios.head).toHaveBeenCalledWith(mockSaveResponse.url, mockHeaders);
+    expect(axios.head).toHaveBeenCalledWith(mockSaveResponse.url, {
+      headers: mockHeaders,
+    });
     expect(result?.status).toBe(200);
   });
   it('should be executed with OPTIONS method', async () => {
@@ -104,10 +106,9 @@ describe('testing getData', () => {
     const result = await getData(mockMethod, mockUrl, mockHeaders, mockBody);
 
     expect(axios.options).toHaveBeenCalledTimes(1);
-    expect(axios.options).toHaveBeenCalledWith(
-      mockSaveResponse.url,
-      mockHeaders
-    );
+    expect(axios.options).toHaveBeenCalledWith(mockSaveResponse.url, {
+      headers: mockHeaders,
+    });
     expect(result?.status).toBe(200);
   });
   it('should be executed with result is undefined', async () => {
