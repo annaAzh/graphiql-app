@@ -12,6 +12,7 @@ import { ButtonLogOut } from 'features/LogOutUser';
 import styles from './Header.module.scss';
 import { LanguageChanger } from 'features/SwitchLanguage';
 import { useTranslation } from 'react-i18next';
+import { redirect } from 'next/navigation';
 
 export const Header: FC = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -22,6 +23,7 @@ export const Header: FC = () => {
   useEffect(() => {
     if (!cookies.user && user) {
       logoutUser();
+      redirect(Path.MAIN);
     }
   }, [cookies.user, user]);
 
